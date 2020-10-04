@@ -100,7 +100,7 @@ export class GitHubLabeler {
         ) {
           const fileContent = await this.getFileRaw(sourceBranch, file.filename);
 
-          if (fileContent.includes('[Migration(')) {
+          if (fileContent?.includes('[Migration(')) {
             labelsRequired.push('migration');
 
             const migrationNumber = /\[Migration\((?<number>[^\)]+)\)\]/g.exec(fileContent).groups?.number;
@@ -236,7 +236,13 @@ export class GitHubLabeler {
   }
 
   private async getFileRaw(branchName: string, filePath: string): Promise<string> {
-    return (await this.repo.getContents(branchName, filePath, true)).data;
+    try {
+      // at least if the branch is deleted we cannot get the file
+      return (await this.repo.getContents(branchName, filePath, true)).data;
+    } catch (error) {
+      log(chalk.red("getFileRaw", "branchName", branchName, "filePath", filePath, "Error", error))
+      return null;
+    }
   }
 
   private updateLabels(number: number, labels: Array<string>): Promise<void> {
