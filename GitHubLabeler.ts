@@ -105,7 +105,7 @@ export class GitHubLabeler {
         ) {
           const fileContent = await this.getFileRaw(sourceBranch, file.filename);
 
-          if (fileContent?.includes('[Migration(')) {
+          if (typeof fileContent === "string" && fileContent?.includes('[Migration(')) {
             labelsRequired.push('migration');
 
             const migrationNumber = /\[Migration\((?<number>[^\)]+)\)\]/g.exec(fileContent).groups?.number;
