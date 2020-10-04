@@ -16,6 +16,7 @@ export class GitHubLabeler {
     listPullRequests: (options: any) => Promise<any>,
     listPullRequestFiles: (number: number) => Promise<any>,
     getContents: (ref: string, path: string, raw: boolean) => Promise<any>,
+    getBranch: (name: string) => Promise<any>,
   };
 
   private readonly issueManager: any;
@@ -37,6 +38,7 @@ export class GitHubLabeler {
     this.getPullRequestFiles = this.getPullRequestFiles.bind(this);
     this.getFileRaw = this.getFileRaw.bind(this);
     this.checkLabels = this.checkLabels.bind(this);
+    this.branchIsExists = this.branchIsExists.bind(this);
     this.updateLabels = this.updateLabels.bind(this);
     this.updateMilestone = this.updateMilestone.bind(this);
     this.updateTitile = this.updateTitile.bind(this);
@@ -242,6 +244,14 @@ export class GitHubLabeler {
     } catch (error) {
       log(chalk.red("getFileRaw", "branchName", branchName, "filePath", filePath, "Error", error))
       return null;
+    }
+  }
+
+  private async branchIsExists(branchName: string): Promise<boolean> {
+    try {
+      return (await this.repo.getBranch(branchName))?.data !== null;
+    } catch {
+      return false;
     }
   }
 
