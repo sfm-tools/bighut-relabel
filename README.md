@@ -8,9 +8,9 @@ Node.js console application that allows set labels to **Pull Request** depending
 
 ```json
 {
-  "token": "%YOU TOKEN HERE%",
-  "user": "user name or organization name, for example: https://github.com/alexeyclearscale/test - username is alexeyclearscale",
-  "repo": "repository name, for example: https://github.com/alexeyclearscale/test - repo name is test"
+  "token": "%YOUR TOKEN HERE%",
+  "user": "%USERNAME OR ORG NAME HERE%",
+  "repo": "%REPOSITORY NAME HERE%"
 }
 ```
 
