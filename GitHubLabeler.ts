@@ -77,7 +77,7 @@ export class GitHubLabeler {
         chalk.green(targetBranch),
       );
 
-      log(`..${pullRequest.url}`);
+      log(`..${pullRequest.html_url}`);
 
       let labelsRequired = [];
       let migrationsRequired = [];
