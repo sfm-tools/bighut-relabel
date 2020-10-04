@@ -69,12 +69,14 @@ export class GitHubLabeler {
       const sourceBranch = pullRequest.head.ref;
       const targetBranch = pullRequest.base.ref;
       const files = await this.getPullRequestFiles(number);
+      const sourceBranchIsExists = await this.branchIsExists(sourceBranch);
 
       log(
         'Pull Request #',
         number,
         'from',
         chalk.yellow(sourceBranch),
+        sourceBranchIsExists ? '' : ` ${chalk.gray('DELETED')}`,
         'into',
         chalk.green(targetBranch),
         'by',
@@ -99,6 +101,7 @@ export class GitHubLabeler {
         if (
           labelsRequired.includes('back end')
           && !labelsRequired.includes('migration')
+          && sourceBranchIsExists
         ) {
           const fileContent = await this.getFileRaw(sourceBranch, file.filename);
 
