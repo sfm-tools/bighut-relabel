@@ -85,6 +85,12 @@ export class GitHubLabeler {
 
       log(`..${pullRequest.html_url}`);
 
+      // skip sync
+      if (milestone && milestone.title === "Sync") {
+        log('..skip the sync milestone');
+        continue;
+      }
+
       let labelsRequired = [];
       let migrationsRequired = [];
 
