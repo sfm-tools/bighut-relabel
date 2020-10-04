@@ -1,0 +1,5 @@
+{
+  "token": "https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token",
+  "user": "user name or organization name, for example: https://github.com/alexeyclearscale/test - username is alexeyclearscale",
+  "repo": "repository name, for example: https://github.com/alexeyclearscale/test - repo name is test"
+}
