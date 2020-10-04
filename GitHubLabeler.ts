@@ -75,6 +75,8 @@ export class GitHubLabeler {
         chalk.yellow(sourceBranch),
         'into',
         chalk.green(targetBranch),
+        'by',
+        pullRequest.user.login
       );
 
       log(`..${pullRequest.html_url}`);
