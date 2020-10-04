@@ -73,12 +73,12 @@ export class GitHubLabeler {
 
       log(
         'Pull Request #',
-        number,
+        number.toString(),
         'from',
-        chalk.yellow(sourceBranch),
+        sourceBranch,
         sourceBranchIsExists ? '' : ` ${chalk.gray('DELETED')}`,
         'into',
-        chalk.green(targetBranch),
+        targetBranch,
         'by',
         pullRequest.user.login
       );
