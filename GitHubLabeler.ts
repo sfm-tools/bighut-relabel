@@ -76,7 +76,7 @@ export class GitHubLabeler {
         number.toString(),
         'from',
         sourceBranch,
-        sourceBranchIsExists ? '' : ` ${chalk.gray('DELETED')}`,
+        sourceBranchIsExists ? '' : ` [${chalk.gray('DELETED')}]`,
         'into',
         targetBranch,
         'by',
