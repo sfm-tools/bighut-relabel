@@ -108,7 +108,10 @@ export class GitHubLabeler {
           labelsRequired.includes('back end')
           && sourceBranchIsExists
         ) {
-          const fileContent = await this.getFileRaw(sourceBranch, file.filename);
+          const fileContent = await this.getFileRaw(
+            sourceBranchIsExists ? sourceBranch : targetBranch,
+            file.filename
+          );
 
           if (typeof fileContent === "string" && fileContent?.includes('[Migration(')) {
             if (!labelsRequired.includes('migration')) {
