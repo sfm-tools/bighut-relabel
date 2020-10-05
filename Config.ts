@@ -22,7 +22,7 @@ export const config: Config = {
     },
     {
       label: 'front end',
-      test: (value: string): boolean => /.(((t|j)sx?)|(p?css))/gi.test(value),
+      test: (value: string): boolean => /.(((t|j)sx?)|(p?css))$/gi.test(value),
     },
     {
       label: 'razor',
