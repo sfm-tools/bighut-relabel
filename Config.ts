@@ -1,4 +1,3 @@
-// TODO: Customization
 type LabelMap = {
   label: string,
   test: (value: string) => boolean,
@@ -15,6 +14,8 @@ type Config = {
 };
 
 export const config: Config = {
+  // TODO: create manually the required labels in the repository
+  // and map labels to files
   labels: [
     {
       label: 'back end',
@@ -35,22 +36,20 @@ export const config: Config = {
       },
     }
   ],
+  // TODO: create manually the required milestones in the repository
+  // and map target branches to milestones
   milestone: [
     {
-      milestone: 'Release-9',
+      milestone: 'v9',
       branches: ['master'],
     },
     {
-      milestone: 'Release-8',
-      branches: ['Release-8'],
+      milestone: 'v8',
+      branches: ['v8'],
     },
     {
-      milestone: 'Test Prod',
-      branches: ['test-prod'],
-    },
-    {
-      milestone: 'Demo',
-      branches: ['demo'],
+      milestone: 'Test',
+      branches: ['test'],
     },
   ],
 };
