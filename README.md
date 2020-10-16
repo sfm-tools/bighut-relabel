@@ -1,4 +1,4 @@
-# github-labeler
+# bighut-relabel
 
 Node.js console application that allows set labels to **Pull Request** depending on the code as well fix milestones.
 
