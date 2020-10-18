@@ -1,6 +1,7 @@
 import {
   BaseCondition,
   WhenCondition,
+  WhenConditionPredicate,
 } from '../Conditions';
 import { LabelerContext } from '../LabelerContext';
 
@@ -8,7 +9,7 @@ export abstract class BaseAction {
 
   private readonly _conditions = new Array<BaseCondition>();
 
-  public when(predicate: { (context: LabelerContext): boolean }): BaseAction {
+  public when(predicate: WhenConditionPredicate): BaseAction {
     return this.addCondition(
       new WhenCondition(predicate)
     );
