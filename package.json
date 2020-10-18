@@ -30,7 +30,8 @@
     "check": "./node_modules/ts-node/dist/bin.js index.ts --test",
     "fix": "./node_modules/ts-node/dist/bin.js index.ts",
     "test": "mocha -r ts-node/register tests/*.ts tests/**/*.ts",
-    "nyc": "nyc --reporter=html mocha -r ts-node/register tests/*.ts tests/**/*.ts"
+    "nyc": "nyc --reporter=html mocha -r ts-node/register tests/*.ts tests/**/*.ts",
+    "eslint": "eslint src/ --ext ts"
   },
   "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
   "license": "MIT"
