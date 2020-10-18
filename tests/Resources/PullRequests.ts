@@ -1,4 +1,4 @@
-import { Commit, PullRequest } from '../../src/GitHubClient';
+import { Commit, File, PullRequest } from '../../src/GitHubClient';
 import { flossTomUser } from './Users';
 
 export const pullRequests: Array<PullRequest> = [
@@ -13,7 +13,117 @@ export const pullRequests: Array<PullRequest> = [
       }
     ]),
     description: 'Hello World',
-    files: Promise.resolve([]),
+    files: Promise.resolve<Array<File>>([
+      {
+        additions: 24,
+        changes: 0,
+        deletions: 0,
+        status: 'added',
+        filePath: 'Frontend/package.json',
+        patch: undefined,
+        content: Promise.resolve(`
+        {
+          "name": "awesome-application",
+          "version": "1.0.0",
+          "description": "Awesome application.",
+          "main": "index.js",
+          "dependencies": {
+          },
+          "devDependencies": {
+            "@types/chai": "4.2.14",
+            "@types/mocha": "8.0.3",
+            "@types/node": "14.0.27",
+            "chai": "4.2.0",
+            "mocha": "8.1.3",
+            "nyc": "15.1.0",
+            "ts-node": "9.0.0",
+            "typescript": "3.9.7"
+          },
+          "scripts": {
+            "start": "./node_modules/ts-node index.ts",
+            "test": "mocha -r ts-node/register tests/*.ts tests/**/*.ts",
+          },
+        }
+        `),
+      },
+      {
+        additions: 0,
+        changes: 0,
+        deletions: 72,
+        status: 'removed',
+        filePath: 'Frontend/webpack.js',
+        patch: undefined,
+        content: Promise.reject('404 File not found.'),
+      },
+      {
+        additions: 9,
+        changes: 0,
+        deletions: 0,
+        status: 'added',
+        filePath: 'Frontend/AwesomeComponent.tsx',
+        patch: undefined,
+        content: Promise.resolve(`
+        export class AwesomeComponent extends React.Component {
+
+          render() {
+            return (
+              <div>Awesome Component</div>
+            )
+          }
+
+        }
+        `),
+      },
+      {
+        additions: 4,
+        changes: 0,
+        deletions: 0,
+        status: 'added',
+        filePath: 'Frontend/Models/AwesomeModel.ts',
+        patch: undefined,
+        content: Promise.resolve(`
+        export type AwesomeModel = {
+          id: number;
+          name: string;
+        };
+        `),
+      },
+      {
+        additions: 4,
+        changes: 0,
+        deletions: 0,
+        status: 'added',
+        filePath: 'Frontend/Models/index.ts',
+        patch: undefined,
+        content: Promise.resolve(`
+        export { AwesomeModel } from "./AwesomeModel";
+        `),
+      },
+      {
+        additions: 4,
+        changes: 0,
+        deletions: 0,
+        status: 'added',
+        filePath: 'Backend/Program.cs',
+        patch: undefined,
+        content: Promise.resolve(`
+        using System;
+        using System.IO;
+        using System.Threading.Tasks;
+        using Autofac;
+
+        namespace AwesomeBackend
+        {
+          public class Program
+          {
+            public static async Task Main(string[] args)
+            {
+            }
+          }
+        }
+        `),
+      },
+    ]),
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/1',
     id: 999000901,
     labels: ['enhancement', 'ui'],
