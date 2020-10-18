@@ -1,9 +1,13 @@
 import {
+  StringConditionOptions,
+} from '../ConditionOptions';
+import {
   BaseCondition,
   WhenCondition,
   WhenConditionPredicate,
+  WhenLabelCondition,
 } from '../Conditions';
-import { LabelerContext } from '../LabelerContext';
+import { DefaultPredicateType } from '../Types';
 
 export abstract class BaseAction {
 
@@ -13,6 +17,15 @@ export abstract class BaseAction {
     return this.addCondition(
       new WhenCondition(predicate)
     );
+  }
+
+  public whenLabel(predicate: DefaultPredicateType): StringConditionOptions {
+    const options = new StringConditionOptions(this);
+    const condition = new WhenLabelCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
