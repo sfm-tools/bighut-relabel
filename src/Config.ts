@@ -9,7 +9,7 @@ import {
 
 export abstract class Config {
 
-  private actions = new Array<BaseActionExecutor<BaseAction>>();
+  private _actions = new Array<BaseActionExecutor<BaseAction>>();
 
   public execute(action: VoidFunction): ExecuteAction {
     return this.addAction(
@@ -20,7 +20,7 @@ export abstract class Config {
   }
 
   private addAction<TAction extends BaseAction, TActionExecutor extends BaseActionExecutor<TAction>>(executorInstance: TActionExecutor): TAction {
-    this.actions.push(executorInstance);
+    this._actions.push(executorInstance);
 
     return executorInstance.action;
   }
