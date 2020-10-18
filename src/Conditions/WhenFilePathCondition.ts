@@ -34,7 +34,7 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
       if (excludeFilePath?.length) {
         let isExcluded = false;
 
-        for (const exclude in excludeFilePath) {
+        for (const exclude of excludeFilePath) {
           isExcluded = this.testStringValue(file.filePath, context, exclude);
 
           if (isExcluded) {
