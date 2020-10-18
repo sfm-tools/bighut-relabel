@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
     "target": "es2019",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
+    "esModuleInterop": true
   },
   "exclude": [
     "node_modules/**/*",
