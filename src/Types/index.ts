@@ -1,0 +1,1 @@
+export { StringTestValue } from './StringTestValue';
