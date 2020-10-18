@@ -1,10 +1,12 @@
 import {
   StringConditionOptions,
+  WhenFilePathConditionOptions,
 } from '../ConditionOptions';
 import {
   BaseCondition,
   WhenCondition,
   WhenConditionPredicate,
+  WhenFilePathCondition,
   WhenLabelCondition,
 } from '../Conditions';
 import { DefaultPredicateType } from '../Types';
@@ -26,6 +28,14 @@ export abstract class BaseAction {
     this.addCondition(condition);
 
     return options;
+  }
+
+  public whenFilePath(predicate: DefaultPredicateType): WhenFilePathConditionOptions {
+    this.addCondition(
+      new WhenFilePathCondition(predicate)
+    );
+
+    return new WhenFilePathConditionOptions(this);
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
