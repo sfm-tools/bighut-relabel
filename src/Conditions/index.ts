@@ -3,3 +3,4 @@ export {
 } from './Types';
 export { BaseCondition } from './BaseCondition';
 export { WhenCondition } from './WhenCondition';
+export { WhenLabelCondition } from './WhenLabelCondition';
