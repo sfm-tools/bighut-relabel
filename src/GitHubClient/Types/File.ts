@@ -6,6 +6,8 @@ export type File = {
 
   path: string;
 
+  patch: string;
+
   additions: number;
 
   deletions: number;

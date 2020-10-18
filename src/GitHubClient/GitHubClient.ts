@@ -111,6 +111,7 @@ export class GitHubClient implements IGitHubClient {
     return data.map((item): File => ({
       status: item.status,
       path: item.filename,
+      patch: item.patch,
       additions: item.additions,
       deletions: item.deletions,
       changes: item.changes,
