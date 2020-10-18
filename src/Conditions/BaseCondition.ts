@@ -1,12 +1,21 @@
+import { BaseConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { DefaultPredicateType } from '../Types';
 
-export abstract class BaseCondition<TPredicate = DefaultPredicateType> {
+type ConditionOptionsValues<T> = T extends BaseConditionOptions<infer TValue> ? TValue : never;
+
+export abstract class BaseCondition<
+  TPredicate = DefaultPredicateType,
+  TConditionOptions extends BaseConditionOptions = BaseConditionOptions
+> {
 
   protected readonly predicate: TPredicate;
 
-  constructor(predicate: TPredicate) {
+  protected readonly options: TConditionOptions;
+
+  constructor(predicate: TPredicate, options?: TConditionOptions) {
     this.predicate = predicate;
+    this.options = options;
   }
 
   public abstract test(context: LabelerContext): Promise<boolean> | boolean;
@@ -31,6 +40,10 @@ export abstract class BaseCondition<TPredicate = DefaultPredicateType> {
     }
 
     throw new Error('The predicate type is not supported. Expectected a string, Array<string>, RegExp or Function.');
+  }
+
+  protected getOptions(): ConditionOptionsValues<TConditionOptions> {
+    return (this.options?.['values'] || {}) as ConditionOptionsValues<TConditionOptions>;
   }
 
 }
