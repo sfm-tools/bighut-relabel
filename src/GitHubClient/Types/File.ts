@@ -4,7 +4,7 @@ export type File = {
 
   content: Promise<string>;
 
-  path: string;
+  filePath: string;
 
   patch: string;
 
