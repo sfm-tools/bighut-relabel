@@ -1,7 +1,6 @@
 import { LabelerContext } from '../LabelerContext';
 import { BaseCondition } from './BaseCondition';
-
-type WhenConditionPredicate = (context: LabelerContext) => boolean;
+import { WhenConditionPredicate } from './Types';
 
 export class WhenCondition extends BaseCondition<WhenConditionPredicate> {
 
