@@ -4,6 +4,7 @@ import {
 } from '../ConditionOptions';
 import {
   BaseCondition,
+  WhenAuthorLoginCondition,
   WhenCondition,
   WhenConditionPredicate,
   WhenFilePathCondition,
@@ -36,6 +37,13 @@ export abstract class BaseAction {
     );
 
     return new WhenFilePathConditionOptions(this);
+  }
+
+
+  public whenAuthorLogin(predicate: DefaultPredicateType): BaseAction {
+    return this.addCondition(
+      new WhenAuthorLoginCondition(predicate)
+    );
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
