@@ -1,5 +1,6 @@
 export {
   ConditionOptionsValues,
+  StringConditionOptionsValues,
   WhenFileContentConditionOptionsValues,
   WhenFilePathConditionOptionsValues,
 } from './Values';
