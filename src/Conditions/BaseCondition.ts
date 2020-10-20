@@ -2,8 +2,8 @@ import { BaseConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import {
   DefaultPredicateType,
-  EqualStrings,
   StringComparer,
+  stringComparison,
 } from '../Types';
 
 type ConditionOptionsValues<T> = T extends BaseConditionOptions<infer TValue> ? TValue : never;
@@ -18,7 +18,7 @@ export abstract class BaseCondition<
   protected readonly options: TConditionOptions;
 
   protected get stringComparer(): StringComparer {
-    return EqualStrings;
+    return stringComparison.equal;
   }
 
   constructor(predicate: TPredicate, options?: TConditionOptions) {

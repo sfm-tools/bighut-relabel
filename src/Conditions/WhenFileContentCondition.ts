@@ -1,16 +1,16 @@
 import { WhenFileContentConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import {
-  ContainsString,
   DefaultPredicateType,
   StringComparer,
+  stringComparison,
 } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
 export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType, WhenFileContentConditionOptions> {
 
   protected get stringComparer(): StringComparer {
-    return ContainsString;
+    return stringComparison.contains;
   }
 
   public async test(context: LabelerContext): Promise<boolean> {

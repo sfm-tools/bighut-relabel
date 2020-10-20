@@ -1,7 +1,3 @@
 export { DefaultPredicateType } from './DefaultPredicateType';
-export {
-  ContainsString,
-  EqualStrings,
-  StringComparer,
-} from './StringComparer';
+export { StringComparer, stringComparison } from './StringComparer';
 export { StringTestValue } from './StringTestValue';
