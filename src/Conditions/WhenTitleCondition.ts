@@ -1,11 +1,11 @@
 import { LabelerContext } from '../LabelerContext';
-import { StringComparer, stringComparison } from '../Types';
+import { StringComparer } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
 export class WhenTitleCondition extends BaseCondition {
 
   protected get stringComparer(): StringComparer {
-    return stringComparison.contains;
+    return BaseCondition.containsString;
   }
 
   public test(context: LabelerContext): boolean {

@@ -13,6 +13,10 @@ export abstract class BaseCondition<
   TConditionOptions extends BaseConditionOptions = BaseConditionOptions
 > {
 
+  protected static readonly equalStrings = stringComparison.equal;
+
+  protected static readonly containsString = stringComparison.contains;
+
   protected readonly predicate: TPredicate;
 
   protected readonly options: TConditionOptions;
