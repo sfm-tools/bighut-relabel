@@ -1,0 +1,9 @@
+import { ConditionOptionsValues } from './ConditionOptionsValues';
+
+export type WhenFileContentConditionOptionsValues = ConditionOptionsValues & {
+
+  onlyNewFiles?: boolean;
+
+  onlyModifiedFiles?: boolean;
+
+};
