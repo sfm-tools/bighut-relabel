@@ -14,12 +14,9 @@ export class WhenLabelCondition extends BaseCondition<DefaultPredicateType, Stri
     let result = false;
 
     if (exclude?.length) {
-      for (const predicate of exclude) {
-        for (const label of context.pullRequest.labels) {
-          if (this.testStringValue(label, context, predicate)) {
-            noOne && console.warn('noOne not works with the exclude option');
-            return false;
-          }
+      for (const label of context.pullRequest.labels) {
+        if (this.testForExcludedSting(label, context, exclude)) {
+          return false;
         }
       }
     }
