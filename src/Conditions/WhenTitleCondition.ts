@@ -1,8 +1,9 @@
+import { StringConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
-import { StringComparer } from '../Types';
+import { DefaultPredicateType, StringComparer } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
-export class WhenTitleCondition extends BaseCondition {
+export class WhenTitleCondition extends BaseCondition<DefaultPredicateType, StringConditionOptions> {
 
   protected get stringComparer(): StringComparer {
     return BaseCondition.containsString;
@@ -10,11 +11,20 @@ export class WhenTitleCondition extends BaseCondition {
 
   public test(context: LabelerContext): boolean {
     const {
+      exclude,
       noOne,
     } = this.getOptions();
 
+    const {
+      title,
+    } = context.pullRequest;
+
+    if (this.testForExcludedSting(title, context, exclude)) {
+      return false;
+    }
+
     return this.testStringValue(
-      context.pullRequest.title,
+      title,
       context
     ) && !noOne;
   }
