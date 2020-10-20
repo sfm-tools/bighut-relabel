@@ -1,9 +1,17 @@
 import { WhenFileContentConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
-import { DefaultPredicateType } from '../Types';
+import {
+  ContainsString,
+  DefaultPredicateType,
+  StringComparer,
+} from '../Types';
 import { BaseCondition } from './BaseCondition';
 
 export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType, WhenFileContentConditionOptions> {
+
+  protected get stringComparer(): StringComparer {
+    return ContainsString;
+  }
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
@@ -11,10 +19,6 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       onlyModifiedFiles,
       onlyNewFiles,
     } = this.getOptions();
-
-    const predicate = typeof this.predicate === 'string'
-      ? (fileContent: string): boolean => fileContent.includes(this.predicate.toString())
-      : this.predicate;
 
     const files = await context.pullRequest.files;
 
@@ -31,7 +35,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
 
       try {
         const content = await file.content;
-        result = this.testStringValue(content, context, predicate);
+        result = this.testStringValue(content, context);
       } catch (error) {
         console.error(error);
       }
