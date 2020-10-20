@@ -9,4 +9,5 @@ export { WhenFileContentCondition } from './WhenFileContentCondition';
 export { WhenFilePathCondition } from './WhenFilePathCondition';
 export { WhenLabelCondition } from './WhenLabelCondition';
 export { WhenSourceBranchNameCondition } from './WhenSourceBranchNameCondition';
+export { WhenTargetBranchNameCondition } from './WhenTargetBranchNameCondition';
 export { WhenTitleCondition } from './WhenTitleCondition';
