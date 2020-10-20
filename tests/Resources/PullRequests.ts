@@ -123,6 +123,31 @@ export const pullRequests: Array<PullRequest> = [
         }
         `),
       },
+      {
+        additions: 115,
+        changes: 0,
+        deletions: 0,
+        status: 'modified',
+        filePath: 'Backend/Controllers/ValuesController.cs',
+        patch: undefined,
+        content: Promise.resolve(`
+        using System;
+        using System.Threading.Tasks;
+        using Microsoft.AspNetCore.Mvc;
+
+        namespace AwesomeBackend.Controllers
+        {
+          public class ValuesController
+          {
+            [HttpGet]
+            public ActionResult<IEnumerable<string>> Get()
+            {
+                return new[] { "value1", "value2", "value3" };
+            }
+          }
+        }
+        `),
+      },
     ]),
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/1',
     id: 999000901,
