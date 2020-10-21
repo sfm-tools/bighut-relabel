@@ -1,4 +1,4 @@
-import GitHub from 'github-api';
+import { Octokit } from '@octokit/rest';
 
 import { IGitHubClient } from './IGitHubClient';
 import {
@@ -6,39 +6,30 @@ import {
   File,
   PullRequest,
   PullRequestStatus,
-  User
+  User,
 } from './Types';
 
 export class GitHubClient implements IGitHubClient {
 
-  private readonly client: GitHub;
+  private readonly _client: Octokit;
 
-  public readonly repoName: string;
+  private readonly _owner: string;
 
-  private readonly repo: {
-    listPullRequests: (options: any) => Promise<any>,
-    listPullRequestFiles: (number: number) => Promise<any>,
-    listCommits: (params: { pull_number: number, page?: number, per_page?: number }) => Promise<any>,
-    getPullRequest: (number: number) => Promise<any>,
-    getContents: (ref: string, path: string, raw: boolean) => Promise<any>,
-    getBranch: (name: string) => Promise<any>,
-  };
+  private readonly _repo: string;
 
-  private readonly issueManager: any;
-
-  constructor(token: string, username: string, repoName: string) {
-    this.client = new GitHub({
-      token,
+  constructor(token: string, owner: string, repo: string) {
+    this._client = new Octokit({
+      auth: token,
     });
 
-    this.repoName = repoName;
-
-    this.repo = this.client.getRepo(username, repoName);
-    this.issueManager = this.client.getIssues(username, repoName);
+    this._owner = owner;
+    this._repo = repo;
   }
 
   public async getPullRequests(page?: number): Promise<Array<PullRequest>> {
-    const pullRequests = (await this.repo.listPullRequests({
+    const pullRequests = (await this._client.pulls.list({
+      owner: this._owner,
+      repo: this._repo,
       state: 'all',
       sort: 'created',
       direction: 'desc',
@@ -53,7 +44,7 @@ export class GitHubClient implements IGitHubClient {
       return {
         id: item.id,
         code: item.number,
-        state: item.state,
+        state: item.state as any,
         title: item.title,
         description: item.body,
         labels: item.labels?.map((label): string => label.name) || [],
@@ -88,6 +79,7 @@ export class GitHubClient implements IGitHubClient {
             );
           }
         ),
+        comments: this.getComments(item.number),
         commits: this.getPullRequestCommits(item.number),
         statusInfo: this.getPullRequestStatus(item.number),
       };
@@ -95,21 +87,31 @@ export class GitHubClient implements IGitHubClient {
   }
 
   public async getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus> {
-    const data = (await this.repo.getPullRequest(pullRequestNumber))?.data || {};
+    const data = (await this._client.pulls.get({
+      owner: this._owner,
+      repo: this._repo,
+      pull_number: pullRequestNumber,
+    }))?.data;
 
     return {
-      merged: data.merged,
-      mergeable: data.mergeable,
-      rebaseable: data.rebaseable,
-      mergeableState: data.mergeable_state,
+      merged: data?.merged,
+      mergeable: data?.mergeable,
+      rebaseable: data?.rebaseable,
+      mergeableState: data?.mergeable_state as any,
     };
   }
 
   public async getPullRequestFiles(branchName: string, pullRequestNumber: number): Promise<Array<File>> {
-    const data = (await this.repo.listPullRequestFiles(pullRequestNumber))?.data || [];
+    // TODO: All files
+    const data = (await this._client.pulls.listFiles({
+      owner: this._owner,
+      repo: this._repo,
+      pull_number: pullRequestNumber,
+      per_page: 100,
+    }))?.data || [];
 
     return data.map((item): File => ({
-      status: item.status,
+      status: item.status as any,
       filePath: item.filename,
       patch: item.patch,
       additions: item.additions,
@@ -122,15 +124,21 @@ export class GitHubClient implements IGitHubClient {
   }
 
   public async getFileRaw(branchName: string, filePath: string): Promise<string> {
-    const result = (await this.repo.getContents(branchName, filePath, true)).data;
-
-    return result;
+    return (await this._client.repos.getContent({
+      owner: this._owner,
+      repo: this._repo,
+      ref: branchName,
+      path: filePath,
+    }))?.data.content;
   }
 
-  public async getPullRequestCommits(code: number): Promise<Array<Commit>> {
-    const data = (await this.repo.listCommits({
-      pull_number: code,
-      per_page: 1000,
+  public async getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>> {
+    // TODO: All commits
+    const data = (await this._client.pulls.listCommits({
+      owner: this._owner,
+      repo: this._repo,
+      pull_number: pullRequestNumber,
+      per_page: 100,
     }))?.data || [];
 
     return data.map((item): Commit => ({
@@ -142,23 +150,42 @@ export class GitHubClient implements IGitHubClient {
 
   public async branchIsExists(branchName: string): Promise<boolean> {
     try {
-      return (await this.repo.getBranch(branchName))?.data !== null;
+      return !!(await this._client.repos.getBranch({
+        owner: this._owner,
+        repo: this._repo,
+        branch: branchName,
+      }))?.data;
     } catch {
       // TODO: Do not hide error
       return false;
     }
   }
 
-  public updatePullRequestLabels(pullRequestNumber: number, labels: Array<string>): Promise<void> {
-    return this.issueManager.editIssue(pullRequestNumber, { labels });
+  public async updatePullRequestLabels(pullRequestNumber: number, labels: Array<string>): Promise<void> {
+    await this._client.issues.update({
+      owner: this._owner,
+      repo: this._repo,
+      issue_number: pullRequestNumber,
+      labels,
+    });
   }
 
-  public updatePullRequestMilestone(pullRequestNumber: number, milestone: number): Promise<void> {
-    return this.issueManager.editIssue(pullRequestNumber, { milestone });
+  public async updatePullRequestMilestone(pullRequestNumber: number, milestone: number): Promise<void> {
+    await this._client.issues.update({
+      owner: this._owner,
+      repo: this._repo,
+      issue_number: pullRequestNumber,
+      milestone,
+    });
   }
 
-  public updatePullRequestTitile(pullRequestNumber: number, title: string): Promise<void> {
-    return this.issueManager.editIssue(pullRequestNumber, { title });
+  public async updatePullRequestTitile(pullRequestNumber: number, title: string): Promise<void> {
+    await this._client.issues.update({
+      owner: this._owner,
+      repo: this._repo,
+      issue_number: pullRequestNumber,
+      title,
+    });
   }
 
   private convertDataToUser(data: any): User {
