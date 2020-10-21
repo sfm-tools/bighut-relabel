@@ -53,6 +53,13 @@
         "max": 1,
         "maxEOF": 0
       }
+    ],
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": false
+      }
     ]
   }
 }
