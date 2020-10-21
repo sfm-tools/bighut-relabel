@@ -4,6 +4,7 @@
   "description": "Labeler for Pull Requests on GitHub.",
   "main": "index.js",
   "dependencies": {
+    "@octokit/rest": "18.0.6",
     "@types/chalk": "2.2.0",
     "axios": "0.19.2",
     "chalk": "4.1.0",
