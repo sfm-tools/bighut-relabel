@@ -1,4 +1,5 @@
 import { Branch } from './Branch';
+import { Comment } from './Comment';
 import { Commit } from './Commit';
 import { File } from './File';
 import { Milestone } from './Milestone';
@@ -36,6 +37,8 @@ export type PullRequest = {
   mergedDate?: Date;
 
   closedDate?: Date;
+
+  comments: Promise<Array<Comment>>;
 
   commits: Promise<Array<Commit>>;
 
