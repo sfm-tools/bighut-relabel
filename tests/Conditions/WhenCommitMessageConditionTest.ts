@@ -25,12 +25,13 @@ describe('WhenCommitMessageCondition', () => {
   it('should return false for an existing substring with multiple exclude option', async(): Promise<void> => {
     const options = new StringConditionOptions(null);
     const when = new WhenCommitMessageCondition('request', options);
-    const result = await when.test(context);
 
     options
       .exclude('abracadabra')
       .exclude((message: string): boolean => message === 'code style fix')
       .exclude(/Merge branch/ig);
+
+    const result = await when.test(context);
 
     expect(false).equal(result);
   });
