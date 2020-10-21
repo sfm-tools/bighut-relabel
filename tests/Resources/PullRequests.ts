@@ -1,10 +1,37 @@
-import { Commit, File, PullRequest } from '../../src/GitHubClient';
-import { flossTomUser } from './Users';
+import { Comment, Commit, File, PullRequest } from '../../src/GitHubClient';
+import { flossTomUser, loftMossUser, msSoftLoUser } from './Users';
 
 export const pullRequests: Array<PullRequest> = [
   {
     author: flossTomUser,
     code: 1,
+    comments: Promise.resolve<Array<Comment>>([
+      {
+        id: 1,
+        author: msSoftLoUser,
+        text: 'Nothing works!',
+        createdDate: new Date(2020, 9, 20),
+      },
+      {
+        id: 2,
+        author: loftMossUser,
+        text: 'Well done! Everything works great! @ms.softlo just **format** your drive and reinstall your system!',
+        createdDate: new Date(2020, 9, 21),
+      },
+      {
+        id: 3,
+        author: msSoftLoUser,
+        text: '@loft-moss thanks it really helped!',
+        createdDate: new Date(2020, 9, 22),
+      },
+      {
+        id: 5,
+        author: flossTomUser,
+        text: '**Thanks, everyone!** _I hope someone will someday approve of this PR and I can merge it into the main branch._',
+        createdDate: new Date(2020, 9, 23),
+        updatedDate: new Date(2020, 9, 25),
+      },
+    ]),
     commits: Promise.resolve<Array<Commit>>([
       {
         author: flossTomUser,
