@@ -3,6 +3,7 @@ export {
 } from './Types';
 export { BaseCondition } from './BaseCondition';
 export { WhenAuthorLoginCondition } from './WhenAuthorLoginCondition';
+export { WhenCommentTextCondition } from './WhenCommentTextCondition';
 export { WhenCommitMessageCondition } from './WhenCommitMessageCondition';
 export { WhenCondition } from './WhenCondition';
 export { WhenDescriptionCondition } from './WhenDescriptionCondition';
