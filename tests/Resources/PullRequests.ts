@@ -37,7 +37,17 @@ export const pullRequests: Array<PullRequest> = [
         author: flossTomUser,
         hash: 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
         message: 'Added new features.',
-      }
+      },
+      {
+        author: flossTomUser,
+        hash: '1a31a3ee5e4b4b0d3255b0efa56018d0af550709',
+        message: 'Fixed awesome bug.',
+      },
+      {
+        author: flossTomUser,
+        hash: '2127cd8852b430ea586be97f82eb16c9d1ae2377',
+        message: 'Merge branch "main" into "issue-1"',
+      },
     ]),
     description: 'Hello World',
     files: Promise.resolve<Array<File>>([
