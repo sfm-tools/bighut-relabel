@@ -1,4 +1,5 @@
 export { Branch } from './Branch';
+export { Comment } from './Comment';
 export { Commit } from './Commit';
 export { File } from './File';
 export { Milestone } from './Milestone';
