@@ -2,6 +2,7 @@ import { Octokit } from '@octokit/rest';
 
 import { IGitHubClient } from './IGitHubClient';
 import {
+  Comment,
   Commit,
   File,
   PullRequest,
@@ -145,6 +146,23 @@ export class GitHubClient implements IGitHubClient {
       author: item.author && this.convertDataToUser(item.author),
       hash: item.sha,
       message: item.commit.message,
+    }));
+  }
+
+  public async getComments(pullRequestNumber: number): Promise<Array<Comment>> {
+    const data = (await this._client.pulls.listReviewComments({
+      owner: this._owner,
+      repo: this._repo,
+      pull_number: pullRequestNumber,
+      per_page: 100,
+    }))?.data || [];
+
+    return data.map((item): Comment => ({
+      id: item.id,
+      author: item.user && this.convertDataToUser(item.user),
+      text: item.body,
+      createdDate: new Date(item.created_at),
+      updatedDate: item.updated_at && new Date(item.updated_at),
     }));
   }
 

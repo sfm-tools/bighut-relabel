@@ -1,4 +1,9 @@
-import { File, PullRequest, PullRequestStatus } from './Types';
+import {
+  Comment,
+  File,
+  PullRequest,
+  PullRequestStatus,
+} from './Types';
 
 export interface IGitHubClient {
 
@@ -9,6 +14,8 @@ export interface IGitHubClient {
   getPullRequestFiles(branchName: string, pullRequestNumber: number): Promise<Array<File>>;
 
   getFileRaw(branchName: string, filePath: string): Promise<string>;
+
+  getComments(pullRequestNumber: number): Promise<Array<Comment>>;
 
   branchIsExists(branchName: string): Promise<boolean>;
 
