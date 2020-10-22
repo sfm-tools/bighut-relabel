@@ -1,11 +1,13 @@
 import {
   StringConditionOptions,
+  WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
 } from '../ConditionOptions';
 import {
   BaseCondition,
   WhenAuthorLoginCondition,
+  WhenCommentTextCondition,
   WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
@@ -88,6 +90,15 @@ export abstract class BaseAction {
 
   public whenDescriptionIsNotEmpty(): StringConditionOptions {
     return this.whenDescription((value: string): boolean => !!value);
+  }
+
+  public whenCommentText(predicate: DefaultPredicateType): WhenCommentTextConditionOptions {
+    const options = new WhenCommentTextConditionOptions(this);
+    const condition = new WhenCommentTextCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   public whenCommitMessage(predicate: DefaultPredicateType): StringConditionOptions {
