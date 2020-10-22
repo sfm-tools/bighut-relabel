@@ -1,5 +1,6 @@
 import {
   StringConditionOptions,
+  WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
 } from '../ConditionOptions';
 import {
@@ -7,6 +8,7 @@ import {
   WhenAuthorLoginCondition,
   WhenCondition,
   WhenConditionPredicate,
+  WhenFileContentCondition,
   WhenFilePathCondition,
   WhenLabelCondition,
 } from '../Conditions';
@@ -40,6 +42,14 @@ export abstract class BaseAction {
     return options;
   }
 
+  public whenFileContent(predicate: DefaultPredicateType): WhenFileContentConditionOptions {
+    const options = new WhenFileContentConditionOptions(this);
+    const condition = new WhenFileContentCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
 
   public whenAuthorLogin(predicate: DefaultPredicateType): BaseAction {
     return this.addCondition(
