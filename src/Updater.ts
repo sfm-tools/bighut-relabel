@@ -7,8 +7,10 @@ export class Updater {
    */
   public readonly addLabels = new Set<string>();
 
+  /**
+   * List of labels to remove.
    */
-  public readonly labels = new Set<string>();
+  public readonly removeLabels = new Set<string>();
 
   /**
    * List of tasks for execution.
