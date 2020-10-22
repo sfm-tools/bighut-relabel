@@ -21,8 +21,7 @@ import {
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
-import { DefaultPredicateType } from '../Types';
-import { MergeDirection } from './Types';
+import { DefaultPredicateType, MergeDirection } from '../Types';
 
 export abstract class BaseAction {
 

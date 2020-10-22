@@ -1,5 +1,5 @@
-import { MergeDirection } from '../Actions/Types';
 import { LabelerContext } from '../LabelerContext';
+import { MergeDirection } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
 export class WhenMergeDirectionCondition extends BaseCondition<Array<MergeDirection>> {
