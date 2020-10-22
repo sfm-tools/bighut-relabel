@@ -11,6 +11,7 @@ import {
   WhenFileContentCondition,
   WhenFilePathCondition,
   WhenLabelCondition,
+  WhenTitleCondition,
 } from '../Conditions';
 import { DefaultPredicateType } from '../Types';
 
@@ -55,6 +56,15 @@ export abstract class BaseAction {
     return this.addCondition(
       new WhenAuthorLoginCondition(predicate)
     );
+  }
+
+  public whenTitle(predicate: DefaultPredicateType): StringConditionOptions {
+    const options = new StringConditionOptions(this);
+    const condition = new WhenTitleCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
