@@ -18,7 +18,7 @@ describe('AddLabelActionExecutor', () => {
 
     await executor.execute(context);
 
-    expect(Array.from(updater.labels)).to.deep.equal([action.label]);
+    expect(Array.from(updater.addLabels)).to.deep.equal([action.label]);
   });
 
   it('should not add any labels to updater', async(): Promise<void> => {
@@ -34,7 +34,7 @@ describe('AddLabelActionExecutor', () => {
 
     await executor.execute(context);
 
-    expect(Array.from(updater.labels)).to.deep.equal([]);
+    expect(Array.from(updater.addLabels)).to.deep.equal([]);
   });
 
 });

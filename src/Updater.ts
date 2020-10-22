@@ -3,7 +3,10 @@ import { UpdateValue } from './UpdateValue';
 export class Updater {
 
   /**
-   * List of labels to update.
+   * List of labels to add.
+   */
+  public readonly addLabels = new Set<string>();
+
    */
   public readonly labels = new Set<string>();
 

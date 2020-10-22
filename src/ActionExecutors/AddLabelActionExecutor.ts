@@ -6,7 +6,7 @@ export class AddLabelActionExecutor extends BaseActionExecutor<AddLabelAction> {
 
   public async execute(context: LabelerContext): Promise<void> {
     if (await this.canExecute(context)) {
-      context.updater.labels.add(this.action.label);
+      context.updater.addLabels.add(this.action.label);
     }
   }
 
