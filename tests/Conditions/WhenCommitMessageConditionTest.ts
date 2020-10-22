@@ -12,7 +12,7 @@ describe('WhenCommitMessageCondition', () => {
     const when = new WhenCommitMessageCondition('bug');
     const result = await when.test(context);
 
-    expect(true).equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false when the specified substring is not found in commit messages', async(): Promise<void> => {
