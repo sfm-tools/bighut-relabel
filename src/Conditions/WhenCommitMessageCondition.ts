@@ -17,6 +17,14 @@ export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateTy
 
     const commits = await context.pullRequest.commits;
 
+    if (exclude?.length) {
+      for (const { message } of commits) {
+        if (this.testForExcludedSting(message, context, exclude)) {
+          return false;
+        }
+      }
+    }
+
     let result = false;
 
     for (const commit of commits) {
@@ -25,10 +33,6 @@ export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateTy
       result = this.testStringValue(message, context);
 
       if (result) {
-        if (this.testForExcludedSting(message, context, exclude)) {
-          return false;
-        }
-
         break;
       }
     }
