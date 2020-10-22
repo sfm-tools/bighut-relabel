@@ -32,11 +32,12 @@ export abstract class BaseAction {
   }
 
   public whenFilePath(predicate: DefaultPredicateType): WhenFilePathConditionOptions {
-    this.addCondition(
-      new WhenFilePathCondition(predicate)
-    );
+    const options = new WhenFilePathConditionOptions(this);
+    const condition = new WhenFilePathCondition(predicate, options);
 
-    return new WhenFilePathConditionOptions(this);
+    this.addCondition(condition);
+
+    return options;
   }
 
 
