@@ -13,6 +13,7 @@ import {
   WhenFileContentCondition,
   WhenFilePathCondition,
   WhenLabelCondition,
+  WhenSourceBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
 import { DefaultPredicateType } from '../Types';
@@ -93,6 +94,12 @@ export abstract class BaseAction {
     this.addCondition(condition);
 
     return options;
+  }
+
+  public whenSourceBranchName(predicate: DefaultPredicateType): BaseAction {
+    return this.addCondition(
+      new WhenSourceBranchNameCondition(predicate)
+    );
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
