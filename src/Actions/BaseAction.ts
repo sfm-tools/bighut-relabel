@@ -13,11 +13,13 @@ import {
   WhenFileContentCondition,
   WhenFilePathCondition,
   WhenLabelCondition,
+  WhenMergeDirectionCondition,
   WhenSourceBranchNameCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
 import { DefaultPredicateType } from '../Types';
+import { MergeDirection } from './Types';
 
 export abstract class BaseAction {
 
@@ -106,6 +108,12 @@ export abstract class BaseAction {
   public whenTargetBranchName(predicate: DefaultPredicateType): BaseAction {
     return this.addCondition(
       new WhenTargetBranchNameCondition(predicate)
+    );
+  }
+
+  public whenMergeDirection(direction: Array<MergeDirection>): BaseAction {
+    return this.addCondition(
+      new WhenMergeDirectionCondition(direction)
     );
   }
 
