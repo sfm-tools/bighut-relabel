@@ -77,6 +77,10 @@ export abstract class BaseAction {
     return options;
   }
 
+  public whenDescriptionIsEmpty(): StringConditionOptions {
+    return this.whenDescription((value: string): boolean => !value);
+  }
+
   private addCondition(condition: BaseCondition<any>): BaseAction {
     this._conditions.push(condition);
 
