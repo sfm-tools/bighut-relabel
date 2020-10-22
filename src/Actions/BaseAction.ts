@@ -1,4 +1,5 @@
 import {
+  DefaultConditionOptions,
   StringConditionOptions,
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
@@ -27,10 +28,13 @@ export abstract class BaseAction {
 
   private readonly _conditions = new Array<BaseCondition>();
 
-  public when(predicate: WhenConditionPredicate): BaseAction {
-    return this.addCondition(
-      new WhenCondition(predicate)
-    );
+  public when(predicate: WhenConditionPredicate): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   public whenLabel(predicate: DefaultPredicateType): StringConditionOptions {
@@ -60,10 +64,13 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenAuthorLogin(predicate: DefaultPredicateType): BaseAction {
-    return this.addCondition(
-      new WhenAuthorLoginCondition(predicate)
-    );
+  public whenAuthorLogin(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenAuthorLoginCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   public whenTitle(predicate: DefaultPredicateType): StringConditionOptions {
@@ -110,10 +117,32 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenSourceBranchName(predicate: DefaultPredicateType): BaseAction {
-    return this.addCondition(
-      new WhenSourceBranchNameCondition(predicate)
-    );
+  public whenSourceBranchName(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenSourceBranchNameCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenTargetBranchName(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenTargetBranchNameCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenMergeDirection(direction: Array<MergeDirection>): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenMergeDirectionCondition(direction, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
   }
 
   public whenTargetBranchName(predicate: DefaultPredicateType): BaseAction {
