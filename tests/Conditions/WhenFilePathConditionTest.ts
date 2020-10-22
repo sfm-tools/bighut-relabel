@@ -38,6 +38,32 @@ describe('WhenFilePathCondition', () => {
     expect(false).to.equal(result);
   });
 
+  it('should return false for a new file  that was excluded using with excludeNewFiles option', async(): Promise<void> => {
+    const options = new WhenFilePathConditionOptions(null);
+    const when = new WhenFilePathCondition((filePath: string): boolean => (
+      filePath.includes('package.json')
+    ), options);
+
+    options.excludeNewFiles();
+
+    const result = await when.test(context);
+
+    expect(false).to.equal(result);
+  });
+
+  it('should return false for a new file  that was excluded using with excludeNewFiles option', async(): Promise<void> => {
+    const options = new WhenFilePathConditionOptions(null);
+    const when = new WhenFilePathCondition((filePath: string): boolean => (
+      filePath.includes('Backend/Controllers/ValuesController.cs')
+    ), options);
+
+    options.excludeModifiedFiles();
+
+    const result = await when.test(context);
+
+    expect(false).to.equal(result);
+  });
+
   it('should return false for an existing file that was excluded using excludeFilePath option', async(): Promise<void> => {
     const options = new WhenFilePathConditionOptions(null);
     const when = new WhenFilePathCondition(/.json/g, options);
