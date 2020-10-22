@@ -11,19 +11,19 @@ describe('WhenTitleCondition', () => {
   it('should return true for a fully matched title', (): void => {
     const when = new WhenTitleCondition('Awesome pull request');
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return true for the found substring in title', (): void => {
     const when = new WhenTitleCondition('pull');
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return false when the specified substring is not found in a title', (): void => {
     const when = new WhenTitleCondition('abracadabra');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing substring with multiple exclude option', (): void => {
@@ -34,7 +34,7 @@ describe('WhenTitleCondition', () => {
       .exclude('abracadabra')
       .exclude(/awesome/ig);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
 });

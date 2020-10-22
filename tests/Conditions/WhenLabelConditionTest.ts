@@ -11,19 +11,19 @@ describe('WhenLabelCondition', () => {
   it('should return true for an existing label using a string predicate', (): void => {
     const when = new WhenLabelCondition('enhancement');
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return true for an existing label using a string array predicate', (): void => {
     const when = new WhenLabelCondition(['bug', 'enhancement']);
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return true for an existing label using a regular expression predicate', (): void => {
     const when = new WhenLabelCondition(/^enhancement$/);
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return true for an existing label using a function predicate', (): void => {
@@ -31,25 +31,25 @@ describe('WhenLabelCondition', () => {
       return value === 'enhancement';
     });
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return false for an non-existing label using a string predicate', (): void => {
     const when = new WhenLabelCondition('bug');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an non-existing label using a string array predicate', (): void => {
     const when = new WhenLabelCondition(['bug', 'bugs', 'bugfix', 'checked']);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an non-existing label using a regular expression predicate', (): void => {
     const when = new WhenLabelCondition(/bug(s?)|bugfix|checked/g);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing label with noOne option', (): void => {
@@ -58,7 +58,7 @@ describe('WhenLabelCondition', () => {
 
     options.noOne();
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing multiple labels with noOne option using a string array predicate', (): void => {
@@ -67,7 +67,7 @@ describe('WhenLabelCondition', () => {
 
     options.noOne();
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an non-existing label with noOne option', (): void => {
@@ -76,7 +76,7 @@ describe('WhenLabelCondition', () => {
 
     options.noOne();
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing label with exclude option', (): void => {
@@ -85,7 +85,7 @@ describe('WhenLabelCondition', () => {
 
     options.exclude('ui');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing label with multiple exclude option', (): void => {
@@ -97,7 +97,7 @@ describe('WhenLabelCondition', () => {
       .exclude('fix')
       .exclude('ui');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
 });

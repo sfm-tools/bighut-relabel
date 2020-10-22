@@ -19,7 +19,7 @@ describe('WhenCommitMessageCondition', () => {
     const when = new WhenCommitMessageCondition('abracadabra');
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for an existing substring with multiple exclude option', async(): Promise<void> => {
@@ -33,7 +33,7 @@ describe('WhenCommitMessageCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
 });

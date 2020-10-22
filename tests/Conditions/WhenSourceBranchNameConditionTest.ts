@@ -10,13 +10,13 @@ describe('WhenSourceBranchNameCondition', () => {
   it('should return true if the branch name matches', (): void => {
     const when = new WhenSourceBranchNameCondition('issue-1');
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return false if the branch name non-matches', (): void => {
     const when = new WhenSourceBranchNameCondition('issue-123');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
 });

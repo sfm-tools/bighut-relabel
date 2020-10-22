@@ -15,7 +15,7 @@ describe('WhenMergeDirectionCondition', () => {
       }
     ]);
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return false for the non-matched direction of the merge', (): void => {
@@ -30,7 +30,7 @@ describe('WhenMergeDirectionCondition', () => {
       }
     ]);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
 });

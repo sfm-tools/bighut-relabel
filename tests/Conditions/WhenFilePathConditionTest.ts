@@ -12,7 +12,7 @@ describe('WhenFilePathCondition', () => {
     const when = new WhenFilePathCondition('Frontend/package.json');
     const result = await when.test(context);
 
-    expect(true).to.equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return true for an existing in list file using a function predicate', async(): Promise<void> => {
@@ -22,7 +22,7 @@ describe('WhenFilePathCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).to.equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for a removed file with excludeRemovedFiles option', async(): Promise<void> => {
@@ -35,7 +35,7 @@ describe('WhenFilePathCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for a new file  that was excluded using with excludeNewFiles option', async(): Promise<void> => {
@@ -48,7 +48,7 @@ describe('WhenFilePathCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for a new file  that was excluded using with excludeNewFiles option', async(): Promise<void> => {
@@ -61,7 +61,7 @@ describe('WhenFilePathCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for an existing file that was excluded using excludeFilePath option', async(): Promise<void> => {
@@ -72,7 +72,7 @@ describe('WhenFilePathCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
 });

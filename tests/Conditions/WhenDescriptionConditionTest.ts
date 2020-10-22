@@ -11,13 +11,13 @@ describe('WhenDescriptionCondition', () => {
   it('should return true for the found substring in description', (): void => {
     const when = new WhenDescriptionCondition('World');
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('should return false when the specified substring is not found in description', (): void => {
     const when = new WhenDescriptionCondition('abracadabra');
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing substring with exclude option', (): void => {
@@ -26,7 +26,7 @@ describe('WhenDescriptionCondition', () => {
 
     options.exclude(/hell/ig);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return false for an existing substring with multiple exclude option', (): void => {
@@ -38,7 +38,7 @@ describe('WhenDescriptionCondition', () => {
       .exclude((value: string): boolean => value.includes('abc'))
       .exclude(/hell/ig);
 
-    expect(false).equal(when.test(context));
+    expect(when.test(context)).to.be.false;
   });
 
   it('should return true for an existing substring with multiple exclude option', (): void => {
@@ -50,7 +50,7 @@ describe('WhenDescriptionCondition', () => {
       .exclude((value: string): boolean => value.includes('abc'))
       .exclude(/lleh/ig);
 
-    expect(true).equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
 });

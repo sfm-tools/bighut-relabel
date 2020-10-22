@@ -12,14 +12,14 @@ describe('WhenFileContentCondition', () => {
     const when = new WhenFileContentCondition('awesome-application');
     const result = await when.test(context);
 
-    expect(true).to.equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for a non-existing substring', async(): Promise<void> => {
     const when = new WhenFileContentCondition('abracadabra');
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return true for an existing substring in added file with onlyNewFiles option', async(): Promise<void> => {
@@ -32,7 +32,7 @@ describe('WhenFileContentCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).to.equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for an existing substring in modified file with onlyNewFiles option', async(): Promise<void> => {
@@ -43,7 +43,7 @@ describe('WhenFileContentCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return true for an existing substring in modified file with onlyModifiedFiles option', async(): Promise<void> => {
@@ -54,7 +54,7 @@ describe('WhenFileContentCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).to.equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for an existing substring with noOne option', async(): Promise<void> => {
@@ -65,7 +65,7 @@ describe('WhenFileContentCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).to.equal(result);
+    expect(result).to.be.false;
   });
 
 });

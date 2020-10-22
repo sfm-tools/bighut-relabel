@@ -15,7 +15,7 @@ describe('WhenCondition', () => {
 
     const context = new LabelerContext(pullRequests[0]);
 
-    expect(true).to.equal(when.test(context));
+    expect(when.test(context)).to.be.true;
   });
 
   it('an exception should be thrown', (): void => {

@@ -12,14 +12,14 @@ describe('WhenCommentTextCondition', () => {
     const when = new WhenCommentTextCondition('great');
     const result = await when.test(context);
 
-    expect(true).equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false when the specified substring is not found in comments', async(): Promise<void> => {
     const when = new WhenCommentTextCondition('abracadabra');
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for an existing substring with multiple exclude option', async(): Promise<void> => {
@@ -33,7 +33,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return false for an existing substring when the author login does not match', async(): Promise<void> => {
@@ -44,7 +44,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return true for an existing substring when the author login is match', async(): Promise<void> => {
@@ -55,7 +55,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for an existing substring if the creation date is less than the specified range by date from', async(): Promise<void> => {
@@ -66,7 +66,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return true for an existing substring when the creation date matches the specified range by date from', async(): Promise<void> => {
@@ -77,7 +77,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).equal(result);
+    expect(result).to.be.true;
   });
 
   it('should return false for an existing substring if the creation date is greater than the specified range by date to', async(): Promise<void> => {
@@ -88,7 +88,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(false).equal(result);
+    expect(result).to.be.false;
   });
 
   it('should return true for an existing substring when the creation date matches the specified range by date to', async(): Promise<void> => {
@@ -99,7 +99,7 @@ describe('WhenCommentTextCondition', () => {
 
     const result = await when.test(context);
 
-    expect(true).equal(result);
+    expect(result).to.be.true;
   });
 
 });
