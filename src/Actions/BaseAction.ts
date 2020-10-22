@@ -8,6 +8,7 @@ import {
   WhenAuthorLoginCondition,
   WhenCondition,
   WhenConditionPredicate,
+  WhenDescriptionCondition,
   WhenFileContentCondition,
   WhenFilePathCondition,
   WhenLabelCondition,
@@ -61,6 +62,15 @@ export abstract class BaseAction {
   public whenTitle(predicate: DefaultPredicateType): StringConditionOptions {
     const options = new StringConditionOptions(this);
     const condition = new WhenTitleCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenDescription(predicate: DefaultPredicateType): StringConditionOptions {
+    const options = new StringConditionOptions(this);
+    const condition = new WhenDescriptionCondition(predicate, options);
 
     this.addCondition(condition);
 
