@@ -1,4 +1,4 @@
-import { BaseConditionOptions } from '../ConditionOptions';
+import { BaseConditionOptions, DefaultConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import {
   DefaultPredicateType,
@@ -10,7 +10,7 @@ type ConditionOptionsValues<T> = T extends BaseConditionOptions<infer TValue> ? 
 
 export abstract class BaseCondition<
   TPredicate = DefaultPredicateType,
-  TConditionOptions extends BaseConditionOptions = BaseConditionOptions
+  TConditionOptions extends BaseConditionOptions = DefaultConditionOptions
 > {
 
   protected static readonly equalStrings = stringComparison.equal;
