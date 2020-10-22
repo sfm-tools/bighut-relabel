@@ -24,7 +24,7 @@ describe('WhenCommitMessageCondition', () => {
 
   it('should return false for an existing substring with multiple exclude option', async(): Promise<void> => {
     const options = new StringConditionOptions(null);
-    const when = new WhenCommitMessageCondition('request', options);
+    const when = new WhenCommitMessageCondition('bug', options);
 
     options
       .exclude('abracadabra')
