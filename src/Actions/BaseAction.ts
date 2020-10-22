@@ -6,6 +6,7 @@ import {
 import {
   BaseCondition,
   WhenAuthorLoginCondition,
+  WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
   WhenDescriptionCondition,
@@ -83,6 +84,15 @@ export abstract class BaseAction {
 
   public whenDescriptionIsNotEmpty(): StringConditionOptions {
     return this.whenDescription((value: string): boolean => !!value);
+  }
+
+  public whenCommitMessage(predicate: DefaultPredicateType): StringConditionOptions {
+    const options = new StringConditionOptions(this);
+    const condition = new WhenCommitMessageCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
