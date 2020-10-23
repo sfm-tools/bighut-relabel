@@ -206,6 +206,9 @@ export const pullRequests: Array<PullRequest> = [
       mergeable: true,
       mergeableState: 'clean',
       rebaseable: true,
+      changedFiles: 7,
+      comments: 4,
+      commits: 3,
     }),
   },
 ];
