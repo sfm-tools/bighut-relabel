@@ -6,6 +6,7 @@ export { WhenAuthorLoginCondition } from './WhenAuthorLoginCondition';
 export { WhenCommentTextCondition } from './WhenCommentTextCondition';
 export { WhenCommitMessageCondition } from './WhenCommitMessageCondition';
 export { WhenCondition } from './WhenCondition';
+export { WhenContainsConflicts } from './WhenContainsConflicts';
 export { WhenDescriptionCondition } from './WhenDescriptionCondition';
 export { WhenFileContentCondition } from './WhenFileContentCondition';
 export { WhenFilePathCondition } from './WhenFilePathCondition';
