@@ -3,6 +3,16 @@ import { Updater } from './Updater';
 
 export class LabelerContext {
 
+  private _stop: boolean = false;
+
+  /**
+   * Indicates to interrupt the processing of other actions
+   * for the current Pull Request.
+   */
+  public get stopped(): boolean {
+    return this._stop;
+  }
+
   /**
    * Current Pull Request.
    */
@@ -21,6 +31,13 @@ export class LabelerContext {
 
   constructor(pullRequest: PullRequest) {
     this.pullRequest = pullRequest;
+  }
+
+  /**
+   * Stops processing at the next iteration.
+   */
+  public stop(): void {
+    this._stop = true;
   }
 
 }
