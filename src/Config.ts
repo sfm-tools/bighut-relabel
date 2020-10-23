@@ -3,13 +3,16 @@ import {
   BaseActionExecutor,
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
+  SetTitleActionExecutor,
 } from './ActionExecutors';
 import {
   AddLabelAction,
   BaseAction,
   ExecuteAction,
   RemoveLabelAction,
+  SetTitleAction,
 } from './Actions';
+import { LabelerContext } from './LabelerContext';
 
 export class Config {
 
@@ -27,6 +30,14 @@ export class Config {
     return this.addAction(
       new RemoveLabelActionExecutor(
         new RemoveLabelAction(label)
+      )
+    );
+  }
+
+  public setTitle(title: string | { (title: string, context?: LabelerContext): string }): SetTitleAction {
+    return this.addAction(
+      new SetTitleActionExecutor(
+        new SetTitleAction(title)
       )
     );
   }
