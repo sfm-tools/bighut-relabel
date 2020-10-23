@@ -3,6 +3,7 @@ import {
   BaseActionExecutor,
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
+  SetDescriptionActionExecutor,
   SetTitleActionExecutor,
 } from './ActionExecutors';
 import {
@@ -10,6 +11,7 @@ import {
   BaseAction,
   ExecuteAction,
   RemoveLabelAction,
+  SetDescriptionAction,
   SetTitleAction,
 } from './Actions';
 import { LabelerContext } from './LabelerContext';
@@ -38,6 +40,14 @@ export class Config {
     return this.addAction(
       new SetTitleActionExecutor(
         new SetTitleAction(title)
+      )
+    );
+  }
+
+  public setDescription(description: string | { (description: string, context?: LabelerContext): string }): SetDescriptionAction {
+    return this.addAction(
+      new SetDescriptionActionExecutor(
+        new SetDescriptionAction(description)
       )
     );
   }
