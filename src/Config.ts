@@ -7,7 +7,7 @@ import {
   ExecuteAction,
 } from './Actions';
 
-export abstract class Config {
+export class Config {
 
   private _actions = new Array<BaseActionExecutor<BaseAction>>();
 
