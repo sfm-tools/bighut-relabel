@@ -12,3 +12,4 @@ export { StringConditionOptions } from './StringConditionOptions';
 export { WhenCommentTextConditionOptions } from './WhenCommentTextConditionOptions';
 export { WhenFileContentConditionOptions } from './WhenFileContentConditionOptions';
 export { WhenFilePathConditionOptions } from './WhenFilePathConditionOptions';
+export { WhenInternalConditionOptions } from './WhenInternalConditionOptions';
