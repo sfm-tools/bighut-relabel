@@ -27,7 +27,7 @@ export class LabelerContext {
    * The custom dataset used in the processing of the current Pull Request.
    * You can use this for whatever you need.
    */
-  public readonly data: Map<string, any>;
+  public readonly data = new Map<string, any>();
 
   constructor(pullRequest: PullRequest) {
     this.pullRequest = pullRequest;
