@@ -13,6 +13,10 @@ export abstract class BaseConditionOptions<TValues extends ConditionOptionsValue
   }
 
   public noOne(): BaseConditionOptions<TValues> {
+    if (this.values.noOne) {
+      console.warn('The noOne option is already in use.');
+    }
+
     this.values.noOne = true;
 
     return this;
