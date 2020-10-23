@@ -4,6 +4,7 @@ import {
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
+  WhenInternalConditionOptions,
 } from '../ConditionOptions';
 import {
   BaseCondition,
@@ -12,9 +13,11 @@ import {
   WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
+  WhenContainsConflicts,
   WhenDescriptionCondition,
   WhenFileContentCondition,
   WhenFilePathCondition,
+  WhenInternalCondition,
   WhenLabelCondition,
   WhenMergeDirectionCondition,
   WhenSourceBranchNameCondition,
@@ -142,17 +145,35 @@ export abstract class BaseAction {
 
     return options;
   }
+
+  public whenHasConflicts(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenContainsConflicts(true);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
-  public whenTargetBranchName(predicate: DefaultPredicateType): BaseAction {
-    return this.addCondition(
-      new WhenTargetBranchNameCondition(predicate)
-    );
+  public whenHasNoConflicts(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenContainsConflicts(false);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
-  public whenMergeDirection(direction: Array<MergeDirection>): BaseAction {
-    return this.addCondition(
-      new WhenMergeDirectionCondition(direction)
+  public ignoreOthers(): void {
+    this._conditions.push(
+      new WhenInternalCondition(
+        new WhenInternalConditionOptions(
+          this,
+          {
+            ignoreOtherActions: true
+          }
+        )
+      )
     );
   }
 
