@@ -4,6 +4,7 @@ export {
   WhenCommentTextConditionOptionsValues,
   WhenFileContentConditionOptionsValues,
   WhenFilePathConditionOptionsValues,
+  WhenInternalConditionOptionsValues,
 } from './Values';
 export { BaseConditionOptions } from './BaseConditionOptions';
 export { DefaultConditionOptions } from './DefaultConditionOptions';
