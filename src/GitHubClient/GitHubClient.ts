@@ -99,6 +99,9 @@ export class GitHubClient implements IGitHubClient {
       mergeable: data?.mergeable,
       rebaseable: data?.rebaseable,
       mergeableState: data?.mergeable_state as any,
+      commits: data.commits,
+      comments: data.comments,
+      changedFiles: data.changed_files,
     };
   }
 
