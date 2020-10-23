@@ -2,11 +2,13 @@ import {
   AddLabelActionExecutor,
   BaseActionExecutor,
   ExecuteActionExecutor,
+  RemoveLabelActionExecutor,
 } from './ActionExecutors';
 import {
   AddLabelAction,
   BaseAction,
   ExecuteAction,
+  RemoveLabelAction,
 } from './Actions';
 
 export class Config {
@@ -17,6 +19,14 @@ export class Config {
     return this.addAction(
       new AddLabelActionExecutor(
         new AddLabelAction(label)
+      )
+    );
+  }
+
+  public removeLabel(label: string): RemoveLabelAction {
+    return this.addAction(
+      new RemoveLabelActionExecutor(
+        new RemoveLabelAction(label)
       )
     );
   }
