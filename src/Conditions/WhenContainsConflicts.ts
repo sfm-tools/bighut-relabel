@@ -11,7 +11,7 @@ export class WhenContainsConflicts extends BaseCondition<boolean, DefaultConditi
   public async test(context: LabelerContext): Promise<boolean> {
     const {
       mergeableState,
-    } = await context.pullRequest.statusInfo;
+    } = await context.pullRequest.statusInfo();
 
     if (this.predicate) {
       return this.testResult(
