@@ -26,6 +26,21 @@ export class GitHubClient implements IGitHubClient {
 
     this._owner = owner;
     this._repo = repo;
+
+    this.addCommentToPullRequest = this.addCommentToPullRequest.bind(this);
+    this.branchIsExists = this.branchIsExists.bind(this);
+    this.convertDataToUser = this.convertDataToUser.bind(this);
+    this.getComments = this.getComments.bind(this);
+    this.getFileRaw = this.getFileRaw.bind(this);
+    this.getMilestones = this.getMilestones.bind(this);
+    this.getPullRequestCommits = this.getPullRequestCommits.bind(this);
+    this.getPullRequestFiles = this.getPullRequestFiles.bind(this);
+    this.getPullRequestStatus = this.getPullRequestStatus.bind(this);
+    this.getPullRequests = this.getPullRequests.bind(this);
+    this.updatePullRequestDescription = this.updatePullRequestDescription.bind(this);
+    this.updatePullRequestLabels = this.updatePullRequestLabels.bind(this);
+    this.updatePullRequestMilestone = this.updatePullRequestMilestone.bind(this);
+    this.updatePullRequestTitile = this.updatePullRequestTitile.bind(this);
   }
 
   public async getPullRequests(page?: number): Promise<Array<PullRequest>> {
