@@ -37,4 +37,25 @@ describe('AddLabelActionExecutor', () => {
     expect(Array.from(updater.addLabels)).to.deep.equal([]);
   });
 
+  it('should not add any labels to updater when the request contains an excluded label', async(): Promise<void> => {
+    const context = new LabelerContext(pullRequests[0]);
+    const updater = context.updater;
+    const action = new AddLabelAction('awesome label');
+    const executor = new AddLabelActionExecutor(action);
+
+    action
+      .whenLabel('invalid')
+      .nothing()
+      .andAlso()
+      .whenLabel('fix')
+      .nothing()
+      .andAlso()
+      .whenLabel('ui')
+      .nothing();
+
+    await executor.execute(context);
+
+    expect(Array.from(updater.addLabels)).to.deep.equal([]);
+  });
+
 });
