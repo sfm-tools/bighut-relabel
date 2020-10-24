@@ -11,8 +11,6 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      nothing,
-      exclude,
       authorLogin,
       creationDateRange,
     } = this.getOptions();
@@ -20,14 +18,6 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
     const comments = await context.pullRequest.comments;
 
     let result = false;
-
-    if (exclude?.length) {
-      for (const { text } of comments) {
-        if (this.testForExcludedSting(text, context, exclude)) {
-          return false;
-        }
-      }
-    }
 
     for (const comment of comments) {
       const {
@@ -57,7 +47,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return result && !nothing;
+    return this.testResult(result);
   }
 
 }

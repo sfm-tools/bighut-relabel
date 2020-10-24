@@ -22,20 +22,6 @@ describe('WhenCommentTextCondition', () => {
     expect(result).to.be.false;
   });
 
-  it('should return false for an existing substring with multiple exclude option', async(): Promise<void> => {
-    const options = new WhenCommentTextConditionOptions(null);
-    const when = new WhenCommentTextCondition('great', options);
-
-    options
-      .exclude('abracadabra')
-      .exclude((message: string): boolean => message === 'test')
-      .exclude(/nothing works/ig);
-
-    const result = await when.test(context);
-
-    expect(result).to.be.false;
-  });
-
   it('should return false for an existing substring when the author login does not match', async(): Promise<void> => {
     const options = new WhenCommentTextConditionOptions(null);
     const when = new WhenCommentTextCondition('great', options);
