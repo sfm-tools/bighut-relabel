@@ -9,6 +9,10 @@ import {
 
 export interface IGitHubClient {
 
+  readonly owner: string;
+
+  readonly repo: string;
+
   getPullRequests(): Promise<Array<PullRequest>>;
 
   getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus>;

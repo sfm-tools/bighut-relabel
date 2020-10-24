@@ -15,17 +15,17 @@ export class GitHubClient implements IGitHubClient {
 
   private readonly _client: Octokit;
 
-  private readonly _owner: string;
+  public readonly owner: string;
 
-  private readonly _repo: string;
+  public readonly repo: string;
 
   constructor(token: string, owner: string, repo: string) {
     this._client = new Octokit({
       auth: token,
     });
 
-    this._owner = owner;
-    this._repo = repo;
+    this.owner = owner;
+    this.repo = repo;
 
     this.addCommentToPullRequest = this.addCommentToPullRequest.bind(this);
     this.branchIsExists = this.branchIsExists.bind(this);
@@ -45,8 +45,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async getPullRequests(page?: number): Promise<Array<PullRequest>> {
     const pullRequests = (await this._client.pulls.list({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       state: 'all',
       sort: 'created',
       direction: 'desc',
@@ -105,8 +105,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus> {
     const data = (await this._client.pulls.get({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       pull_number: pullRequestNumber,
     })).data;
 
@@ -124,8 +124,8 @@ export class GitHubClient implements IGitHubClient {
   public async getPullRequestFiles(branchName: string, pullRequestNumber: number): Promise<Array<File>> {
     // TODO: All files
     const data = (await this._client.pulls.listFiles({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       pull_number: pullRequestNumber,
       per_page: 100,
     })).data || [];
@@ -145,8 +145,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async getFileRaw(branchName: string, filePath: string): Promise<string> {
     return (await this._client.repos.getContent({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       ref: branchName,
       path: filePath,
     })).data.content;
@@ -155,8 +155,8 @@ export class GitHubClient implements IGitHubClient {
   public async getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>> {
     // TODO: All commits
     const data = (await this._client.pulls.listCommits({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       pull_number: pullRequestNumber,
       per_page: 100,
     })).data || [];
@@ -175,8 +175,8 @@ export class GitHubClient implements IGitHubClient {
 
     // TODO: All comments
     const data = (await this._client.issues.listComments({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       per_page: 100,
     })).data || [];
@@ -192,8 +192,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async getMilestones(): Promise<Array<Milestone>> {
     const data = (await this._client.issues.listMilestones({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       page: 1,
       per_page: 100,
     })).data || [];
@@ -207,8 +207,8 @@ export class GitHubClient implements IGitHubClient {
   public async branchIsExists(branchName: string): Promise<boolean> {
     try {
       return !!(await this._client.repos.getBranch({
-        owner: this._owner,
-        repo: this._repo,
+        owner: this.owner,
+        repo: this.repo,
         branch: branchName,
       })).data;
     } catch {
@@ -219,8 +219,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async updatePullRequestLabels(pullRequestNumber: number, labels: Array<string>): Promise<void> {
     await this._client.issues.update({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       labels,
     });
@@ -228,8 +228,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async updatePullRequestMilestone(pullRequestNumber: number, milestoneId: number): Promise<void> {
     await this._client.issues.update({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       milestone: milestoneId,
     });
@@ -237,8 +237,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async updatePullRequestTitile(pullRequestNumber: number, title: string): Promise<void> {
     await this._client.issues.update({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       title,
     });
@@ -246,8 +246,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async updatePullRequestDescription(pullRequestNumber: number, description: string): Promise<void> {
     await this._client.issues.update({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       body: description,
     });
@@ -255,8 +255,8 @@ export class GitHubClient implements IGitHubClient {
 
   public async addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number> {
     return (await this._client.issues.createComment({
-      owner: this._owner,
-      repo: this._repo,
+      owner: this.owner,
+      repo: this.repo,
       issue_number: pullRequestNumber,
       body: text,
     })).data?.id;
