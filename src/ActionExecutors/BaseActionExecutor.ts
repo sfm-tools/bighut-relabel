@@ -44,6 +44,10 @@ export abstract class BaseActionExecutor<TAction extends IAction> implements IAc
     return result;
   }
 
+  protected done(): void {
+    this._executed = true;
+  }
+
   abstract execute(context: LabelerContext): Promise<void>;
 
 }
