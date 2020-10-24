@@ -1,13 +1,14 @@
 import { BaseAction } from '../Actions';
+import { IAction } from '../Interfaces';
 import { ConditionOptionsValues } from './Values';
 
 export abstract class BaseConditionOptions<TValues extends ConditionOptionsValues = ConditionOptionsValues> {
 
-  private readonly _action: BaseAction;
+  private readonly _action: IAction;
 
   protected readonly values: TValues;
 
-  constructor(action: BaseAction, defaultValues?: TValues) {
+  constructor(action: IAction, defaultValues?: TValues) {
     this._action = action;
     this.values = defaultValues || {} as TValues;
   }
@@ -22,12 +23,12 @@ export abstract class BaseConditionOptions<TValues extends ConditionOptionsValue
     return this;
   }
 
-  public nothingAndAlso(): BaseAction {
+  public nothingAndAlso(): IAction {
     this.nothing();
     return this.andAlso();
   }
 
-  public andAlso(): BaseAction {
+  public andAlso(): IAction {
     return this._action;
   }
 
