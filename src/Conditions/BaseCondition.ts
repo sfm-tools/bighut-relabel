@@ -68,6 +68,20 @@ export abstract class BaseCondition<
     return false;
   }
 
+  /**
+   * Returns the specified result depending on the value of the nothing option.
+   */
+  protected testResult(result: boolean): boolean {
+    const { nothing } = this.getOptions();
+
+    return (
+      result && !nothing
+    )
+    || (
+      !result && !!nothing
+    );
+  }
+
   protected getOptions(): ConditionOptionsValues<TConditionOptions> {
     return (this.options?.['values'] || {}) as ConditionOptionsValues<TConditionOptions>;
   }
