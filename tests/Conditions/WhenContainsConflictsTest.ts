@@ -3,7 +3,6 @@ import chaiAsPromised from 'chai-as-promised';
 
 import { DefaultConditionOptions } from '../../src/ConditionOptions';
 import { WhenContainsConflicts } from '../../src/Conditions';
-import { NotSupportedParameterError } from '../../src/Errors';
 import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
@@ -44,15 +43,16 @@ describe('WhenContainsConflicts', () => {
     expect(result).to.be.false;
   });
 
-  it('an exception should be thrown', () => {
+  it('should return false for a pull request that contains conflicts', async(): Promise<void> => {
     const options = new DefaultConditionOptions(null);
     const when = new WhenContainsConflicts(true, options);
 
     options.nothing();
 
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[1]);
+    const result = await when.test(context);
 
-    return when.test(context).should.be.rejectedWith(new NotSupportedParameterError('nothing').message);
+    expect(result).to.be.false;
   });
 
 });
