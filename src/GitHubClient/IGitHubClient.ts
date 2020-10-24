@@ -28,4 +28,6 @@ export interface IGitHubClient {
 
   updatePullRequestTitile(pullRequestNumber: number, title: string): Promise<void>;
 
+  updatePullRequestDescription(pullRequestNumber: number, description: string): Promise<void>;
+
 }

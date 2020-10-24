@@ -209,6 +209,15 @@ export class GitHubClient implements IGitHubClient {
     });
   }
 
+  public async updatePullRequestDescription(pullRequestNumber: number, description: string): Promise<void> {
+    await this._client.issues.update({
+      owner: this._owner,
+      repo: this._repo,
+      issue_number: pullRequestNumber,
+      body: description,
+    });
+  }
+
   private convertDataToUser(data: any): User {
     return {
       avatarUrl: data.avatar_url,
