@@ -1,4 +1,5 @@
 import {
+  AddCommentActionExecutor,
   AddLabelActionExecutor,
   BaseActionExecutor,
   ExecuteActionExecutor,
@@ -8,6 +9,7 @@ import {
   SetTitleActionExecutor,
 } from './ActionExecutors';
 import {
+  AddCommentAction,
   AddLabelAction,
   BaseAction,
   ExecuteAction,
@@ -22,6 +24,14 @@ import { TaskFunction } from './Types';
 export class Config {
 
   private _actions = new Array<BaseActionExecutor<BaseAction>>();
+
+  public addComment(text: string): BaseAction {
+    return this.addAction(
+      new AddCommentActionExecutor(
+        new AddCommentAction(text)
+      )
+    );
+  }
 
   public addLabel(label: string): BaseAction {
     return this.addAction(
