@@ -5,6 +5,8 @@ export interface IActionExecutor<TAction extends BaseAction = BaseAction> {
 
   readonly action: TAction;
 
+  readonly executed: boolean;
+
   execute(context: LabelerContext): Promise<void>;
 
 }
