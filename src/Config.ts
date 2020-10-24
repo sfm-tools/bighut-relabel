@@ -4,6 +4,7 @@ import {
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
   SetDescriptionActionExecutor,
+  SetMilestoneActionExecutor,
   SetTitleActionExecutor,
 } from './ActionExecutors';
 import {
@@ -12,6 +13,7 @@ import {
   ExecuteAction,
   RemoveLabelAction,
   SetDescriptionAction,
+  SetMilestoneAction,
   SetTitleAction,
 } from './Actions';
 import { LabelerContext } from './LabelerContext';
@@ -49,6 +51,14 @@ export class Config {
     return this.addAction(
       new SetDescriptionActionExecutor(
         new SetDescriptionAction(description)
+      )
+    );
+  }
+
+  public setMilestone(milestoneName: string | { (milestoneName: string, context?: LabelerContext): string }): BaseAction {
+    return this.addAction(
+      new SetMilestoneActionExecutor(
+        new SetMilestoneAction(milestoneName)
       )
     );
   }
