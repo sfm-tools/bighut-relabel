@@ -55,8 +55,8 @@ export class GitHubClient implements IGitHubClient {
     })).data || [];
 
     return pullRequests.map((item): PullRequest => {
-      const sourceBranchIsExists = this.branchIsExists(item.head.ref);
-      const targetBranchIsExists = this.branchIsExists(item.base.ref);
+      const sourceBranchIsExists = (): Promise<boolean> => this.branchIsExists(item.head.ref);
+      const targetBranchIsExists = (): Promise<boolean> => this.branchIsExists(item.base.ref);
 
       return {
         id: item.id,
@@ -83,22 +83,16 @@ export class GitHubClient implements IGitHubClient {
         updatedDate: item.updated_at && new Date(item.updated_at),
         mergedDate: item.merged_at && new Date(item.merged_at),
         closedDate: item.closed_at && new Date(item.closed_at),
-        files: new Promise<Array<File>>(
-          // eslint-disable-next-line no-async-promise-executor
-          async(resolve: { (value?: Array<File> | PromiseLike<Array<File>>) }): Promise<void> => {
-            const existsSource = await sourceBranchIsExists;
-
-            resolve(
-              await this.getPullRequestFiles(
-                existsSource ? item.head.ref : item.base.ref,
-                item.number
-              )
-            );
-          }
-        ),
-        comments: this.getComments(item.number),
-        commits: this.getPullRequestCommits(item.number),
-        statusInfo: this.getPullRequestStatus(item.number),
+        files: async(): Promise<Array<File>> => {
+          const existsSource = await sourceBranchIsExists();
+          return this.getPullRequestFiles(
+            existsSource ? item.head.ref : item.base.ref,
+            item.number
+          );
+        },
+        comments: (): Promise<Array<Comment>> => this.getComments(item.number),
+        commits: (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number),
+        statusInfo: (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number),
       };
     });
   }
