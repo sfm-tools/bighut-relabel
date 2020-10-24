@@ -2,6 +2,7 @@ import {
   Comment,
   Commit,
   File,
+  Milestone,
   PullRequest,
   PullRequestStatus,
 } from './Types';
@@ -19,6 +20,8 @@ export interface IGitHubClient {
   getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>>;
 
   getComments(pullRequestNumber: number): Promise<Array<Comment>>;
+
+  getMilestones(): Promise<Array<Milestone>>;
 
   branchIsExists(branchName: string): Promise<boolean>;
 

@@ -5,6 +5,7 @@ import {
   Comment,
   Commit,
   File,
+  Milestone,
   PullRequest,
   PullRequestStatus,
   User,
@@ -166,6 +167,20 @@ export class GitHubClient implements IGitHubClient {
       text: item.body,
       createdDate: new Date(item.created_at),
       updatedDate: item.updated_at && new Date(item.updated_at),
+    }));
+  }
+
+  public async getMilestones(): Promise<Array<Milestone>> {
+    const data = (await this._client.issues.listMilestones({
+      owner: this._owner,
+      repo: this._repo,
+      page: 1,
+      per_page: 100,
+    }))?.data || [];
+
+    return data.map((item): Milestone => ({
+      id: item.id,
+      name: item.title,
     }));
   }
 
