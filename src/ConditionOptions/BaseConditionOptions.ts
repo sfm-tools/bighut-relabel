@@ -1,5 +1,5 @@
 import { BaseAction } from '../Actions';
-import { IAction } from '../Interfaces';
+import { IAction, IConfig, ILinkingActions } from '../Interfaces';
 import { ConditionOptionsValues } from './Values';
 
 export abstract class BaseConditionOptions<TValues extends ConditionOptionsValues = ConditionOptionsValues> {
@@ -30,6 +30,14 @@ export abstract class BaseConditionOptions<TValues extends ConditionOptionsValue
 
   public andAlso(): IAction {
     return this._action;
+  }
+
+  public then(): IConfig {
+    const config: IConfig | ILinkingActions = (this._action as BaseAction).config;
+
+    (config as ILinkingActions).linkingMode = true;
+
+    return config as IConfig;
   }
 
 }
