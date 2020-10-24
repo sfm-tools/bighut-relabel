@@ -45,11 +45,9 @@ describe('AddLabelActionExecutor', () => {
 
     action
       .whenLabel('invalid')
-      .nothing()
-      .andAlso()
+      .nothingAndAlso()
       .whenLabel('fix')
-      .nothing()
-      .andAlso()
+      .nothingAndAlso()
       .whenLabel('ui')
       .nothing();
 
