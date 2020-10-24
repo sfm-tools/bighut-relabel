@@ -154,10 +154,15 @@ export class GitHubClient implements IGitHubClient {
   }
 
   public async getComments(pullRequestNumber: number): Promise<Array<Comment>> {
-    const data = (await this._client.pulls.listReviewComments({
+    // TODO: pulls.listReviewComments and issues.listComments - these are different comments.
+    // Need to understand which ones we should use.
+    // It might be worth making separate methods or combining comments from different sources.
+
+    // TODO: All comments
+    const data = (await this._client.issues.listComments({
       owner: this._owner,
       repo: this._repo,
-      pull_number: pullRequestNumber,
+      issue_number: pullRequestNumber,
       per_page: 100,
     }))?.data || [];
 
