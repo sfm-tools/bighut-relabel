@@ -238,6 +238,15 @@ export class GitHubClient implements IGitHubClient {
     });
   }
 
+  public async addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number> {
+    return (await this._client.issues.createComment({
+      owner: this._owner,
+      repo: this._repo,
+      issue_number: pullRequestNumber,
+      body: text,
+    })).data?.id;
+  }
+
   private convertDataToUser(data: any): User {
     return {
       avatarUrl: data.avatar_url,

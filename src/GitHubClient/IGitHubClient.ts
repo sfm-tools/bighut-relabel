@@ -33,4 +33,6 @@ export interface IGitHubClient {
 
   updatePullRequestDescription(pullRequestNumber: number, description: string): Promise<void>;
 
+  addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number>;
+
 }
