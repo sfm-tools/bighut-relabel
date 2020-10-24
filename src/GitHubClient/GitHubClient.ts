@@ -93,7 +93,7 @@ export class GitHubClient implements IGitHubClient {
       owner: this._owner,
       repo: this._repo,
       pull_number: pullRequestNumber,
-    }))?.data;
+    })).data;
 
     return {
       merged: data?.merged,
@@ -113,7 +113,7 @@ export class GitHubClient implements IGitHubClient {
       repo: this._repo,
       pull_number: pullRequestNumber,
       per_page: 100,
-    }))?.data || [];
+    })).data || [];
 
     return data.map((item): File => ({
       status: item.status as any,
@@ -134,7 +134,7 @@ export class GitHubClient implements IGitHubClient {
       repo: this._repo,
       ref: branchName,
       path: filePath,
-    }))?.data.content;
+    })).data.content;
   }
 
   public async getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>> {
@@ -144,7 +144,7 @@ export class GitHubClient implements IGitHubClient {
       repo: this._repo,
       pull_number: pullRequestNumber,
       per_page: 100,
-    }))?.data || [];
+    })).data || [];
 
     return data.map((item): Commit => ({
       author: item.author && this.convertDataToUser(item.author),
@@ -164,7 +164,7 @@ export class GitHubClient implements IGitHubClient {
       repo: this._repo,
       issue_number: pullRequestNumber,
       per_page: 100,
-    }))?.data || [];
+    })).data || [];
 
     return data.map((item): Comment => ({
       id: item.id,
@@ -181,7 +181,7 @@ export class GitHubClient implements IGitHubClient {
       repo: this._repo,
       page: 1,
       per_page: 100,
-    }))?.data || [];
+    })).data || [];
 
     return data.map((item): Milestone => ({
       id: item.id,
@@ -195,7 +195,7 @@ export class GitHubClient implements IGitHubClient {
         owner: this._owner,
         repo: this._repo,
         branch: branchName,
-      }))?.data;
+      })).data;
     } catch {
       // TODO: Do not hide error
       return false;
