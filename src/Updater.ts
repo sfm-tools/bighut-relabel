@@ -21,16 +21,21 @@ export class Updater {
   /**
    * Pull Request title to update.
    */
-  public readonly title? = new UpdateValue<string>();
+  public readonly title = new UpdateValue<string>();
 
   /**
    * Pull Request description to update.
    */
-  public readonly description? = new UpdateValue<string>();
+  public readonly description = new UpdateValue<string>();
 
   /**
    * Milestone to set on the Pull Request.
    */
-  public readonly milestone? = new UpdateValue<string>();
+  public readonly milestone = new UpdateValue<string>();
+
+  /**
+   * Comments to add to the Pull Request.
+   */
+  public readonly addComments = new Array<string>();
 
 }
