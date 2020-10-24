@@ -23,7 +23,7 @@ export class Config {
 
   private _actions = new Array<BaseActionExecutor<BaseAction>>();
 
-  public addLabel(label: string): AddLabelAction {
+  public addLabel(label: string): BaseAction {
     return this.addAction(
       new AddLabelActionExecutor(
         new AddLabelAction(label)
@@ -31,7 +31,7 @@ export class Config {
     );
   }
 
-  public removeLabel(label: string): RemoveLabelAction {
+  public removeLabel(label: string): BaseAction {
     return this.addAction(
       new RemoveLabelActionExecutor(
         new RemoveLabelAction(label)
@@ -39,7 +39,7 @@ export class Config {
     );
   }
 
-  public setTitle(title: string | { (title: string, context?: LabelerContext): string }): SetTitleAction {
+  public setTitle(title: string | { (title: string, context?: LabelerContext): string }): BaseAction {
     return this.addAction(
       new SetTitleActionExecutor(
         new SetTitleAction(title)
@@ -47,7 +47,7 @@ export class Config {
     );
   }
 
-  public setDescription(description: string | { (description: string, context?: LabelerContext): string }): SetDescriptionAction {
+  public setDescription(description: string | { (description: string, context?: LabelerContext): string }): BaseAction {
     return this.addAction(
       new SetDescriptionActionExecutor(
         new SetDescriptionAction(description)
