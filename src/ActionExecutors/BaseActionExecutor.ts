@@ -1,7 +1,6 @@
 import { BaseAction } from '../Actions';
-import { IAction } from '../Interfaces';
+import { IAction, IActionExecutor } from '../Interfaces';
 import { LabelerContext } from '../LabelerContext';
-import { IActionExecutor } from './IActionExecutor';
 
 export abstract class BaseActionExecutor<TAction extends IAction> implements IActionExecutor<TAction> {
 

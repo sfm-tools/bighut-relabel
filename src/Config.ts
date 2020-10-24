@@ -2,7 +2,6 @@ import {
   AddCommentActionExecutor,
   AddLabelActionExecutor,
   ExecuteActionExecutor,
-  IActionExecutor,
   RemoveLabelActionExecutor,
   SetDescriptionActionExecutor,
   SetMilestoneActionExecutor,
@@ -21,6 +20,7 @@ import {
 import {
   IAction,
   IActionCollection,
+  IActionExecutor,
   IConfig,
   ILinkingActions,
 } from './Interfaces';

@@ -1,9 +1,8 @@
 import chalk from 'chalk';
 import queue from 'queue';
 
-import { IActionExecutor } from './ActionExecutors';
 import { IGitHubClient, Milestone } from './GitHubClient';
-import { IAction, IActionCollection, IConfig } from './Interfaces';
+import { IAction, IActionCollection, IActionExecutor, IConfig } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
 
 export class Labeler {

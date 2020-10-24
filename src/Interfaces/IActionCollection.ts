@@ -1,5 +1,5 @@
-import { IActionExecutor } from '../ActionExecutors';
 import { IAction } from './IAction';
+import { IActionExecutor } from './IActionExecutor';
 
 export interface IActionCollection {
 
