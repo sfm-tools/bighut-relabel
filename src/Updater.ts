@@ -1,3 +1,4 @@
+import { TaskFunction } from './Types';
 import { UpdateValue } from './UpdateValue';
 
 export class Updater {
@@ -15,7 +16,7 @@ export class Updater {
   /**
    * List of tasks for execution.
    */
-  public readonly tasks = new Array<VoidFunction>();
+  public readonly tasks = new Array<TaskFunction>();
 
   /**
    * Pull Request title to update.

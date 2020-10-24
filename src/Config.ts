@@ -15,6 +15,7 @@ import {
   SetTitleAction,
 } from './Actions';
 import { LabelerContext } from './LabelerContext';
+import { TaskFunction } from './Types';
 
 export class Config {
 
@@ -52,7 +53,7 @@ export class Config {
     );
   }
 
-  public execute(action: VoidFunction): ExecuteAction {
+  public execute(action: TaskFunction): ExecuteAction {
     return this.addAction(
       new ExecuteActionExecutor(
         new ExecuteAction(action)
