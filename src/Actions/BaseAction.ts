@@ -1,6 +1,5 @@
 import {
   DefaultConditionOptions,
-  StringConditionOptions,
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
@@ -39,8 +38,8 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenLabel(predicate: DefaultPredicateType): StringConditionOptions {
-    const options = new StringConditionOptions(this);
+  public whenLabel(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
     const condition = new WhenLabelCondition(predicate, options);
 
     this.addCondition(condition);
@@ -75,8 +74,8 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenTitle(predicate: DefaultPredicateType): StringConditionOptions {
-    const options = new StringConditionOptions(this);
+  public whenTitle(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
     const condition = new WhenTitleCondition(predicate, options);
 
     this.addCondition(condition);
@@ -84,8 +83,8 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenDescription(predicate: DefaultPredicateType): StringConditionOptions {
-    const options = new StringConditionOptions(this);
+  public whenDescription(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
     const condition = new WhenDescriptionCondition(predicate, options);
 
     this.addCondition(condition);
@@ -93,11 +92,11 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenDescriptionIsEmpty(): StringConditionOptions {
+  public whenDescriptionIsEmpty(): DefaultConditionOptions {
     return this.whenDescription((value: string): boolean => !value);
   }
 
-  public whenDescriptionIsNotEmpty(): StringConditionOptions {
+  public whenDescriptionIsNotEmpty(): DefaultConditionOptions {
     return this.whenDescription((value: string): boolean => !!value);
   }
 
@@ -110,8 +109,8 @@ export abstract class BaseAction {
     return options;
   }
 
-  public whenCommitMessage(predicate: DefaultPredicateType): StringConditionOptions {
-    const options = new StringConditionOptions(this);
+  public whenCommitMessage(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
     const condition = new WhenCommitMessageCondition(predicate, options);
 
     this.addCondition(condition);
