@@ -22,6 +22,11 @@ export abstract class BaseConditionOptions<TValues extends ConditionOptionsValue
     return this;
   }
 
+  public nothingAndAlso(): BaseAction {
+    this.nothing();
+    return this.andAlso();
+  }
+
   public andAlso(): BaseAction {
     return this._action;
   }
