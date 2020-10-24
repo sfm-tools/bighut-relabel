@@ -236,7 +236,7 @@ export const pullRequests: Array<PullRequest> = [
     ]),
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/2',
     id: 999000902,
-    labels: null,
+    labels: [],
     milestone: null,
     sourceBranch: {
       name: 'issue-2',
