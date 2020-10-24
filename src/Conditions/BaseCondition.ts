@@ -54,20 +54,6 @@ export abstract class BaseCondition<
     throw new Error('The predicate type is not supported. Expectected a string, Array<string>, RegExp or Function.');
   }
 
-  protected testForExcludedSting(value: string, context: LabelerContext, exclude: Array<DefaultPredicateType>): boolean {
-    if (exclude?.length) {
-      for (const predicate of exclude) {
-        // TODO: Houston we have problems with predicate type
-        if (this.testStringValue(value, context, predicate as unknown as TPredicate)) {
-          this.getOptions().nothing && console.warn('The "nothing" option not works with the exclude option.');
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
   /**
    * Returns the specified result depending on the value of the nothing option.
    */
