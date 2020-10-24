@@ -7,11 +7,11 @@ export class WhenCondition extends BaseCondition<WhenConditionPredicate> {
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
-    if (noOne) {
-      throw new NotSupportedParameterError('noOne');
+    if (nothing) {
+      throw new NotSupportedParameterError('nothing');
     }
 
     return this.predicate(context);

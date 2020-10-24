@@ -11,7 +11,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      noOne,
+      nothing,
       exclude,
       authorLogin,
       creationDateRange,
@@ -57,7 +57,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return result && !noOne;
+    return result && !nothing;
   }
 
 }

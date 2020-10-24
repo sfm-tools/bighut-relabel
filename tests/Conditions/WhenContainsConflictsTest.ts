@@ -48,11 +48,11 @@ describe('WhenContainsConflicts', () => {
     const options = new DefaultConditionOptions(null);
     const when = new WhenContainsConflicts(true, options);
 
-    options.noOne();
+    options.nothing();
 
     const context = new LabelerContext(pullRequests[0]);
 
-    return when.test(context).should.be.rejectedWith(new NotSupportedParameterError('noOne').message);
+    return when.test(context).should.be.rejectedWith(new NotSupportedParameterError('nothing').message);
   });
 
 });

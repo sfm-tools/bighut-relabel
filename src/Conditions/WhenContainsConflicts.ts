@@ -11,11 +11,11 @@ export class WhenContainsConflicts extends BaseCondition<boolean, DefaultConditi
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
-    if (noOne) {
-      throw new NotSupportedParameterError('noOne');
+    if (nothing) {
+      throw new NotSupportedParameterError('nothing');
     }
 
     const {

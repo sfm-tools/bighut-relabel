@@ -57,11 +57,11 @@ describe('WhenFileContentCondition', () => {
     expect(result).to.be.true;
   });
 
-  it('should return false for an existing substring with noOne option', async(): Promise<void> => {
+  it('should return false for an existing substring with the "nothing" option', async(): Promise<void> => {
     const options = new WhenFileContentConditionOptions(null);
     const when = new WhenFileContentCondition(/AspNetCore/, options);
 
-    options.noOne();
+    options.nothing();
 
     const result = await when.test(context);
 

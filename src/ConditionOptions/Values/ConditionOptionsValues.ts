@@ -1,5 +1,5 @@
 export type ConditionOptionsValues = {
 
-  noOne?: boolean;
+  nothing?: boolean;
 
 };

@@ -11,7 +11,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      noOne,
+      nothing,
       onlyModifiedFiles,
       onlyNewFiles,
     } = this.getOptions();
@@ -41,7 +41,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return result && !noOne;
+    return result && !nothing;
   }
 
 }

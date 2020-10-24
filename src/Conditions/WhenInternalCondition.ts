@@ -13,11 +13,11 @@ export class WhenInternalCondition extends BaseCondition<DefaultPredicateType, W
   public test(context: LabelerContext): boolean {
     const {
       ignoreOtherActions,
-      noOne,
+      nothing,
     } = this.getOptions();
 
-    if (noOne) {
-      throw new NotSupportedParameterError('noOne');
+    if (nothing) {
+      throw new NotSupportedParameterError('nothing');
     }
 
     if (ignoreOtherActions) {

@@ -7,7 +7,7 @@ export class WhenLabelCondition extends BaseCondition<DefaultPredicateType, Stri
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
       exclude,
     } = this.getOptions();
 
@@ -32,7 +32,7 @@ export class WhenLabelCondition extends BaseCondition<DefaultPredicateType, Stri
       }
     }
 
-    return result && !noOne;
+    return result && !nothing;
   }
 
 }

@@ -52,29 +52,29 @@ describe('WhenLabelCondition', () => {
     expect(when.test(context)).to.be.false;
   });
 
-  it('should return false for an existing label with noOne option', (): void => {
+  it('should return false for an existing label with the "nothing" option', (): void => {
     const options = new StringConditionOptions(null);
     const when = new WhenLabelCondition('enhancement', options);
 
-    options.noOne();
+    options.nothing();
 
     expect(when.test(context)).to.be.false;
   });
 
-  it('should return false for an existing multiple labels with noOne option using a string array predicate', (): void => {
+  it('should return false for an existing multiple labels with the "nothing" option using a string array predicate', (): void => {
     const options = new StringConditionOptions(null);
     const when = new WhenLabelCondition(['bug', 'enhancement', 'ui'], options);
 
-    options.noOne();
+    options.nothing();
 
     expect(when.test(context)).to.be.false;
   });
 
-  it('should return false for an non-existing label with noOne option', (): void => {
+  it('should return false for an non-existing label with the "nothing" option', (): void => {
     const options = new StringConditionOptions(null);
     const when = new WhenLabelCondition('bug');
 
-    options.noOne();
+    options.nothing();
 
     expect(when.test(context)).to.be.false;
   });

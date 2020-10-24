@@ -12,7 +12,7 @@ export class WhenDescriptionCondition extends BaseCondition<DefaultPredicateType
   public test(context: LabelerContext): boolean {
     const {
       exclude,
-      noOne,
+      nothing,
     } = this.getOptions();
 
     const {
@@ -26,7 +26,7 @@ export class WhenDescriptionCondition extends BaseCondition<DefaultPredicateType
     return this.testStringValue(
       description,
       context
-    ) && !noOne;
+    ) && !nothing;
   }
 
 }

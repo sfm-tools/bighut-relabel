@@ -6,7 +6,7 @@ export class WhenMergeDirectionCondition extends BaseCondition<Array<MergeDirect
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
     for (const direction of this.predicate) {
@@ -14,7 +14,7 @@ export class WhenMergeDirectionCondition extends BaseCondition<Array<MergeDirect
         direction.from === context.pullRequest.sourceBranch.name
         && direction.to === context.pullRequest.targetBranch.name
       ) {
-        return !noOne;
+        return !nothing;
       }
     }
 

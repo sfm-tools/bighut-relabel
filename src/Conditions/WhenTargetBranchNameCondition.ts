@@ -5,13 +5,13 @@ export class WhenTargetBranchNameCondition extends BaseCondition {
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
     return this.testStringValue(
       context.pullRequest.targetBranch.name,
       context
-    ) && !noOne;
+    ) && !nothing;
   }
 
 }

@@ -5,13 +5,13 @@ export class WhenSourceBranchNameCondition extends BaseCondition {
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
     return this.testStringValue(
       context.pullRequest.sourceBranch.name,
       context
-    ) && !noOne;
+    ) && !nothing;
   }
 
 }

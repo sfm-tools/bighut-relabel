@@ -5,13 +5,13 @@ export class WhenAuthorLoginCondition extends BaseCondition {
 
   public test(context: LabelerContext): boolean {
     const {
-      noOne,
+      nothing,
     } = this.getOptions();
 
     return this.testStringValue(
       context.pullRequest.author.login,
       context
-    ) && !noOne;
+    ) && !nothing;
   }
 
 }

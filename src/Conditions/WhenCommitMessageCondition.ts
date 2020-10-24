@@ -11,7 +11,7 @@ export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateTy
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      noOne,
+      nothing,
       exclude,
     } = this.getOptions();
 
@@ -37,7 +37,7 @@ export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateTy
       }
     }
 
-    return result && !noOne;
+    return result && !nothing;
   }
 
 }

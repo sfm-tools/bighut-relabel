@@ -24,11 +24,11 @@ describe('WhenCondition', () => {
       return !!context.pullRequest;
     }, options);
 
-    options.noOne();
+    options.nothing();
 
     const context = new LabelerContext(pullRequests[0]);
 
-    expect(() => when.test(context)).to.throw(new NotSupportedParameterError('noOne').message);
+    expect(() => when.test(context)).to.throw(new NotSupportedParameterError('nothing').message);
   });
 
 });

@@ -59,7 +59,7 @@ export abstract class BaseCondition<
       for (const predicate of exclude) {
         // TODO: Houston we have problems with predicate type
         if (this.testStringValue(value, context, predicate as unknown as TPredicate)) {
-          this.getOptions().noOne && console.warn('noOne not works with the exclude option.');
+          this.getOptions().nothing && console.warn('The "nothing" option not works with the exclude option.');
           return true;
         }
       }
