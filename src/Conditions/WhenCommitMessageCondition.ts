@@ -1,29 +1,15 @@
-import { StringConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
-import { DefaultPredicateType, StringComparer } from '../Types';
+import { StringComparer } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
-export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateType, StringConditionOptions> {
+export class WhenCommitMessageCondition extends BaseCondition {
 
   protected get stringComparer(): StringComparer {
     return BaseCondition.containsString;
   }
 
   public async test(context: LabelerContext): Promise<boolean> {
-    const {
-      nothing,
-      exclude,
-    } = this.getOptions();
-
     const commits = await context.pullRequest.commits;
-
-    if (exclude?.length) {
-      for (const { message } of commits) {
-        if (this.testForExcludedSting(message, context, exclude)) {
-          return false;
-        }
-      }
-    }
 
     let result = false;
 
@@ -37,7 +23,7 @@ export class WhenCommitMessageCondition extends BaseCondition<DefaultPredicateTy
       }
     }
 
-    return result && !nothing;
+    return this.testResult(result);
   }
 
 }

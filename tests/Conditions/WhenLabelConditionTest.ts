@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { StringConditionOptions } from '../../src/ConditionOptions';
+import { DefaultConditionOptions } from '../../src/ConditionOptions';
 import { WhenLabelCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
@@ -53,7 +53,7 @@ describe('WhenLabelCondition', () => {
   });
 
   it('should return false for an existing label with the "nothing" option', (): void => {
-    const options = new StringConditionOptions(null);
+    const options = new DefaultConditionOptions(null);
     const when = new WhenLabelCondition('enhancement', options);
 
     options.nothing();
@@ -62,7 +62,7 @@ describe('WhenLabelCondition', () => {
   });
 
   it('should return false for an existing multiple labels with the "nothing" option using a string array predicate', (): void => {
-    const options = new StringConditionOptions(null);
+    const options = new DefaultConditionOptions(null);
     const when = new WhenLabelCondition(['bug', 'enhancement', 'ui'], options);
 
     options.nothing();
@@ -71,31 +71,10 @@ describe('WhenLabelCondition', () => {
   });
 
   it('should return false for an non-existing label with the "nothing" option', (): void => {
-    const options = new StringConditionOptions(null);
+    const options = new DefaultConditionOptions(null);
     const when = new WhenLabelCondition('bug');
 
     options.nothing();
-
-    expect(when.test(context)).to.be.false;
-  });
-
-  it('should return false for an existing label with exclude option', (): void => {
-    const options = new StringConditionOptions(null);
-    const when = new WhenLabelCondition('enhancement', options);
-
-    options.exclude('ui');
-
-    expect(when.test(context)).to.be.false;
-  });
-
-  it('should return false for an existing label with multiple exclude option', (): void => {
-    const options = new StringConditionOptions(null);
-    const when = new WhenLabelCondition('enhancement', options);
-
-    options
-      .exclude('invalid')
-      .exclude('fix')
-      .exclude('ui');
 
     expect(when.test(context)).to.be.false;
   });
