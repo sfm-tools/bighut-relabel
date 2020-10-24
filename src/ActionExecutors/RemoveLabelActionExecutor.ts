@@ -7,6 +7,7 @@ export class RemoveLabelActionExecutor extends BaseActionExecutor<RemoveLabelAct
   public async execute(context: LabelerContext): Promise<void> {
     if (await this.canExecute(context)) {
       context.updater.removeLabels.add(this.action.label);
+      this.done();
     }
   }
 

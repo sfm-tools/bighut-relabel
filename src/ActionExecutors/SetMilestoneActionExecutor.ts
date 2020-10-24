@@ -9,6 +9,8 @@ export class SetMilestoneActionExecutor extends BaseActionExecutor<SetMilestoneA
       context.updater.milestone.value = this.action.getMilestoneName
         ? this.action.getMilestoneName(context.pullRequest.milestone?.name ?? null, context)
         : this.action.milestoneName;
+
+      this.done();
     }
   }
 

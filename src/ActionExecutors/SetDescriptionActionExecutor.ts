@@ -9,6 +9,8 @@ export class SetDescriptionActionExecutor extends BaseActionExecutor<SetDescript
       context.updater.description.value = this.action.getDescription
         ? this.action.getDescription(context.pullRequest.description, context)
         : this.action.description;
+
+      this.done();
     }
   }
 

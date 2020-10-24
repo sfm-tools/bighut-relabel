@@ -7,6 +7,7 @@ export class AddCommentActionExecutor extends BaseActionExecutor<AddCommentActio
   public async execute(context: LabelerContext): Promise<void> {
     if (await this.canExecute(context)) {
       context.updater.addComments.push(this.action.text);
+      this.done();
     }
   }
 

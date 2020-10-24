@@ -9,6 +9,8 @@ export class SetTitleActionExecutor extends BaseActionExecutor<SetTitleAction> {
       context.updater.title.value = this.action.getTitle
         ? this.action.getTitle(context.pullRequest.title, context)
         : this.action.title;
+
+      this.done();
     }
   }
 
