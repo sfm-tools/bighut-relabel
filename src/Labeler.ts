@@ -107,7 +107,7 @@ export class Labeler {
       }
     }
 
-    const updaterTasks = new Array<Promise<any>>();
+    const updaterTasks = new Array<{ (): Promise<any> }>();
     const labels = new Set<string>(pullRequest.labels);
 
     if (updater.addLabels.size) {
@@ -130,9 +130,11 @@ export class Labeler {
       );
 
       updaterTasks.push(
-        updatePullRequestLabels(
-          pullRequest.code,
-          Array.from(updater.addLabels)
+        (): Promise<void> => (
+          updatePullRequestLabels(
+            pullRequest.code,
+            Array.from(updater.addLabels)
+          )
         )
       );
     }
@@ -146,9 +148,11 @@ export class Labeler {
       );
 
       updaterTasks.push(
-        updatePullRequestTitile(
-          pullRequest.code,
-          updater.title.value
+        (): Promise<void> => (
+          updatePullRequestTitile(
+            pullRequest.code,
+            updater.title.value
+          )
         )
       );
     }
@@ -162,9 +166,11 @@ export class Labeler {
       );
 
       updaterTasks.push(
-        updatePullRequestDescription(
-          pullRequest.code,
-          updater.description.value
+        (): Promise<void> => (
+          updatePullRequestDescription(
+            pullRequest.code,
+            updater.description.value
+          )
         )
       );
     }
@@ -188,9 +194,11 @@ export class Labeler {
         );
 
         updaterTasks.push(
-          updatePullRequestMilestone(
-            pullRequest.code,
-            milestone?.id ?? null,
+          (): Promise<void> => (
+            updatePullRequestMilestone(
+              pullRequest.code,
+              milestone?.id ?? null,
+            )
           )
         );
       }
@@ -209,9 +217,11 @@ export class Labeler {
         );
 
         updaterTasks.push(
-          addCommentToPullRequest(
-            pullRequest.code,
-            comment
+          (): Promise<number> => (
+            addCommentToPullRequest(
+              pullRequest.code,
+              comment
+            )
           )
         );
       }
