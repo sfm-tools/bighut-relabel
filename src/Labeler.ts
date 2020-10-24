@@ -2,20 +2,20 @@ import chalk from 'chalk';
 import queue from 'queue';
 
 import { IActionExecutor } from './ActionExecutors';
-import { Config } from './Config';
 import { IGitHubClient, Milestone } from './GitHubClient';
+import { IAction, IActionCollection, IConfig } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
 
 export class Labeler {
 
   private readonly _client: IGitHubClient;
 
-  private readonly _actions: Array<IActionExecutor>;
+  private readonly _actions: Array<IActionExecutor<IAction>>;
 
   private readonly _milestones: Promise<Array<Milestone>>;
 
-  constructor(config: Config, gitHubClient: IGitHubClient) {
-    this._actions = config['_actions'] as Array<IActionExecutor>;
+  constructor(config: IConfig | IActionCollection, gitHubClient: IGitHubClient) {
+    this._actions = (config as IActionCollection).actions;
     this._client = gitHubClient;
     // TODO: Something went wrong. This code shouldn't be here.
     // Need to figure out how to fix this.
@@ -63,6 +63,11 @@ export class Labeler {
 
       for (let i = 0, ic = this._actions.length; i < ic; ++i) {
         const action = this._actions[i];
+
+        if (action.linked && !action.linked.executed) {
+          continue;
+        }
+
         await action.execute(context);
 
         if (context.stopped) {
