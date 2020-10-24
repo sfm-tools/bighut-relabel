@@ -206,12 +206,12 @@ export class GitHubClient implements IGitHubClient {
     });
   }
 
-  public async updatePullRequestMilestone(pullRequestNumber: number, milestone: number): Promise<void> {
+  public async updatePullRequestMilestone(pullRequestNumber: number, milestoneId: number): Promise<void> {
     await this._client.issues.update({
       owner: this._owner,
       repo: this._repo,
       issue_number: pullRequestNumber,
-      milestone,
+      milestone: milestoneId,
     });
   }
 
