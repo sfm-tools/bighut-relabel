@@ -23,11 +23,18 @@ import {
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
+import { IAction, IConfig, ILinkingActions } from '../Interfaces';
 import { DefaultPredicateType, MergeDirection } from '../Types';
 
-export abstract class BaseAction {
+export abstract class BaseAction implements IAction {
 
-  private readonly _conditions = new Array<BaseCondition>();
+  public readonly conditions = new Array<BaseCondition>();
+
+  public readonly config: IConfig | ILinkingActions = null;
+
+  constructor(config: IConfig) {
+    this.config = config;
+  }
 
   public when(predicate: WhenConditionPredicate): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
@@ -164,7 +171,7 @@ export abstract class BaseAction {
   }
 
   public ignoreOthers(): void {
-    this._conditions.push(
+    this.conditions.push(
       new WhenInternalCondition(
         new WhenInternalConditionOptions(
           this,
@@ -177,7 +184,7 @@ export abstract class BaseAction {
   }
 
   private addCondition(condition: BaseCondition<any>): BaseAction {
-    this._conditions.push(condition);
+    this.conditions.push(condition);
 
     return this;
   }
