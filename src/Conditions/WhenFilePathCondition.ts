@@ -7,7 +7,6 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
 
   public async test(context: LabelerContext): Promise<boolean> {
     const {
-      nothing,
       excludeFilePath,
       excludeModifiedFiles,
       excludeNewFiles,
@@ -54,7 +53,7 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
       }
     }
 
-    return result && !nothing;
+    return this.testResult(result);
   }
 
 }

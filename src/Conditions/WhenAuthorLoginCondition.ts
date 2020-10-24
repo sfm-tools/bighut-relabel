@@ -4,14 +4,12 @@ import { BaseCondition } from './BaseCondition';
 export class WhenAuthorLoginCondition extends BaseCondition {
 
   public test(context: LabelerContext): boolean {
-    const {
-      nothing,
-    } = this.getOptions();
-
-    return this.testStringValue(
-      context.pullRequest.author.login,
-      context
-    ) && !nothing;
+    return this.testResult(
+      this.testStringValue(
+        context.pullRequest.author.login,
+        context
+      )
+    );
   }
 
 }
