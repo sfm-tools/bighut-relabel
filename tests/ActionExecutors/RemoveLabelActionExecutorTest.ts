@@ -10,8 +10,8 @@ describe('RemoveLabelActionExecutor', () => {
   it('should add an existing label to the remove list of the updater', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new RemoveLabelAction('enhancement');
-    const executor = new RemoveLabelActionExecutor(action);
+    const action = new RemoveLabelAction('enhancement', null);
+    const executor = new RemoveLabelActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login);
@@ -24,8 +24,8 @@ describe('RemoveLabelActionExecutor', () => {
   it('should not add an existing label to the remove list of the updater', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new RemoveLabelAction('enhancement');
-    const executor = new RemoveLabelActionExecutor(action);
+    const action = new RemoveLabelAction('enhancement', null);
+    const executor = new RemoveLabelActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login)

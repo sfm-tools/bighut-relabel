@@ -10,8 +10,8 @@ describe('AddLabelActionExecutor', () => {
   it('should add a label to the updater', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new AddLabelAction('awesome label');
-    const executor = new AddLabelActionExecutor(action);
+    const action = new AddLabelAction('awesome label', null);
+    const executor = new AddLabelActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login);
@@ -24,8 +24,8 @@ describe('AddLabelActionExecutor', () => {
   it('should not add any labels to updater', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new AddLabelAction('awesome label');
-    const executor = new AddLabelActionExecutor(action);
+    const action = new AddLabelAction('awesome label', null);
+    const executor = new AddLabelActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login)
@@ -40,8 +40,8 @@ describe('AddLabelActionExecutor', () => {
   it('should not add any labels to updater when the request contains an excluded label', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new AddLabelAction('awesome label');
-    const executor = new AddLabelActionExecutor(action);
+    const action = new AddLabelAction('awesome label', null);
+    const executor = new AddLabelActionExecutor(action, null);
 
     action
       .whenLabel('invalid')

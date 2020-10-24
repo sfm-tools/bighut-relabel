@@ -10,8 +10,8 @@ describe('AddCommentActionExecutor', () => {
   it('should add a task to comment comment', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new AddCommentAction('Awesome comment');
-    const executor = new AddCommentActionExecutor(action);
+    const action = new AddCommentAction('Awesome comment', null);
+    const executor = new AddCommentActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login);
@@ -24,8 +24,8 @@ describe('AddCommentActionExecutor', () => {
   it('should not add a task to add comment', async(): Promise<void> => {
     const context = new LabelerContext(pullRequests[0]);
     const updater = context.updater;
-    const action = new AddCommentAction('Awesome comment');
-    const executor = new AddCommentActionExecutor(action);
+    const action = new AddCommentAction('Awesome comment', null);
+    const executor = new AddCommentActionExecutor(action, null);
 
     action
       .whenAuthorLogin(flossTomUser.login)
