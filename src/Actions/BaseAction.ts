@@ -19,6 +19,7 @@ import {
   WhenInternalCondition,
   WhenLabelCondition,
   WhenMergeDirectionCondition,
+  WhenMilestoneNameCondition,
   WhenSourceBranchNameCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
@@ -75,6 +76,15 @@ export abstract class BaseAction implements IAction {
   public whenAuthorLogin(predicate: DefaultPredicateType): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
     const condition = new WhenAuthorLoginCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenMilestoneName(predicate: DefaultPredicateType): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenMilestoneNameCondition(predicate, options);
 
     this.addCondition(condition);
 

@@ -21,6 +21,8 @@ export interface IAction {
 
   whenAuthorLogin(predicate: DefaultPredicateType): DefaultConditionOptions;
 
+  whenMilestoneName(predicate: DefaultPredicateType): DefaultConditionOptions;
+
   whenTitle(predicate: DefaultPredicateType): DefaultConditionOptions;
 
   whenDescription(predicate: DefaultPredicateType): DefaultConditionOptions;
