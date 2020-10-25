@@ -45,6 +45,7 @@ export class GitHubClient implements IGitHubClient {
     this.updatePullRequestLabels = this.updatePullRequestLabels.bind(this);
     this.updatePullRequestMilestone = this.updatePullRequestMilestone.bind(this);
     this.updatePullRequestTitile = this.updatePullRequestTitile.bind(this);
+    this.wrapIntoPromise = this.wrapIntoPromise.bind(this);
   }
 
   public async getPullRequests(page?: number): Promise<Array<PullRequest>> {
@@ -59,8 +60,13 @@ export class GitHubClient implements IGitHubClient {
     })).data || [];
 
     return pullRequests.map((item): PullRequest => {
-      const sourceBranchIsExists = (): Promise<boolean> => this.branchIsExists(item.head.ref);
-      const targetBranchIsExists = (): Promise<boolean> => this.branchIsExists(item.base.ref);
+      const sourceBranchIsExists = this.wrapIntoPromise(
+        (): Promise<boolean> => this.branchIsExists(item.head.ref)
+      );
+
+      const targetBranchIsExists = this.wrapIntoPromise(
+        (): Promise<boolean> => this.branchIsExists(item.base.ref)
+      );
 
       return {
         id: item.id,
@@ -87,16 +93,24 @@ export class GitHubClient implements IGitHubClient {
         updatedDate: item.updated_at && new Date(item.updated_at),
         mergedDate: item.merged_at && new Date(item.merged_at),
         closedDate: item.closed_at && new Date(item.closed_at),
-        files: async(): Promise<Array<File>> => {
-          const existsSource = await sourceBranchIsExists();
-          return this.getPullRequestFiles(
-            existsSource ? item.head.ref : item.base.ref,
-            item.number
-          );
-        },
-        comments: (): Promise<Array<Comment>> => this.getComments(item.number),
-        commits: (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number),
-        statusInfo: (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number),
+        files: this.wrapIntoPromise(
+          async(): Promise<Array<File>> => {
+            const existsSource = await sourceBranchIsExists;
+            return this.getPullRequestFiles(
+              existsSource ? item.head.ref : item.base.ref,
+              item.number
+            );
+          }
+        ),
+        comments: this.wrapIntoPromise(
+          (): Promise<Array<Comment>> => this.getComments(item.number)
+        ),
+        commits: this.wrapIntoPromise(
+          (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number)
+        ),
+        statusInfo: this.wrapIntoPromise(
+          (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number)
+        ),
       };
     });
   }
@@ -288,6 +302,21 @@ export class GitHubClient implements IGitHubClient {
       login: data.login,
       profileUrl: data.html_url,
     };
+  }
+
+  private wrapIntoPromise<TResult>(action: { (): Promise<TResult> }): Promise<TResult> {
+    return new Promise<TResult>(
+      (resolve, reject): void => {
+        (async () => {
+          try {
+            const result = await action();
+            resolve(result);
+          } catch (error) {
+            reject(error);
+          }
+        })();
+      }
+    );
   }
 
 }

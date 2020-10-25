@@ -9,7 +9,7 @@ export class WhenCommitMessageCondition extends BaseCondition {
   }
 
   public async test(context: LabelerContext): Promise<boolean> {
-    const commits = await context.pullRequest.commits();
+    const commits = await context.pullRequest.commits;
 
     let result = false;
 

@@ -15,7 +15,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       onlyNewFiles,
     } = this.getOptions();
 
-    const files = await context.pullRequest.files();
+    const files = await context.pullRequest.files;
 
     let result = false;
 

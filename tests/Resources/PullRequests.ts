@@ -5,7 +5,7 @@ export const pullRequests: Array<PullRequest> = [
   {
     author: flossTomUser,
     code: 1,
-    comments: (): Promise<Array<Comment>> => Promise.resolve<Array<Comment>>([
+    comments: Promise.resolve<Array<Comment>>([
       {
         id: 1,
         author: msSoftLoUser,
@@ -32,7 +32,7 @@ export const pullRequests: Array<PullRequest> = [
         updatedDate: new Date(2020, 9, 25),
       },
     ]),
-    commits: (): Promise<Array<Commit>> => Promise.resolve<Array<Commit>>([
+    commits: Promise.resolve<Array<Commit>>([
       {
         author: flossTomUser,
         hash: 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
@@ -50,7 +50,7 @@ export const pullRequests: Array<PullRequest> = [
       },
     ]),
     description: 'Hello World',
-    files: (): Promise<Array<File>> => Promise.resolve([
+    files: Promise.resolve([
       {
         additions: 24,
         changes: 0,
@@ -192,16 +192,16 @@ export const pullRequests: Array<PullRequest> = [
     milestone: null,
     sourceBranch: {
       name: 'issue-1',
-      isExists: (): Promise<boolean> => Promise.resolve(true),
+      isExists: Promise.resolve(true),
     },
     targetBranch: {
       name: 'main',
-      isExists: (): Promise<boolean> => Promise.resolve(true),
+      isExists: Promise.resolve(true),
     },
     state: 'open',
     title: 'Awesome pull request',
     createdDate: new Date(2020, 9, 18, 12, 51, 0),
-    statusInfo: (): Promise<PullRequestStatus> => Promise.resolve<PullRequestStatus>({
+    statusInfo: Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
       mergeableState: 'clean',
@@ -214,8 +214,8 @@ export const pullRequests: Array<PullRequest> = [
   {
     author: loftMossUser,
     code: 2,
-    comments: (): Promise<Array<Comment>> => Promise.resolve<Array<Comment>>([]),
-    commits: (): Promise<Array<Commit>> => Promise.resolve<Array<Commit>>([
+    comments: Promise.resolve<Array<Comment>>([]),
+    commits: Promise.resolve<Array<Commit>>([
       {
         author: loftMossUser,
         hash: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
@@ -223,7 +223,7 @@ export const pullRequests: Array<PullRequest> = [
       },
     ]),
     description: null,
-    files: (): Promise<Array<File>> => Promise.resolve<Array<File>>([
+    files: Promise.resolve<Array<File>>([
       {
         additions: 451324,
         changes: 1233324,
@@ -240,16 +240,16 @@ export const pullRequests: Array<PullRequest> = [
     milestone: null,
     sourceBranch: {
       name: 'issue-2',
-      isExists: (): Promise<boolean> => Promise.resolve(true),
+      isExists: Promise.resolve(true),
     },
     targetBranch: {
       name: 'main',
-      isExists: (): Promise<boolean> => Promise.resolve(true),
+      isExists: Promise.resolve(true),
     },
     state: 'open',
     title: 'Readme fixes',
     createdDate: new Date(2020, 9, 24, 0, 30, 0),
-    statusInfo: (): Promise<PullRequestStatus> => Promise.resolve<PullRequestStatus>({
+    statusInfo: Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
       mergeableState: 'dirty',

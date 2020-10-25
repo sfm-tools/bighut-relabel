@@ -38,12 +38,12 @@ export type PullRequest = {
 
   closedDate?: Date;
 
-  comments: () => Promise<Array<Comment>>;
+  comments: Promise<Array<Comment>>;
 
-  commits: () => Promise<Array<Commit>>;
+  commits: Promise<Array<Commit>>;
 
-  files: () => Promise<Array<File>>;
+  files: Promise<Array<File>>;
 
-  statusInfo: () => Promise<PullRequestStatus>;
+  statusInfo: Promise<PullRequestStatus>;
 
 };
