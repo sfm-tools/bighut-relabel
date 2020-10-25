@@ -6,6 +6,7 @@ import {
   SetDescriptionActionExecutor,
   SetMilestoneActionExecutor,
   SetTitleActionExecutor,
+  SkipActionExecutor,
 } from './ActionExecutors';
 import {
   AddCommentAction,
@@ -16,6 +17,7 @@ import {
   SetDescriptionAction,
   SetMilestoneAction,
   SetTitleAction,
+  SkipAction,
 } from './Actions';
 import {
   IAction,
@@ -91,6 +93,15 @@ export class Config implements IConfig, IActionCollection, ILinkingActions {
     return this.addAction(
       new ExecuteActionExecutor(
         new ExecuteAction(action, this),
+        this.getLink()
+      )
+    );
+  }
+
+  public skip(): IAction {
+    return this.addAction(
+      new SkipActionExecutor(
+        new SkipAction(this),
         this.getLink()
       )
     );

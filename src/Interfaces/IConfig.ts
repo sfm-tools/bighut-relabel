@@ -18,4 +18,6 @@ export interface IConfig {
 
   execute(action: TaskFunction): IAction;
 
+  skip(): IAction;
+
 }
