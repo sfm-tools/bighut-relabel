@@ -1,4 +1,5 @@
 export { DefaultPredicateType } from './DefaultPredicateType';
+export { LabelerOptions } from './LabelerOptions';
 export { MergeDirection } from './MergeDirection';
 export { StringComparer, stringComparison } from './StringComparer';
 export { StringTestValue } from './StringTestValue';
