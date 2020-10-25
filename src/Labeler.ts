@@ -10,8 +10,11 @@ import {
   IConfig,
 } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
+import { LabelerOptions } from './Types';
 
 export class Labeler {
+
+  private readonly _options: LabelerOptions;
 
   private readonly _client: IGitHubClient;
 
@@ -19,9 +22,22 @@ export class Labeler {
 
   private readonly _milestones: Promise<Array<Milestone>>;
 
-  constructor(config: IConfig | IActionCollection, gitHubClient: IGitHubClient) {
-    this._actions = (config as IActionCollection).actions;
+  constructor(
+    config: IConfig | IActionCollection,
+    gitHubClient: IGitHubClient,
+    options?: LabelerOptions,
+  ) {
+    this._options = Object.assign(
+      {},
+      {
+        limit: 100,
+        threads: 3,
+      } as LabelerOptions,
+      options
+    );
     this._client = gitHubClient;
+    this._actions = (config as IActionCollection).actions;
+
     // TODO: Something went wrong. This code shouldn't be here.
     // Need to figure out how to fix this.
     this._milestones = gitHubClient.getMilestones();
@@ -38,8 +54,7 @@ export class Labeler {
   private async processPullRequests(test?: boolean): Promise<void> {
     const q = queue({
       autostart: false,
-      // TODO: config
-      concurrency: 3, // GitHub limits - 5000 requests per hour
+      concurrency: this._options.threads,
     });
 
     console.log(
@@ -53,7 +68,10 @@ export class Labeler {
       'mode.'
     );
 
-    const pullRequests = await this._client.getPullRequests();
+    const pullRequests = await this._client.getPullRequests(
+      1,
+      this._options.limit
+    );
 
     for (const pullRequest of pullRequests) {
       const context = new LabelerContext(pullRequest);
