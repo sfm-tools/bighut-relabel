@@ -214,11 +214,22 @@ export class GitHubClient implements IGitHubClient {
 
   public async branchIsExists(branchName: string): Promise<boolean> {
     try {
-      return !!(await this._client.repos.getBranch({
+      const cacheKey = `${this.owner}/${this.repo}/branchIsExists/${branchName}`;
+
+      if (this._cache.has(cacheKey)) {
+        console.log('cache', cacheKey);
+        return this._cache.get<boolean>(cacheKey);
+      }
+
+      const result = !!(await this._client.repos.getBranch({
         owner: this.owner,
         repo: this.repo,
         branch: branchName,
       })).data;
+
+      this._cache.add(cacheKey, result, 10);
+
+      return result;
     } catch {
       // TODO: Do not hide error
       return false;
