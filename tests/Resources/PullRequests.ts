@@ -237,7 +237,10 @@ export const pullRequests: Array<PullRequest> = [
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/2',
     id: 999000902,
     labels: [],
-    milestone: null,
+    milestone: {
+      id: 999000501,
+      name: 'Version 2.0',
+    },
     sourceBranch: {
       name: 'issue-2',
       isExists: Promise.resolve(true),
