@@ -2,7 +2,13 @@ import chalk from 'chalk';
 import queue from 'queue';
 
 import { IGitHubClient, Milestone } from './GitHubClient';
-import { IAction, IActionCollection, IActionExecutor, IConfig } from './Interfaces';
+import {
+  IAction,
+  IActionCollection,
+  IActionExecutor,
+  IBufferable,
+  IConfig,
+} from './Interfaces';
 import { LabelerContext } from './LabelerContext';
 
 export class Labeler {
@@ -31,7 +37,9 @@ export class Labeler {
 
   private async processPullRequests(test?: boolean): Promise<void> {
     const q = queue({
-      autostart: true,
+      autostart: false,
+      // TODO: config
+      concurrency: 3, // GitHub limits - 5000 requests per hour
     });
 
     console.log(
@@ -48,48 +56,67 @@ export class Labeler {
     const pullRequests = await this._client.getPullRequests();
 
     for (const pullRequest of pullRequests) {
-      console.log(
-        'Pull Request #',
-        pullRequest.code.toString(), // string - so that there is no highlight in the terminal
-        'from',
-        pullRequest.sourceBranch.name,
-        'into',
-        pullRequest.targetBranch.name,
-        'by',
-        pullRequest.author.login
-      );
-
-      console.log(`..${pullRequest.htmlUrl}`);
-
       const context = new LabelerContext(pullRequest);
 
-      for (let i = 0, ic = this._actions.length; i < ic; ++i) {
-        const action = this._actions[i];
-
-        if (action.linked && !action.linked.executed) {
-          continue;
-        }
-
-        await action.execute(context);
-
-        if (context.stopped) {
-          console.log(`..actions check stopped on ${i} of ${ic}`);
-          break;
-        }
-      }
-
       q.push(
-        (): Promise<void> => {
-          return this.updatePullRequest(context, test);
+        async(): Promise<void> => {
+          context.log(
+            'Pull Request #',
+            context.pullRequest.code.toString(), // string - so that there is no highlight in the terminal
+            'from',
+            context.pullRequest.sourceBranch.name,
+            'into',
+            context.pullRequest.targetBranch.name,
+            'by',
+            context.pullRequest.author.login
+          );
+
+          context.log(`..${context.pullRequest.htmlUrl}`);
+
+          for (let i = 0, ic = this._actions.length; i < ic; ++i) {
+            const action = this._actions[i];
+
+            if (action.linked && !action.linked.executed) {
+              continue;
+            }
+
+            await action.execute(context);
+
+            if (context.stopped) {
+              context.log(`..actions check stopped on ${i} of ${ic}`);
+              break;
+            }
+          }
+
+          const updateTasks = await this.createUpdateTasks(context);
+
+          (context.logger as unknown as IBufferable).flush();
+
+          if (!test && updateTasks.length) {
+            await Promise.all(updateTasks);
+          }
         }
       );
     }
+
+    await new Promise<void>((resolve): void => {
+      q.emit = (e: string | symbol, ...args: Array<any>): boolean => {
+        if (e === 'end') {
+          resolve();
+        }
+
+        return true;
+      };
+
+      q.start();
+    });
   }
 
-  private async updatePullRequest(context: LabelerContext, test: boolean): Promise<void> {
+  private async createUpdateTasks(context: LabelerContext): Promise<Array<{ (): Promise<any> }>> {
     const {
       pullRequest,
       updater,
+      log,
     } = context;
 
     const {
@@ -109,7 +136,7 @@ export class Labeler {
       }
     }
 
-    const updaterTasks = new Array<{ (): Promise<any> }>();
+    const updateTasks = new Array<{ (): Promise<any> }>();
     const labels = new Set<string>(pullRequest.labels);
 
     if (updater.addLabels.size) {
@@ -124,14 +151,14 @@ export class Labeler {
       (labels.size === 0 && pullRequest.labels.length > 0)
       || Array.from(labels).some((label: string): boolean => !pullRequest.labels.includes(label))
     ) {
-      console.log(
+      log(
         '..fix labels:',
         chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
         '=>',
         chalk.green(labels.size ? Array.from(labels).join(', ') : '<empty>')
       );
 
-      updaterTasks.push(
+      updateTasks.push(
         (): Promise<void> => (
           updatePullRequestLabels(
             pullRequest.code,
@@ -142,14 +169,14 @@ export class Labeler {
     }
 
     if (updater.title.counter && updater.title.value !== pullRequest.title) {
-      console.log(
+      log(
         '..fix title:',
         chalk.yellow(pullRequest.title || '<empty>'),
         '=>',
         chalk.green(updater.title.value || '<empty>')
       );
 
-      updaterTasks.push(
+      updateTasks.push(
         (): Promise<void> => (
           updatePullRequestTitile(
             pullRequest.code,
@@ -160,14 +187,14 @@ export class Labeler {
     }
 
     if (updater.description.counter && updater.description.value !== pullRequest.description) {
-      console.log(
+      log(
         '..fix description:',
         chalk.yellow(pullRequest.description || '<empty>'),
         '=>',
         chalk.green(updater.description.value || '<empty>')
       );
 
-      updaterTasks.push(
+      updateTasks.push(
         (): Promise<void> => (
           updatePullRequestDescription(
             pullRequest.code,
@@ -186,17 +213,17 @@ export class Labeler {
       );
 
       if (!milestone) {
-        console.error(`..milestone "${updater.milestone.value}" not found.`);
+        log(chalk.red(`..milestone "${updater.milestone.value}" not found.`));
       } else {
         if (updater.milestone.value !== pullRequest.milestone?.name) {
-          console.log(
+          log(
             '..fix milestone:',
             chalk.yellow(pullRequest.milestone?.name || '<empty>'),
             '=>',
             chalk.green(milestone?.name || '<empty>')
           );
 
-          updaterTasks.push(
+          updateTasks.push(
             (): Promise<void> => (
               updatePullRequestMilestone(
                 pullRequest.code,
@@ -210,7 +237,7 @@ export class Labeler {
 
     if (updater.addComments.length) {
       for (const comment of updater.addComments) {
-        console.log(
+        log(
           '..add comment:',
           chalk.green(
             comment.substr(
@@ -220,7 +247,7 @@ export class Labeler {
           )
         );
 
-        updaterTasks.push(
+        updateTasks.push(
           (): Promise<number> => (
             addCommentToPullRequest(
               pullRequest.code,
@@ -231,9 +258,7 @@ export class Labeler {
       }
     }
 
-    if (!test && updaterTasks.length) {
-      await Promise.all(updaterTasks);
-    }
+    return updateTasks;
   }
 
 }
