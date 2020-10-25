@@ -6,3 +6,4 @@ export { RemoveLabelAction } from './RemoveLabelAction';
 export { SetDescriptionAction } from './SetDescriptionAction';
 export { SetMilestoneAction } from './SetMilestoneAction';
 export { SetTitleAction } from './SetTitleAction';
+export { SkipAction } from './SkipAction';
