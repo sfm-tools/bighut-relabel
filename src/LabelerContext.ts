@@ -1,9 +1,13 @@
 import { PullRequest } from './GitHubClient';
+import { ILogger } from './Interfaces';
+import { Logger } from './Logger';
 import { Updater } from './Updater';
 
 export class LabelerContext {
 
   private _stop: boolean = false;
+
+  public readonly logger: ILogger = new Logger();
 
   /**
    * Indicates to interrupt the processing of other actions
@@ -31,6 +35,9 @@ export class LabelerContext {
 
   constructor(pullRequest: PullRequest) {
     this.pullRequest = pullRequest;
+
+    this.stop = this.stop.bind(this);
+    this.log = this.log.bind(this);
   }
 
   /**
@@ -38,6 +45,10 @@ export class LabelerContext {
    */
   public stop(): void {
     this._stop = true;
+  }
+
+  public log(message?: any, ...optionalParams: Array<any>): void {
+    this.logger.log(message, ...optionalParams);
   }
 
 }
