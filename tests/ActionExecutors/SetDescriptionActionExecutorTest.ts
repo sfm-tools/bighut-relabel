@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { SetDescriptionActionExecutor } from '../../src/ActionExecutors';
 import { SetDescriptionAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser,pullRequests } from '../Resources';
+import { flossTomUser, pullRequests } from '../Resources';
 
 describe('SetDescriptionActionExecutor', () => {
 

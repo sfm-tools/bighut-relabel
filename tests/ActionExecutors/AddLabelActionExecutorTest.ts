@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { AddLabelActionExecutor } from '../../src/ActionExecutors';
 import { AddLabelAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser,pullRequests } from '../Resources';
+import { flossTomUser, pullRequests } from '../Resources';
 
 describe('AddLabelActionExecutor', () => {
 

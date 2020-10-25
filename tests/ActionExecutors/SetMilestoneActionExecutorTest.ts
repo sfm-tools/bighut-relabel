@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { SetMilestoneActionExecutor } from '../../src/ActionExecutors';
 import { SetMilestoneAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser,pullRequests } from '../Resources';
+import { flossTomUser, pullRequests } from '../Resources';
 
 describe('SetMilestoneActionExecutor', () => {
 

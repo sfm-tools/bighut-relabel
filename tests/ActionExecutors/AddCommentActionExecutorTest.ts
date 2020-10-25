@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { AddCommentActionExecutor } from '../../src/ActionExecutors';
 import { AddCommentAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser,pullRequests } from '../Resources';
+import { flossTomUser, pullRequests } from '../Resources';
 
 describe('AddCommentActionExecutor', () => {
 
