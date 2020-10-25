@@ -152,9 +152,11 @@ export class GitHubClient implements IGitHubClient {
       additions: item.additions,
       deletions: item.deletions,
       changes: item.changes,
-      content: item.status === 'removed'
-        ? Promise.resolve(undefined)
-        : this.getFileRaw(branchName, item.filename),
+      content: this.wrapIntoPromise((): Promise<string> => (
+        item.status === 'removed'
+          ? Promise.resolve(undefined)
+          : this.getFileRaw(branchName, item.filename)
+      )),
     }));
   }
 
