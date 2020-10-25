@@ -33,6 +33,7 @@ export class GitHubClient implements IGitHubClient {
 
     this.addCommentToPullRequest = this.addCommentToPullRequest.bind(this);
     this.branchIsExists = this.branchIsExists.bind(this);
+    this.checkRateLimit = this.checkRateLimit.bind(this);
     this.convertDataToUser = this.convertDataToUser.bind(this);
     this.getComments = this.getComments.bind(this);
     this.getFileRaw = this.getFileRaw.bind(this);
@@ -49,6 +50,8 @@ export class GitHubClient implements IGitHubClient {
   }
 
   public async getPullRequests(page?: number, pageSize?: number): Promise<Array<PullRequest>> {
+    await this.checkRateLimit();
+
     const pullRequests = (await this._client.pulls.list({
       owner: this.owner,
       repo: this.repo,
@@ -293,6 +296,14 @@ export class GitHubClient implements IGitHubClient {
       issue_number: pullRequestNumber,
       body: text,
     })).data?.id;
+  }
+
+  private async checkRateLimit(): Promise<void> {
+    const rateLimit = (await this._client.rateLimit.get()).data;
+
+    if (rateLimit.resources.core.remaining === 0) {
+      console.warn('API request limit exceeded. Used', rateLimit.resources.core['used'], 'of', rateLimit.resources.core.limit, 'requests.');
+    }
   }
 
   private convertDataToUser(data: any): User {
