@@ -101,7 +101,7 @@ export class Labeler {
             await action.execute(context);
 
             if (context.stopped) {
-              context.log(`..actions check stopped on ${i} of ${ic}`);
+              context.log(`..actions check stopped on ${i + 1} of ${ic}`);
               break;
             }
           }
