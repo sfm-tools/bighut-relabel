@@ -13,6 +13,7 @@ export { WhenFilePathCondition } from './WhenFilePathCondition';
 export { WhenInternalCondition } from './WhenInternalCondition';
 export { WhenLabelCondition } from './WhenLabelCondition';
 export { WhenMergeDirectionCondition } from './WhenMergeDirectionCondition';
+export { WhenMilestoneNameCondition } from './WhenMilestoneNameCondition';
 export { WhenSourceBranchNameCondition } from './WhenSourceBranchNameCondition';
 export { WhenTargetBranchNameCondition } from './WhenTargetBranchNameCondition';
 export { WhenTitleCondition } from './WhenTitleCondition';
