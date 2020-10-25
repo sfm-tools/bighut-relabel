@@ -1,5 +1,7 @@
 import { Octokit } from '@octokit/rest';
 
+import { Cache } from '../Cache';
+import { ICache } from '../Interfaces';
 import { IGitHubClient } from './IGitHubClient';
 import {
   Comment,
@@ -14,6 +16,8 @@ import {
 export class GitHubClient implements IGitHubClient {
 
   private readonly _client: Octokit;
+
+  private readonly _cache: ICache = new Cache();
 
   public readonly owner: string;
 
@@ -185,6 +189,12 @@ export class GitHubClient implements IGitHubClient {
   }
 
   public async getMilestones(): Promise<Array<Milestone>> {
+    const cacheKey = `${this.owner}/${this.repo}/getMilestones`;
+
+    if (this._cache.has(cacheKey)) {
+      return this._cache.get<Array<Milestone>>(cacheKey);
+    }
+
     const data = (await this._client.issues.listMilestones({
       owner: this.owner,
       repo: this.repo,
@@ -192,10 +202,14 @@ export class GitHubClient implements IGitHubClient {
       per_page: 100,
     })).data || [];
 
-    return data.map((item): Milestone => ({
+    const result = data.map((item): Milestone => ({
       id: item.id,
       name: item.title,
     }));
+
+    this._cache.add(cacheKey, result, 30);
+
+    return result;
   }
 
   public async branchIsExists(branchName: string): Promise<boolean> {
