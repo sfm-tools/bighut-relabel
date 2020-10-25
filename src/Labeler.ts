@@ -40,6 +40,9 @@ export class Labeler {
       'using',
       chalk.yellow(this._client.owner),
       'token',
+      'in',
+      chalk.yellow(test ? 'test' : 'fix'),
+      'mode.'
     );
 
     const pullRequests = await this._client.getPullRequests();
