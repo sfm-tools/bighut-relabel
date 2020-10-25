@@ -4,10 +4,9 @@ import { BaseActionExecutor } from './BaseActionExecutor';
 
 export class SkipActionExecutor extends BaseActionExecutor<SkipAction> {
 
-  public execute(context: LabelerContext): Promise<void> {
+  public async execute(context: LabelerContext): Promise<void> {
+    await this.canExecute(context);
     this.done();
-
-    return Promise.resolve();
   }
 
 }

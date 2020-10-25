@@ -20,4 +20,17 @@ describe('SkipActionExecutor', () => {
     expect(executor.executed).to.be.true;
   });
 
+  it('context should have the true value of the stopped property', async(): Promise<void> => {
+    const context = new LabelerContext(pullRequests[0]);
+    const action = new SkipAction(null);
+    const executor = new SkipActionExecutor(action, null);
+
+    action
+      .ignoreOthers();
+
+    await executor.execute(context);
+
+    expect(context.stopped).to.be.true;
+  });
+
 });
