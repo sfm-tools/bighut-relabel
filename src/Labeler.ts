@@ -141,7 +141,7 @@ export class Labeler {
       );
     }
 
-    if (updater.title.counter) {
+    if (updater.title.counter && updater.title.value !== pullRequest.title) {
       console.log(
         '..fix title:',
         chalk.yellow(pullRequest.title || '<empty>'),
@@ -159,7 +159,7 @@ export class Labeler {
       );
     }
 
-    if (updater.description.counter) {
+    if (updater.description.counter && updater.description.value !== pullRequest.description) {
       console.log(
         '..fix description:',
         chalk.yellow(pullRequest.description || '<empty>'),
@@ -188,21 +188,23 @@ export class Labeler {
       if (!milestone) {
         console.error(`..milestone "${updater.milestone.value}" not found.`);
       } else {
-        console.log(
-          '..fix milestone:',
-          chalk.yellow(pullRequest.milestone?.name || '<empty>'),
-          '=>',
-          chalk.green(milestone?.name || '<empty>')
-        );
+        if (updater.milestone.value !== pullRequest.milestone?.name) {
+          console.log(
+            '..fix milestone:',
+            chalk.yellow(pullRequest.milestone?.name || '<empty>'),
+            '=>',
+            chalk.green(milestone?.name || '<empty>')
+          );
 
-        updaterTasks.push(
-          (): Promise<void> => (
-            updatePullRequestMilestone(
-              pullRequest.code,
-              milestone?.id ?? null,
+          updaterTasks.push(
+            (): Promise<void> => (
+              updatePullRequestMilestone(
+                pullRequest.code,
+                milestone?.id ?? null,
+              )
             )
-          )
-        );
+          );
+        }
       }
     }
 
