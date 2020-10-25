@@ -48,7 +48,7 @@ export class GitHubClient implements IGitHubClient {
     this.wrapIntoPromise = this.wrapIntoPromise.bind(this);
   }
 
-  public async getPullRequests(page?: number): Promise<Array<PullRequest>> {
+  public async getPullRequests(page?: number, pageSize?: number): Promise<Array<PullRequest>> {
     const pullRequests = (await this._client.pulls.list({
       owner: this.owner,
       repo: this.repo,
@@ -56,7 +56,7 @@ export class GitHubClient implements IGitHubClient {
       sort: 'created',
       direction: 'desc',
       page: page,
-      per_page: 100,
+      per_page: pageSize || 100,
     })).data || [];
 
     return pullRequests.map((item): PullRequest => {

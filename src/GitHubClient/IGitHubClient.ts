@@ -13,7 +13,7 @@ export interface IGitHubClient {
 
   readonly repo: string;
 
-  getPullRequests(): Promise<Array<PullRequest>>;
+  getPullRequests(page?: number, pageSize?: number): Promise<Array<PullRequest>>;
 
   getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus>;
 
