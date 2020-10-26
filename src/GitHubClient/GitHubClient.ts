@@ -250,7 +250,6 @@ export class GitHubClient implements IGitHubClient {
       const cacheKey = `${this.owner}/${this.repo}/branchIsExists/${branchName}`;
 
       if (this._cache.has(cacheKey)) {
-        console.log('cache', cacheKey);
         return this._cache.get<boolean>(cacheKey);
       }
 
