@@ -29,7 +29,7 @@ import {
 import { LabelerContext } from './LabelerContext';
 import { TaskFunction } from './Types';
 
-export class Config implements IConfig, IActionCollection, ILinkingActions {
+class Config implements IConfig, IActionCollection, ILinkingActions {
 
   public readonly actions = new Array<IActionExecutor>();
 
@@ -120,4 +120,11 @@ export class Config implements IConfig, IActionCollection, ILinkingActions {
     return executorInstance.action;
   }
 
+}
+
+/**
+ * Creates a new config instance.
+ */
+export function createConfig(): IConfig {
+  return new Config();
 }

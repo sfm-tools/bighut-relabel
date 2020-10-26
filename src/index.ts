@@ -1,4 +1,4 @@
-import { Config } from './Config';
+import { createConfig } from './Config';
 import { GitHubClient } from './GitHubClient';
 import { IConfig } from './Interfaces';
 import { Labeler } from './Labeler';
@@ -45,7 +45,7 @@ type Options = {
  * Creates a new config.
  */
 export function create(): IConfig {
-  return new Config();
+  return createConfig();
 }
 
 /**
