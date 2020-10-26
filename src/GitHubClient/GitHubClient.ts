@@ -5,6 +5,7 @@ import { CacheableAction } from '../CacheableAction';
 import { ICache } from '../Interfaces';
 import { IGitHubClient } from './IGitHubClient';
 import {
+  Auth,
   Comment,
   Commit,
   File,
@@ -16,21 +17,26 @@ import {
 
 export class GitHubClient implements IGitHubClient {
 
+  private readonly _auth: Auth;
+
   private readonly _client: Octokit;
 
   private readonly _cache: ICache = new Cache();
 
-  public readonly owner: string;
+  public get owner(): string {
+    return this._auth.owner;
+  }
 
-  public readonly repo: string;
+  public get repo(): string {
+    return this._auth.repo;
+  }
 
-  constructor(token: string, owner: string, repo: string) {
+  constructor(auth: Auth) {
     this._client = new Octokit({
-      auth: token,
+      auth: auth.token,
     });
 
-    this.owner = owner;
-    this.repo = repo;
+    this._auth = auth;
 
     this.addCommentToPullRequest = this.addCommentToPullRequest.bind(this);
     this.branchIsExists = this.branchIsExists.bind(this);

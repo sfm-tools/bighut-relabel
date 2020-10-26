@@ -1,7 +1,8 @@
 import { createConfig } from './Config';
-import { GitHubClient } from './GitHubClient';
+import { Auth, GitHubClient } from './GitHubClient';
 import { IConfig } from './Interfaces';
 import { Labeler } from './Labeler';
+import { LabelerOptions } from './Types';
 
 type Options = {
 
@@ -13,31 +14,14 @@ type Options = {
   config: IConfig;
 
   /**
-   * Username or organization name.
-   *
-   * @example
-   * https://github.com/sfm-tools/bighut-relabel
-   *                    ^^^^^^^^  ^^^^^^^^^^^^^^
-   *                    owner     repo
+   * Information for accessing the GitHub repository.
    */
-  owner: string;
+  auth: Auth;
 
   /**
-   * Repository name.
-   *
-   * @example
-   * https://github.com/sfm-tools/bighut-relabel
-   *                    ^^^^^^^^  ^^^^^^^^^^^^^^
-   *                    owner     repo
+   * Additional options.
    */
-  repo: string;
-
-  /**
-   * GitHub access token.
-   *
-   * @see https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
-   */
-  token: string;
+  options?: LabelerOptions;
 
 };
 
@@ -65,14 +49,14 @@ export function test(options: Options): Promise<void> {
 function run(options: Options, test: boolean): Promise<void> {
   const {
     config,
-    owner,
-    repo,
-    token,
+    auth,
+    options: labelerOptions,
   } = options;
 
   const labeler = new Labeler(
     config,
-    new GitHubClient(token, owner, repo)
+    new GitHubClient(auth),
+    labelerOptions
   );
 
   return test
