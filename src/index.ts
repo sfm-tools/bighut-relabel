@@ -1,4 +1,3 @@
-import { createConfig } from './Config';
 import { Auth, GitHubClient } from './GitHubClient';
 import { IConfig } from './Interfaces';
 import { Labeler } from './Labeler';
@@ -25,12 +24,7 @@ type Options = {
 
 };
 
-/**
- * Creates a new config.
- */
-export function create(): IConfig {
-  return createConfig();
-}
+export { createConfig } from './Config';
 
 /**
  * Applies the specified configuration to the specified repository.
