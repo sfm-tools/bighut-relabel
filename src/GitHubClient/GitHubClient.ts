@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest';
 
 import { Cache } from '../Cache';
+import { CacheableAction } from '../CacheableAction';
 import { ICache } from '../Interfaces';
 import { IGitHubClient } from './IGitHubClient';
 import {
@@ -46,7 +47,6 @@ export class GitHubClient implements IGitHubClient {
     this.updatePullRequestLabels = this.updatePullRequestLabels.bind(this);
     this.updatePullRequestMilestone = this.updatePullRequestMilestone.bind(this);
     this.updatePullRequestTitile = this.updatePullRequestTitile.bind(this);
-    this.wrapIntoPromise = this.wrapIntoPromise.bind(this);
   }
 
   public async getPullRequests(page?: number, pageSize?: number): Promise<Array<PullRequest>> {
@@ -62,60 +62,66 @@ export class GitHubClient implements IGitHubClient {
       per_page: pageSize || 100,
     })).data || [];
 
-    return pullRequests.map((item): PullRequest => {
-      const sourceBranchIsExists = this.wrapIntoPromise(
+    const result = new Array<PullRequest>();
+
+    for (let i = 0, ic = pullRequests.length; i < ic; ++i) {
+      const item = pullRequests[i];
+      const sourceBranchIsExists = new CacheableAction(
         (): Promise<boolean> => this.branchIsExists(item.head.ref)
       );
-
-      const targetBranchIsExists = this.wrapIntoPromise(
+      const targetBranchIsExists = new CacheableAction(
         (): Promise<boolean> => this.branchIsExists(item.base.ref)
       );
 
-      return {
-        id: item.id,
-        code: item.number,
-        state: item.state as any,
-        title: item.title,
-        description: item.body,
-        labels: item.labels?.map((label): string => label.name) || [],
-        htmlUrl: item.html_url,
-        sourceBranch: {
-          name: item.head.ref,
-          isExists: sourceBranchIsExists,
-        },
-        targetBranch: {
-          name: item.base.ref,
-          isExists: targetBranchIsExists,
-        },
-        author: this.convertDataToUser(item.user),
-        milestone: item.milestone && {
-          id: item.milestone.id,
-          name: item.milestone.title,
-        },
-        createdDate: item.created_at && new Date(item.created_at),
-        updatedDate: item.updated_at && new Date(item.updated_at),
-        mergedDate: item.merged_at && new Date(item.merged_at),
-        closedDate: item.closed_at && new Date(item.closed_at),
-        files: this.wrapIntoPromise(
-          async(): Promise<Array<File>> => {
-            const existsSource = await sourceBranchIsExists;
-            return this.getPullRequestFiles(
-              existsSource ? item.head.ref : item.base.ref,
-              item.number
-            );
-          }
-        ),
-        comments: this.wrapIntoPromise(
-          (): Promise<Array<Comment>> => this.getComments(item.number)
-        ),
-        commits: this.wrapIntoPromise(
-          (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number)
-        ),
-        statusInfo: this.wrapIntoPromise(
-          (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number)
-        ),
-      };
-    });
+      result.push(
+        {
+          id: item.id,
+          code: item.number,
+          state: item.state as any,
+          title: item.title,
+          description: item.body,
+          labels: item.labels?.map((label): string => label.name) || [],
+          htmlUrl: item.html_url,
+          sourceBranch: {
+            name: item.head.ref,
+            isExists: sourceBranchIsExists,
+          },
+          targetBranch: {
+            name: item.base.ref,
+            isExists: targetBranchIsExists,
+          },
+          author: this.convertDataToUser(item.user),
+          milestone: item.milestone && {
+            id: item.milestone.id,
+            name: item.milestone.title,
+          },
+          createdDate: item.created_at && new Date(item.created_at),
+          updatedDate: item.updated_at && new Date(item.updated_at),
+          mergedDate: item.merged_at && new Date(item.merged_at),
+          closedDate: item.closed_at && new Date(item.closed_at),
+          files: new CacheableAction(
+            async(): Promise<Array<File>> => {
+              const existsSource = await sourceBranchIsExists;
+              return this.getPullRequestFiles(
+                existsSource ? item.head.ref : item.base.ref, // TODO: Fix wrong reference issue
+                item.number
+              );
+            }
+          ),
+          comments: new CacheableAction(
+            (): Promise<Array<Comment>> => this.getComments(item.number)
+          ),
+          commits: new CacheableAction(
+            (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number)
+          ),
+          statusInfo: new CacheableAction(
+            (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number)
+          ),
+        }
+      );
+    }
+
+    return result;
   }
 
   public async getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus> {
@@ -152,7 +158,7 @@ export class GitHubClient implements IGitHubClient {
       additions: item.additions,
       deletions: item.deletions,
       changes: item.changes,
-      content: this.wrapIntoPromise((): Promise<string> => (
+      content: new CacheableAction((): Promise<string> => (
         item.status === 'removed'
           ? Promise.resolve(undefined)
           : this.getFileRaw(branchName, item.filename)
@@ -315,21 +321,6 @@ export class GitHubClient implements IGitHubClient {
       login: data.login,
       profileUrl: data.html_url,
     };
-  }
-
-  private wrapIntoPromise<TResult>(action: { (): Promise<TResult> }): Promise<TResult> {
-    return new Promise<TResult>(
-      (resolve, reject): void => {
-        (async () => {
-          try {
-            const result = await action();
-            resolve(result);
-          } catch (error) {
-            reject(error);
-          }
-        })();
-      }
-    );
   }
 
 }

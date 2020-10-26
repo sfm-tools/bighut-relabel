@@ -1,7 +1,9 @@
+import { CacheableAction } from '../../CacheableAction';
+
 export type Branch = {
 
   name: string;
 
-  isExists: Promise<boolean>;
+  isExists: CacheableAction<boolean>;
 
 }

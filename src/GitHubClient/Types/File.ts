@@ -1,8 +1,10 @@
+import { CacheableAction } from '../../CacheableAction';
+
 export type File = {
 
   status: 'added' | 'modified' | 'removed';
 
-  content: Promise<string>;
+  content: CacheableAction<string>;
 
   filePath: string;
 

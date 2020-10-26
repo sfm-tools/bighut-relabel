@@ -15,7 +15,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       onlyNewFiles,
     } = this.getOptions();
 
-    const files = await context.pullRequest.files;
+    const files = await context.pullRequest.files.execute();
 
     let result = false;
 
@@ -29,7 +29,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       }
 
       try {
-        const content = await file.content;
+        const content = await file.content.execute();
         result = this.testStringValue(content, context);
       } catch (error) {
         console.error(error);

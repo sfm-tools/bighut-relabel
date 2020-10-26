@@ -1,3 +1,4 @@
+import { CacheableAction } from '../../CacheableAction';
 import { Branch } from './Branch';
 import { Comment } from './Comment';
 import { Commit } from './Commit';
@@ -38,12 +39,12 @@ export type PullRequest = {
 
   closedDate?: Date;
 
-  comments: Promise<Array<Comment>>;
+  comments: CacheableAction<Array<Comment>>;
 
-  commits: Promise<Array<Commit>>;
+  commits: CacheableAction<Array<Commit>>;
 
-  files: Promise<Array<File>>;
+  files: CacheableAction<Array<File>>;
 
-  statusInfo: Promise<PullRequestStatus>;
+  statusInfo: CacheableAction<PullRequestStatus>;
 
 };

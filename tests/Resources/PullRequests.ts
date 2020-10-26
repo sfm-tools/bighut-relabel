@@ -1,3 +1,4 @@
+import { CacheableAction } from '../../src/CacheableAction';
 import { Comment, Commit, File, PullRequest, PullRequestStatus } from '../../src/GitHubClient';
 import { flossTomUser, loftMossUser, msSoftLoUser } from './Users';
 
@@ -5,7 +6,7 @@ export const pullRequests: Array<PullRequest> = [
   {
     author: flossTomUser,
     code: 1,
-    comments: Promise.resolve<Array<Comment>>([
+    comments: new CacheableAction(() => Promise.resolve<Array<Comment>>([
       {
         id: 1,
         author: msSoftLoUser,
@@ -31,8 +32,8 @@ export const pullRequests: Array<PullRequest> = [
         createdDate: new Date(2020, 9, 23),
         updatedDate: new Date(2020, 9, 25),
       },
-    ]),
-    commits: Promise.resolve<Array<Commit>>([
+    ])),
+    commits: new CacheableAction(() => Promise.resolve<Array<Commit>>([
       {
         author: flossTomUser,
         hash: 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
@@ -48,9 +49,9 @@ export const pullRequests: Array<PullRequest> = [
         hash: '2127cd8852b430ea586be97f82eb16c9d1ae2377',
         message: 'Merge branch "main" into "issue-1"',
       },
-    ]),
+    ])),
     description: 'Hello World',
-    files: Promise.resolve([
+    files: new CacheableAction(() => Promise.resolve<Array<File>>([
       {
         additions: 24,
         changes: 0,
@@ -58,7 +59,7 @@ export const pullRequests: Array<PullRequest> = [
         status: 'added',
         filePath: 'Frontend/package.json',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         {
           "name": "awesome-application",
           "version": "1.0.0",
@@ -81,7 +82,7 @@ export const pullRequests: Array<PullRequest> = [
             "test": "mocha -r ts-node/register tests/*.ts tests/**/*.ts",
           },
         }
-        `),
+        `)),
       },
       {
         additions: 0,
@@ -90,7 +91,7 @@ export const pullRequests: Array<PullRequest> = [
         status: 'removed',
         filePath: 'Frontend/webpack.js',
         patch: undefined,
-        content: Promise.reject('404 File not found.'),
+        content: new CacheableAction(() => Promise.reject('404 File not found.')),
       },
       {
         additions: 9,
@@ -99,7 +100,7 @@ export const pullRequests: Array<PullRequest> = [
         status: 'added',
         filePath: 'Frontend/AwesomeComponent.tsx',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         export class AwesomeComponent extends React.Component {
 
           render() {
@@ -109,7 +110,7 @@ export const pullRequests: Array<PullRequest> = [
           }
 
         }
-        `),
+        `)),
       },
       {
         additions: 4,
@@ -118,12 +119,12 @@ export const pullRequests: Array<PullRequest> = [
         status: 'added',
         filePath: 'Frontend/Models/AwesomeModel.ts',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         export type AwesomeModel = {
           id: number;
           name: string;
         };
-        `),
+        `)),
       },
       {
         additions: 4,
@@ -132,9 +133,9 @@ export const pullRequests: Array<PullRequest> = [
         status: 'added',
         filePath: 'Frontend/Models/index.ts',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         export { AwesomeModel } from "./AwesomeModel";
-        `),
+        `)),
       },
       {
         additions: 4,
@@ -143,7 +144,7 @@ export const pullRequests: Array<PullRequest> = [
         status: 'added',
         filePath: 'Backend/Program.cs',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         using System;
         using System.IO;
         using System.Threading.Tasks;
@@ -158,7 +159,7 @@ export const pullRequests: Array<PullRequest> = [
             }
           }
         }
-        `),
+        `)),
       },
       {
         additions: 115,
@@ -167,7 +168,7 @@ export const pullRequests: Array<PullRequest> = [
         status: 'modified',
         filePath: 'Backend/Controllers/ValuesController.cs',
         patch: undefined,
-        content: Promise.resolve(`
+        content: new CacheableAction(() => Promise.resolve(`
         using System;
         using System.Threading.Tasks;
         using Microsoft.AspNetCore.Mvc;
@@ -183,25 +184,25 @@ export const pullRequests: Array<PullRequest> = [
             }
           }
         }
-        `),
+        `)),
       },
-    ]),
+    ])),
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/1',
     id: 999000901,
     labels: ['enhancement', 'ui'],
     milestone: null,
     sourceBranch: {
       name: 'issue-1',
-      isExists: Promise.resolve(true),
+      isExists: new CacheableAction(() => Promise.resolve(true)),
     },
     targetBranch: {
       name: 'main',
-      isExists: Promise.resolve(true),
+      isExists: new CacheableAction(() => Promise.resolve(true)),
     },
     state: 'open',
     title: 'Awesome pull request',
     createdDate: new Date(2020, 9, 18, 12, 51, 0),
-    statusInfo: Promise.resolve<PullRequestStatus>({
+    statusInfo: new CacheableAction(() => Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
       mergeableState: 'clean',
@@ -209,31 +210,31 @@ export const pullRequests: Array<PullRequest> = [
       changedFiles: 7,
       comments: 4,
       commits: 3,
-    }),
+    })),
   },
   {
     author: loftMossUser,
     code: 2,
-    comments: Promise.resolve<Array<Comment>>([]),
-    commits: Promise.resolve<Array<Commit>>([
+    comments: new CacheableAction(() => Promise.resolve<Array<Comment>>([])),
+    commits: new CacheableAction(() => Promise.resolve<Array<Commit>>([
       {
         author: loftMossUser,
         hash: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
         message: 'Updated README.md',
       },
-    ]),
+    ])),
     description: null,
-    files: Promise.resolve<Array<File>>([
+    files: new CacheableAction(() => Promise.resolve<Array<File>>([
       {
         additions: 451324,
         changes: 1233324,
         deletions: 133,
-        content: Promise.resolve('Awesome README'),
+        content: new CacheableAction(() => Promise.resolve('Awesome README')),
         filePath: 'README.md',
         patch: null,
         status: 'modified',
       },
-    ]),
+    ])),
     htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/2',
     id: 999000902,
     labels: [],
@@ -243,16 +244,16 @@ export const pullRequests: Array<PullRequest> = [
     },
     sourceBranch: {
       name: 'issue-2',
-      isExists: Promise.resolve(true),
+      isExists: new CacheableAction(() => Promise.resolve(true)),
     },
     targetBranch: {
       name: 'main',
-      isExists: Promise.resolve(true),
+      isExists: new CacheableAction(() => Promise.resolve(true)),
     },
     state: 'open',
     title: 'Readme fixes',
     createdDate: new Date(2020, 9, 24, 0, 30, 0),
-    statusInfo: Promise.resolve<PullRequestStatus>({
+    statusInfo: new CacheableAction(() => Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
       mergeableState: 'dirty',
@@ -260,6 +261,6 @@ export const pullRequests: Array<PullRequest> = [
       changedFiles: 1,
       comments: 0,
       commits: 1,
-    }),
+    })),
   }
 ];
