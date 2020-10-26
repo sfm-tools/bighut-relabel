@@ -109,7 +109,7 @@ export class GitHubClient implements IGitHubClient {
             async(): Promise<Array<File>> => {
               const existsSource = await sourceBranchIsExists.get();
               return this.getPullRequestFiles(
-                existsSource ? item.head.ref : item.base.ref, // TODO: Fix wrong reference issue
+                existsSource ? item.head.ref : item.base.ref,
                 item.number
               );
             }
