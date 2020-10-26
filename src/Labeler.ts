@@ -226,7 +226,7 @@ export class Labeler {
     }
 
     if (updater.milestone.counter) {
-      const milestones = await this._milestones.execute();
+      const milestones = await this._milestones.get();
       const milestone = milestones.find(
         (milestone: Milestone): boolean => (
           milestone.name === updater.milestone.value

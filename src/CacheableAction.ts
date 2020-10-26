@@ -8,7 +8,10 @@ export class CacheableAction<TResult> {
     this._action = action;
   }
 
-  public async execute(): Promise<TResult> {
+  /**
+   * Executes the action once, store the result, and returns the stored result.
+   */
+  public async get(): Promise<TResult> {
     if (this._result === undefined) {
       this._result = await this._action();
     }

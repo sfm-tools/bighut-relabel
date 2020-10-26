@@ -15,7 +15,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
       creationDateRange,
     } = this.getOptions();
 
-    const comments = await context.pullRequest.comments.execute();
+    const comments = await context.pullRequest.comments.get();
 
     let result = false;
 

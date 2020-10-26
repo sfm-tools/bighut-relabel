@@ -13,7 +13,7 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
       excludeRemovedFiles,
     } = super.getOptions();
 
-    const files = await context.pullRequest.files.execute();
+    const files = await context.pullRequest.files.get();
 
     let result = false;
 
