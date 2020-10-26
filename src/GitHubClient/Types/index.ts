@@ -1,3 +1,4 @@
+export { Auth } from './Auth';
 export { Branch } from './Branch';
 export { Comment } from './Comment';
 export { Commit } from './Commit';
