@@ -55,9 +55,14 @@ export class Labeler {
   }
 
   private async processPullRequests(test?: boolean): Promise<void> {
+    const {
+      threads,
+      test: allowedToHandle,
+    } = this._options;
+
     const q = queue({
       autostart: false,
-      concurrency: this._options.threads,
+      concurrency: threads,
     });
 
     console.log(
@@ -77,6 +82,10 @@ export class Labeler {
     );
 
     for (const pullRequest of pullRequests) {
+      if (allowedToHandle && !allowedToHandle(pullRequest)) {
+        continue;
+      }
+
       const context = new LabelerContext(pullRequest);
 
       q.push(
