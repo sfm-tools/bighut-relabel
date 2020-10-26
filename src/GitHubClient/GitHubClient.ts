@@ -107,7 +107,7 @@ export class GitHubClient implements IGitHubClient {
           closedDate: item.closed_at && new Date(item.closed_at),
           files: new CacheableAction(
             async(): Promise<Array<File>> => {
-              const existsSource = await sourceBranchIsExists;
+              const existsSource = await sourceBranchIsExists.get();
               return this.getPullRequestFiles(
                 existsSource ? item.head.ref : item.base.ref, // TODO: Fix wrong reference issue
                 item.number
