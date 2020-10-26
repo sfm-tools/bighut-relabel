@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import queue from 'queue';
 
+import { CacheableAction } from './CacheableAction';
 import { IGitHubClient, Milestone } from './GitHubClient';
 import {
   IAction,
@@ -20,7 +21,7 @@ export class Labeler {
 
   private readonly _actions: Array<IActionExecutor<IAction>>;
 
-  private readonly _milestones: Promise<Array<Milestone>>;
+  private readonly _milestones: CacheableAction<Array<Milestone>>;
 
   constructor(
     config: IConfig | IActionCollection,
@@ -40,7 +41,9 @@ export class Labeler {
 
     // TODO: Something went wrong. This code shouldn't be here.
     // Need to figure out how to fix this.
-    this._milestones = gitHubClient.getMilestones();
+    this._milestones = new CacheableAction(
+      (): Promise<Array<Milestone>> => gitHubClient.getMilestones()
+    );
   }
 
   public test(): Promise<void> {
@@ -223,7 +226,7 @@ export class Labeler {
     }
 
     if (updater.milestone.counter) {
-      const milestones = await this._milestones;
+      const milestones = await this._milestones.execute();
       const milestone = milestones.find(
         (milestone: Milestone): boolean => (
           milestone.name === updater.milestone.value
