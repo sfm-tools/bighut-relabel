@@ -2,6 +2,7 @@ import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
+  WhenFileCountConditionOptions,
   WhenFilePathConditionOptions,
   WhenInternalConditionOptions,
 } from '../ConditionOptions';
@@ -15,6 +16,7 @@ import {
   WhenContainsConflicts,
   WhenDescriptionCondition,
   WhenFileContentCondition,
+  WhenFileCountCondition,
   WhenFilePathCondition,
   WhenInternalCondition,
   WhenLabelCondition,
@@ -49,6 +51,15 @@ export abstract class BaseAction implements IAction {
   public whenLabel(predicate: DefaultPredicateType): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
     const condition = new WhenLabelCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenFileCount(): WhenFileCountConditionOptions {
+    const options = new WhenFileCountConditionOptions(this);
+    const condition = new WhenFileCountCondition(options);
 
     this.addCondition(condition);
 
