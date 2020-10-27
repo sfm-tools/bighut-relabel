@@ -123,7 +123,9 @@ export class Labeler {
           (context.logger as unknown as IBufferable).flush();
 
           if (!test && updateTasks.length) {
-            await Promise.all(updateTasks);
+            await Promise.all(
+              updateTasks.map(update => update())
+            );
           }
         }
       );
