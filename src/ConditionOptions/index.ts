@@ -10,5 +10,6 @@ export { BaseConditionOptions } from './BaseConditionOptions';
 export { DefaultConditionOptions } from './DefaultConditionOptions';
 export { WhenCommentTextConditionOptions } from './WhenCommentTextConditionOptions';
 export { WhenFileContentConditionOptions } from './WhenFileContentConditionOptions';
+export { WhenFileCountConditionOptions } from './WhenFileCountConditionOptions';
 export { WhenFilePathConditionOptions } from './WhenFilePathConditionOptions';
 export { WhenInternalConditionOptions } from './WhenInternalConditionOptions';
