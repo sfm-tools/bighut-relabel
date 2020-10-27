@@ -154,16 +154,16 @@ export class GitHubClient implements IGitHubClient {
     };
   }
 
-  public async getPullRequestFiles(branchName: string, pullRequestNumber: number): Promise<Array<File>> {
-    // TODO: All files
+  public async getPullRequestFiles(branchName: string, pullRequestNumber: number, page?: number): Promise<Array<File>> {
     const data = (await this._client.pulls.listFiles({
       owner: this.owner,
       repo: this.repo,
       pull_number: pullRequestNumber,
       per_page: 100,
+      page,
     })).data || [];
 
-    return data.map((item): File => ({
+    const result = data.map((item): File => ({
       status: item.status as any,
       filePath: item.filename,
       patch: item.patch,
@@ -176,6 +176,14 @@ export class GitHubClient implements IGitHubClient {
           : this.getFileRaw(branchName, item.filename)
       )),
     }));
+
+    if (data.length === 100) {
+      result.push(
+        ...(await this.getPullRequestFiles(branchName, pullRequestNumber, (page || 1) + 1))
+      );
+    }
+
+    return result;
   }
 
   public async getFileRaw(branchName: string, filePath: string): Promise<string> {

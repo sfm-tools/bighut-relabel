@@ -17,7 +17,7 @@ export interface IGitHubClient {
 
   getPullRequestStatus(pullRequestNumber: number): Promise<PullRequestStatus>;
 
-  getPullRequestFiles(branchName: string, pullRequestNumber: number): Promise<Array<File>>;
+  getPullRequestFiles(branchName: string, pullRequestNumber: number, page?: number): Promise<Array<File>>;
 
   getFileRaw(branchName: string, filePath: string): Promise<string>;
 
