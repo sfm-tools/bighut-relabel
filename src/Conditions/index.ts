@@ -9,6 +9,7 @@ export { WhenCondition } from './WhenCondition';
 export { WhenContainsConflicts } from './WhenContainsConflicts';
 export { WhenDescriptionCondition } from './WhenDescriptionCondition';
 export { WhenFileContentCondition } from './WhenFileContentCondition';
+export { WhenFileCountCondition } from './WhenFileCountCondition';
 export { WhenFilePathCondition } from './WhenFilePathCondition';
 export { WhenInternalCondition } from './WhenInternalCondition';
 export { WhenLabelCondition } from './WhenLabelCondition';
