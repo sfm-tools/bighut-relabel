@@ -34,6 +34,8 @@ export interface IAction {
 
   whenDescriptionIsNotEmpty(): DefaultConditionOptions;
 
+  whenCommentCount(): WhenNumberConditionOptions;
+
   whenCommentText(predicate: DefaultPredicateType): WhenCommentTextConditionOptions;
 
   whenCommitCount(): WhenNumberConditionOptions;

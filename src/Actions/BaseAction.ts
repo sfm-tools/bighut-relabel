@@ -9,6 +9,7 @@ import {
 import {
   BaseCondition,
   WhenAuthorLoginCondition,
+  WhenCommentCountCondition,
   WhenCommentTextCondition,
   WhenCommitCountCondition,
   WhenCommitMessageCondition,
@@ -127,6 +128,15 @@ export abstract class BaseAction implements IAction {
 
   public whenDescriptionIsNotEmpty(): DefaultConditionOptions {
     return this.whenDescription((value: string): boolean => !!value);
+  }
+
+  public whenCommentCount(): WhenNumberConditionOptions {
+    const options = new WhenNumberConditionOptions(this);
+    const condition = new WhenCommentCountCondition(options);
+
+    this.addCondition(condition);
+
+    return options;
   }
 
   public whenCommentText(predicate: DefaultPredicateType): WhenCommentTextConditionOptions {
