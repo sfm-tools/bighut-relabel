@@ -23,7 +23,7 @@ export interface IGitHubClient {
 
   getPullRequestCommits(pullRequestNumber: number, page?: number): Promise<Array<Commit>>;
 
-  getComments(pullRequestNumber: number): Promise<Array<Comment>>;
+  getComments(pullRequestNumber: number, page?: number): Promise<Array<Comment>>;
 
   getMilestones(): Promise<Array<Milestone>>;
 

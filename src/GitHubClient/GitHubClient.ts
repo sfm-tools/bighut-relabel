@@ -221,7 +221,7 @@ export class GitHubClient implements IGitHubClient {
     return result;
   }
 
-  public async getComments(pullRequestNumber: number): Promise<Array<Comment>> {
+  public async getComments(pullRequestNumber: number, page?: number): Promise<Array<Comment>> {
     // TODO: pulls.listReviewComments and issues.listComments - these are different comments.
     // Need to understand which ones we should use.
     // It might be worth making separate methods or combining comments from different sources.
@@ -232,15 +232,24 @@ export class GitHubClient implements IGitHubClient {
       repo: this.repo,
       issue_number: pullRequestNumber,
       per_page: 100,
+      page,
     })).data || [];
 
-    return data.map((item): Comment => ({
+    const result = data.map((item): Comment => ({
       id: item.id,
       author: item.user && this.convertDataToUser(item.user),
       text: item.body,
       createdDate: new Date(item.created_at),
       updatedDate: item.updated_at && new Date(item.updated_at),
     }));
+
+    if (data.length === 100) {
+      result.push(
+        ...(await this.getComments(pullRequestNumber, (page || 1) + 1))
+      );
+    }
+
+    return result;
   }
 
   public async getMilestones(): Promise<Array<Milestone>> {
