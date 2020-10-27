@@ -10,6 +10,7 @@ import {
   BaseCondition,
   WhenAuthorLoginCondition,
   WhenCommentTextCondition,
+  WhenCommitCountCondition,
   WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
@@ -131,6 +132,15 @@ export abstract class BaseAction implements IAction {
   public whenCommentText(predicate: DefaultPredicateType): WhenCommentTextConditionOptions {
     const options = new WhenCommentTextConditionOptions(this);
     const condition = new WhenCommentTextCondition(predicate, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenCommitCount(): WhenNumberConditionOptions {
+    const options = new WhenNumberConditionOptions(this);
+    const condition = new WhenCommitCountCondition(options);
 
     this.addCondition(condition);
 

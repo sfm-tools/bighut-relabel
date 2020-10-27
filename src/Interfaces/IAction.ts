@@ -36,6 +36,8 @@ export interface IAction {
 
   whenCommentText(predicate: DefaultPredicateType): WhenCommentTextConditionOptions;
 
+  whenCommitCount(): WhenNumberConditionOptions;
+
   whenCommitMessage(predicate: DefaultPredicateType): DefaultConditionOptions;
 
   whenSourceBranchName(predicate: DefaultPredicateType): DefaultConditionOptions;
