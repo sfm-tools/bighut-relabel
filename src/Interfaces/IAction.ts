@@ -2,8 +2,8 @@ import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
-  WhenFileCountConditionOptions,
   WhenFilePathConditionOptions,
+  WhenNumberConditionOptions,
 } from '../ConditionOptions';
 import {
   WhenConditionPredicate,
@@ -16,7 +16,7 @@ export interface IAction {
 
   whenLabel(predicate: DefaultPredicateType): DefaultConditionOptions;
 
-  whenFileCount(): WhenFileCountConditionOptions;
+  whenFileCount(): WhenNumberConditionOptions;
 
   whenFilePath(predicate: DefaultPredicateType): WhenFilePathConditionOptions;
 

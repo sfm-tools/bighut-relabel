@@ -2,9 +2,9 @@ import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
   WhenFileContentConditionOptions,
-  WhenFileCountConditionOptions,
   WhenFilePathConditionOptions,
   WhenInternalConditionOptions,
+  WhenNumberConditionOptions,
 } from '../ConditionOptions';
 import {
   BaseCondition,
@@ -57,8 +57,8 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
-  public whenFileCount(): WhenFileCountConditionOptions {
-    const options = new WhenFileCountConditionOptions(this);
+  public whenFileCount(): WhenNumberConditionOptions {
+    const options = new WhenNumberConditionOptions(this);
     const condition = new WhenFileCountCondition(options);
 
     this.addCondition(condition);

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { WhenFileCountConditionOptions } from '../../src/ConditionOptions';
+import { WhenNumberConditionOptions } from '../../src/ConditionOptions';
 import { WhenFileCountCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
@@ -9,7 +9,7 @@ describe('WhenFileCountCondition', () => {
 
   describe('equal', () => {
     it('should return true if the number of files matches', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -21,7 +21,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return false when the number of files non-matches', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -35,7 +35,7 @@ describe('WhenFileCountCondition', () => {
 
   describe('greaterThan', () => {
     it('should return true when the number of files greater than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -47,7 +47,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return false when the number of files less than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -61,7 +61,7 @@ describe('WhenFileCountCondition', () => {
 
   describe('greaterThanOrEqualTo', () => {
     it('should return true when the number of files greater than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -73,7 +73,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return true when the number of files equals to the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -85,7 +85,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return false when the number of files less than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -99,7 +99,7 @@ describe('WhenFileCountCondition', () => {
 
   describe('lessThan', () => {
     it('should return true when the number of files less than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -111,7 +111,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return false when the number of files greater than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -125,7 +125,7 @@ describe('WhenFileCountCondition', () => {
 
   describe('greaterThanOrEqualTo', () => {
     it('should return true when the number of files less than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -137,7 +137,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return true when the number of files equals to the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 
@@ -149,7 +149,7 @@ describe('WhenFileCountCondition', () => {
     });
 
     it('should return false when the number of files greater than the specified value', async(): Promise<void> => {
-      const options = new WhenFileCountConditionOptions(null);
+      const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
       const context = new LabelerContext(pullRequests[0]);
 

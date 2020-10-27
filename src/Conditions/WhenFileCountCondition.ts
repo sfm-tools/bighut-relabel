@@ -1,11 +1,11 @@
-import { WhenFileCountConditionOptions } from '../ConditionOptions';
+import { WhenNumberConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { DefaultPredicateType } from '../Types';
 import { BaseCondition } from './BaseCondition';
 
-export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, WhenFileCountConditionOptions> {
+export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, WhenNumberConditionOptions> {
 
-  constructor(options: WhenFileCountConditionOptions) {
+  constructor(options: WhenNumberConditionOptions) {
     super(undefined, options);
   }
 
