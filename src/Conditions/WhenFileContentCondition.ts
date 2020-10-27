@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 import { WhenFileContentConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { DefaultPredicateType, StringComparer } from '../Types';
@@ -32,7 +34,13 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
         const content = await file.content.get();
         result = this.testStringValue(content, context);
       } catch (error) {
-        console.error(error);
+        if (error instanceof Error) {
+          context.log(chalk.red(`..file "${file.filePath}" not found.`));
+        } else if (typeof error === 'string') {
+          context.log(error);
+        } else {
+          context.log(error);
+        }
       }
 
       if (result) {
