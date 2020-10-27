@@ -107,11 +107,17 @@ export class GitHubClient implements IGitHubClient {
           closedDate: item.closed_at && new Date(item.closed_at),
           files: new CacheableAction(
             async(): Promise<Array<File>> => {
-              const existsSource = await sourceBranchIsExists.get();
-              return this.getPullRequestFiles(
-                existsSource ? item.head.ref : item.base.ref,
-                item.number
-              );
+              let branch = item.head.ref;
+
+              if (!await sourceBranchIsExists.get()) {
+                if (!await targetBranchIsExists.get()) {
+                  branch = undefined;
+                } else {
+                  branch = item.base.ref;
+                }
+              }
+
+              return this.getPullRequestFiles(branch, item.number);
             }
           ),
           comments: new CacheableAction(
