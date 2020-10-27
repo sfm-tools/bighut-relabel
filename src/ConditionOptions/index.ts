@@ -1,5 +1,6 @@
 export {
   ConditionOptionsValues,
+  NumberConditionOptionsValues,
   WhenCommentTextConditionOptionsValues,
   WhenFileContentConditionOptionsValues,
   WhenFilePathConditionOptionsValues,
