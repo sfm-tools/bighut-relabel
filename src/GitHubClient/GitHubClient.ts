@@ -197,20 +197,28 @@ export class GitHubClient implements IGitHubClient {
     return content && Buffer.from(content, 'base64').toString();
   }
 
-  public async getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>> {
-    // TODO: All commits
+  public async getPullRequestCommits(pullRequestNumber: number, page?: number): Promise<Array<Commit>> {
     const data = (await this._client.pulls.listCommits({
       owner: this.owner,
       repo: this.repo,
       pull_number: pullRequestNumber,
       per_page: 100,
+      page,
     })).data || [];
 
-    return data.map((item): Commit => ({
+    const result = data.map((item): Commit => ({
       author: item.author && this.convertDataToUser(item.author),
       hash: item.sha,
       message: item.commit.message,
     }));
+
+    if (data.length === 100) {
+      result.push(
+        ...(await this.getPullRequestCommits(pullRequestNumber, (page || 1) + 1))
+      );
+    }
+
+    return result;
   }
 
   public async getComments(pullRequestNumber: number): Promise<Array<Comment>> {

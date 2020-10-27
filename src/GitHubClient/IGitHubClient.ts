@@ -21,7 +21,7 @@ export interface IGitHubClient {
 
   getFileRaw(branchName: string, filePath: string): Promise<string>;
 
-  getPullRequestCommits(pullRequestNumber: number): Promise<Array<Commit>>;
+  getPullRequestCommits(pullRequestNumber: number, page?: number): Promise<Array<Commit>>;
 
   getComments(pullRequestNumber: number): Promise<Array<Comment>>;
 
