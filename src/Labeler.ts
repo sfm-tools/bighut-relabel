@@ -176,12 +176,13 @@ export class Labeler {
     }
 
     if (updater.removeLabels.size) {
-      updater.addLabels.forEach(labels.delete, labels);
+      updater.removeLabels.forEach(labels.delete, labels);
     }
 
     if (
       (labels.size === 0 && pullRequest.labels.length > 0)
       || Array.from(labels).some((label: string): boolean => !pullRequest.labels.includes(label))
+      || labels.size !== pullRequest.labels.length
     ) {
       log(
         '..fix labels:',
