@@ -99,6 +99,7 @@ export class GitHubClient implements IGitHubClient {
           author: this.convertDataToUser(item.user),
           milestone: item.milestone && {
             id: item.milestone.id,
+            code: item.milestone.number,
             name: item.milestone.title,
           },
           createdDate: item.created_at && new Date(item.created_at),
@@ -268,6 +269,7 @@ export class GitHubClient implements IGitHubClient {
 
     const result = data.map((item): Milestone => ({
       id: item.id,
+      code: item.number,
       name: item.title,
     }));
 

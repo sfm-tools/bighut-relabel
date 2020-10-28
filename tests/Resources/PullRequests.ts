@@ -240,6 +240,7 @@ export const pullRequests: Array<PullRequest> = [
     labels: [],
     milestone: {
       id: 999000501,
+      code: 1,
       name: 'Version 2.0',
     },
     sourceBranch: {
