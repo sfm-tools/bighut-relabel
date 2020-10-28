@@ -7,6 +7,8 @@ export class LabelerContext {
 
   private _stop: boolean = false;
 
+  private _stopComments: string = null;
+
   public readonly logger: ILogger = new Logger();
 
   /**
@@ -15,6 +17,13 @@ export class LabelerContext {
    */
   public get stopped(): boolean {
     return this._stop;
+  }
+
+  /**
+   * The reason for the stop.
+   */
+  public get stopComments(): string {
+    return this._stopComments;
   }
 
   /**
@@ -43,8 +52,9 @@ export class LabelerContext {
   /**
    * Stops processing at the next iteration.
    */
-  public stop(): void {
+  public stop(comments?: string): void {
     this._stop = true;
+    this._stopComments = comments;
   }
 
   public log(message?: any, ...optionalParams: Array<any>): void {

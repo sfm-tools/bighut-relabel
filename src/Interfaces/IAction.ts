@@ -52,6 +52,6 @@ export interface IAction {
 
   whenHasNoConflicts(): DefaultConditionOptions;
 
-  ignoreOthers(): void;
+  ignoreOthers(comments?: string): void;
 
 }

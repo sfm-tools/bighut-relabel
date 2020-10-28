@@ -13,6 +13,7 @@ export class WhenInternalCondition extends BaseCondition<DefaultPredicateType, W
   public test(context: LabelerContext): boolean {
     const {
       ignoreOtherActions,
+      comments,
       nothing,
     } = this.getOptions();
 
@@ -21,7 +22,7 @@ export class WhenInternalCondition extends BaseCondition<DefaultPredicateType, W
     }
 
     if (ignoreOtherActions) {
-      context.stop();
+      context.stop(comments);
     }
 
     return true;

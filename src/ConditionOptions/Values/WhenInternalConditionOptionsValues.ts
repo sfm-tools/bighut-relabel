@@ -4,4 +4,6 @@ export type WhenInternalConditionOptionsValues = ConditionOptionsValues & {
 
   ignoreOtherActions?: boolean;
 
+  comments?: string;
+
 };

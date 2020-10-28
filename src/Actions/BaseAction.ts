@@ -211,13 +211,14 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
-  public ignoreOthers(): void {
+  public ignoreOthers(comments?: string): void {
     this.conditions.push(
       new WhenInternalCondition(
         new WhenInternalConditionOptions(
           this,
           {
-            ignoreOtherActions: true
+            ignoreOtherActions: true,
+            comments,
           }
         )
       )
