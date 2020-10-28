@@ -9,7 +9,7 @@ export type PullRequestStatus = {
 
   rebaseable: boolean;
 
-  mergeableState: 'clean' | 'dirty' | 'unstable';
+  mergeableState: 'clean' | 'dirty' | 'unstable' | 'unknown';
 
   commits: number;
 
