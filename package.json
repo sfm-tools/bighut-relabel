@@ -41,5 +41,26 @@
     "eslint": "eslint src/ --ext ts"
   },
   "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "automation",
+    "management",
+    "analysis",
+    "labeler",
+    "relabel",
+    "analyzer",
+    "pull requests"
+  ],
+  "homepage": "https://github.com/sfm-tools/bighut-relabel#readme",
+  "bugs": {
+    "url": "https://github.com/sfm-tools/bighut-relabel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sfm-tools/bighut-relabel.git"
+  },
+  "engines": {
+    "node": ">=12.18.3"
+  }
 }
