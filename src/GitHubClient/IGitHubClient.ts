@@ -31,7 +31,7 @@ export interface IGitHubClient {
 
   updatePullRequestLabels(pullRequestNumber: number, labels: Array<string>): Promise<void>;
 
-  updatePullRequestMilestone(pullRequestNumber: number, milestoneId: number): Promise<void>;
+  updatePullRequestMilestone(pullRequestNumber: number, milestoneNumber: number): Promise<void>;
 
   updatePullRequestTitile(pullRequestNumber: number, title: string): Promise<void>;
 

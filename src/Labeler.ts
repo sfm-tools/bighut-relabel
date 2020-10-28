@@ -259,7 +259,7 @@ export class Labeler {
             (): Promise<void> => (
               updatePullRequestMilestone(
                 pullRequest.code,
-                milestone?.id ?? null,
+                milestone?.code ?? null,
               )
             )
           );
