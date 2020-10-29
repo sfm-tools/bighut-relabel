@@ -8,7 +8,7 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('RemoveLabelActionExecutor', () => {
 
   it('should add an existing label to the remove list of the updater', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new RemoveLabelAction('enhancement', null);
     const executor = new RemoveLabelActionExecutor(action, null);
@@ -22,7 +22,7 @@ describe('RemoveLabelActionExecutor', () => {
   });
 
   it('should not add an existing label to the remove list of the updater', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new RemoveLabelAction('enhancement', null);
     const executor = new RemoveLabelActionExecutor(action, null);

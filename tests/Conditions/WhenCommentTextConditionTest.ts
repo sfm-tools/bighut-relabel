@@ -6,7 +6,7 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenCommentTextCondition', () => {
-  const context = new LabelerContext(pullRequests[0]);
+  const context = new LabelerContext(pullRequests[0], true);
 
   it('should return true when the specified substring is found in comments', async(): Promise<void> => {
     const when = new WhenCommentTextCondition('great');

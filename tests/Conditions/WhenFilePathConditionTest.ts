@@ -6,7 +6,7 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenFilePathCondition', () => {
-  const context = new LabelerContext(pullRequests[0]);
+  const context = new LabelerContext(pullRequests[0], true);
 
   it('should return true for an existing file using a string predicate', async(): Promise<void> => {
     const when = new WhenFilePathCondition('Frontend/package.json');

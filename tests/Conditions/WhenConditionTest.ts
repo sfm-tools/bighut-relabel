@@ -12,7 +12,7 @@ describe('WhenCondition', () => {
       return !!context.pullRequest;
     });
 
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
 
     expect(when.test(context)).to.be.true;
   });
@@ -22,7 +22,7 @@ describe('WhenCondition', () => {
       return !context.pullRequest;
     });
 
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
 
     expect(when.test(context)).to.be.false;
   });
@@ -35,7 +35,7 @@ describe('WhenCondition', () => {
 
     options.nothing();
 
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
 
     expect(when.test(context)).to.be.false;
   });
@@ -48,7 +48,7 @@ describe('WhenCondition', () => {
 
     options.nothing();
 
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
 
     expect(when.test(context)).to.be.true;
   });

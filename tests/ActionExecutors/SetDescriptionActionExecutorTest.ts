@@ -8,7 +8,7 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('SetDescriptionActionExecutor', () => {
 
   it('should add a task to change description', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new SetDescriptionAction('Awesome description', null);
     const executor = new SetDescriptionActionExecutor(action, null);
@@ -22,7 +22,7 @@ describe('SetDescriptionActionExecutor', () => {
   });
 
   it('should not add a task to change description', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new SetDescriptionAction('Awesome description', null);
     const executor = new SetDescriptionActionExecutor(action, null);

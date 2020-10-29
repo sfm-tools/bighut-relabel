@@ -8,7 +8,7 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('SetMilestoneActionExecutor', () => {
 
   it('should add a task to set milestone', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new SetMilestoneAction('Awesome Milestone', null);
     const executor = new SetMilestoneActionExecutor(action, null);
@@ -22,7 +22,7 @@ describe('SetMilestoneActionExecutor', () => {
   });
 
   it('should not add a task to set milestone', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0]);
+    const context = new LabelerContext(pullRequests[0], true);
     const updater = context.updater;
     const action = new SetMilestoneAction('Awesome Milestone', null);
     const executor = new SetMilestoneActionExecutor(action, null);

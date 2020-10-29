@@ -5,7 +5,7 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenMergeDirectionCondition', () => {
-  const context = new LabelerContext(pullRequests[0]);
+  const context = new LabelerContext(pullRequests[0], true);
 
   it('should return true for the matched direction of the merge', (): void => {
     const when = new WhenMergeDirectionCondition([

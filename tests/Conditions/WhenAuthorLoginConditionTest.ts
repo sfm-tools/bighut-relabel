@@ -5,7 +5,7 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenAuthorLoginCondition', () => {
-  const context = new LabelerContext(pullRequests[0]);
+  const context = new LabelerContext(pullRequests[0], true);
 
   it('should return true if the login of the author of the pull request matches', (): void => {
     const when = new WhenAuthorLoginCondition('floss.tom');
