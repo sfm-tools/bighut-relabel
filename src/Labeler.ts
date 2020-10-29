@@ -179,11 +179,7 @@ export class Labeler {
       updater.removeLabels.forEach(labels.delete, labels);
     }
 
-    if (
-      (labels.size === 0 && pullRequest.labels.length > 0)
-      || Array.from(labels).some((label: string): boolean => !pullRequest.labels.includes(label))
-      || labels.size !== pullRequest.labels.length
-    ) {
+    if (Array.from(labels).sort().join() !== pullRequest.labels.sort().join()) {
       log(
         '..fix labels:',
         chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
