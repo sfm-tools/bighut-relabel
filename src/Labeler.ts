@@ -9,11 +9,12 @@ import {
   IActionExecutor,
   IBufferable,
   IConfig,
+  ILabeler,
 } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
 import { LabelerOptions } from './Types';
 
-export class Labeler {
+export class Labeler implements ILabeler {
 
   private readonly _options: LabelerOptions;
 
