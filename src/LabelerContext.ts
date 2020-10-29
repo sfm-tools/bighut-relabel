@@ -1,4 +1,4 @@
-import { PullRequest } from './GitHubClient';
+import { PullRequest } from './ApiProviders';
 import { ILogger } from './Interfaces';
 import { Logger } from './Logger';
 import { Updater } from './Updater';

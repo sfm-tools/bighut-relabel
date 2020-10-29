@@ -1,4 +1,4 @@
-import { PullRequest } from '../GitHubClient';
+import { PullRequest } from '../ApiProviders';
 
 export type LabelerOptions = {
 

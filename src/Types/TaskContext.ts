@@ -1,4 +1,4 @@
-import { IApiProviderClient } from '../GitHubClient';
+import { IApiProviderClient } from '../ApiProviders';
 import { LabelerContext } from '../LabelerContext';
 
 export type TaskContext = {

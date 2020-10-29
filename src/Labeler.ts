@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import queue from 'queue';
 
+import { IApiProviderClient, Milestone } from './ApiProviders';
 import { CacheableAction } from './CacheableAction';
-import { IApiProviderClient, Milestone } from './GitHubClient';
 import {
   IAction,
   IActionCollection,

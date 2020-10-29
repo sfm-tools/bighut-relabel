@@ -1,5 +1,5 @@
+import { Comment, Commit, File, PullRequest, PullRequestStatus } from '../../src/ApiProviders';
 import { CacheableAction } from '../../src/CacheableAction';
-import { Comment, Commit, File, PullRequest, PullRequestStatus } from '../../src/GitHubClient';
 import { flossTomUser, loftMossUser, msSoftLoUser } from './Users';
 
 export const pullRequests: Array<PullRequest> = [

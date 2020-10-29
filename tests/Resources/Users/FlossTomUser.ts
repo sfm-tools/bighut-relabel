@@ -1,4 +1,4 @@
-import { User } from '../../../src/GitHubClient';
+import { User } from '../../../src/ApiProviders';
 
 export const flossTomUser: User = {
   id: 999000161,

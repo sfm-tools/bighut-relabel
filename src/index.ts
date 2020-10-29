@@ -1,4 +1,4 @@
-import { Auth, GitHubClient } from './GitHubClient';
+import { Auth, GitHubClient } from './ApiProviders';
 import { IConfig } from './Interfaces';
 import { Labeler } from './Labeler';
 import { LabelerOptions } from './Types';

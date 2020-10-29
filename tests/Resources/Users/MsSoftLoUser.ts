@@ -1,4 +1,4 @@
-import { User } from '../../../src/GitHubClient';
+import { User } from '../../../src/ApiProviders';
 
 export const msSoftLoUser: User = {
   id: 999000350,
