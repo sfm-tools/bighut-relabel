@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import queue from 'queue';
 
 import { CacheableAction } from './CacheableAction';
-import { IGitHubClient, Milestone } from './GitHubClient';
+import { IApiProviderClient, Milestone } from './GitHubClient';
 import {
   IAction,
   IActionCollection,
@@ -18,7 +18,7 @@ export class Labeler implements ILabeler {
 
   private readonly _options: LabelerOptions;
 
-  private readonly _client: IGitHubClient;
+  private readonly _client: IApiProviderClient;
 
   private readonly _actions: Array<IActionExecutor<IAction>>;
 
@@ -26,7 +26,7 @@ export class Labeler implements ILabeler {
 
   constructor(
     config: IConfig | IActionCollection,
-    gitHubClient: IGitHubClient,
+    apiProviderClient: IApiProviderClient,
     options?: LabelerOptions,
   ) {
     this._options = Object.assign(
@@ -37,13 +37,13 @@ export class Labeler implements ILabeler {
       } as LabelerOptions,
       options
     );
-    this._client = gitHubClient;
+    this._client = apiProviderClient;
     this._actions = (config as IActionCollection).actions;
 
     // TODO: Something went wrong. This code shouldn't be here.
     // Need to figure out how to fix this.
     this._milestones = new CacheableAction(
-      (): Promise<Array<Milestone>> => gitHubClient.getMilestones()
+      (): Promise<Array<Milestone>> => apiProviderClient.getMilestones()
     );
   }
 

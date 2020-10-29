@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest';
 import { Cache } from '../Cache';
 import { CacheableAction } from '../CacheableAction';
 import { ICache } from '../Interfaces';
-import { IGitHubClient } from './IGitHubClient';
+import { IApiProviderClient } from './IApiProviderClient';
 import {
   Auth,
   Comment,
@@ -15,7 +15,7 @@ import {
   User,
 } from './Types';
 
-export class GitHubClient implements IGitHubClient {
+export class GitHubClient implements IApiProviderClient {
 
   private readonly _auth: Auth;
 

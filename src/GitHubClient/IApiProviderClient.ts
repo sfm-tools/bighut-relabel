@@ -7,7 +7,7 @@ import {
   PullRequestStatus,
 } from './Types';
 
-export interface IGitHubClient {
+export interface IApiProviderClient {
 
   readonly owner: string;
 

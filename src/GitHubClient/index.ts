@@ -1,5 +1,5 @@
+export { IApiProviderClient } from './IApiProviderClient';
 export { GitHubClient } from './GitHubClient';
-export { IGitHubClient } from './IGitHubClient';
 export {
   Auth,
   Branch,
