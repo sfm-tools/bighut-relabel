@@ -86,7 +86,7 @@ export class Labeler {
         continue;
       }
 
-      const context = new LabelerContext(pullRequest);
+      const context = new LabelerContext(pullRequest, test);
 
       q.push(
         async(): Promise<void> => {

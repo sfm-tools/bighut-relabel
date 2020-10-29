@@ -12,6 +12,11 @@ export class LabelerContext {
   public readonly logger: ILogger = new Logger();
 
   /**
+   * Indicates what is running in test mode.
+   */
+  public readonly testMode: boolean = false;
+
+  /**
    * Indicates to interrupt the processing of other actions
    * for the current Pull Request.
    */
@@ -42,8 +47,9 @@ export class LabelerContext {
    */
   public readonly data = new Map<string, any>();
 
-  constructor(pullRequest: PullRequest) {
+  constructor(pullRequest: PullRequest, test: boolean) {
     this.pullRequest = pullRequest;
+    this.testMode = test;
 
     this.stop = this.stop.bind(this);
     this.log = this.log.bind(this);
