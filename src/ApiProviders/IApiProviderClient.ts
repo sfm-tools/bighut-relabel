@@ -5,6 +5,7 @@ import {
   Milestone,
   PullRequest,
   PullRequestStatus,
+  RateLimit,
 } from './Types';
 
 export interface IApiProviderClient {
@@ -38,5 +39,7 @@ export interface IApiProviderClient {
   updatePullRequestDescription(pullRequestNumber: number, description: string): Promise<void>;
 
   addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number>;
+
+  getRateLimit(): Promise<RateLimit>;
 
 }

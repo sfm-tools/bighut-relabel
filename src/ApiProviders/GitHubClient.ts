@@ -12,6 +12,7 @@ import {
   Milestone,
   PullRequest,
   PullRequestStatus,
+  RateLimit,
   User,
 } from './Types';
 
@@ -40,7 +41,7 @@ export class GitHubClient implements IApiProviderClient {
 
     this.addCommentToPullRequest = this.addCommentToPullRequest.bind(this);
     this.branchIsExists = this.branchIsExists.bind(this);
-    this.checkRateLimit = this.checkRateLimit.bind(this);
+    this.getRateLimit = this.getRateLimit.bind(this);
     this.convertDataToUser = this.convertDataToUser.bind(this);
     this.getComments = this.getComments.bind(this);
     this.getFileRaw = this.getFileRaw.bind(this);
@@ -56,8 +57,6 @@ export class GitHubClient implements IApiProviderClient {
   }
 
   public async getPullRequests(page?: number, pageSize?: number): Promise<Array<PullRequest>> {
-    await this.checkRateLimit();
-
     const pullRequests = (await this._client.pulls.list({
       owner: this.owner,
       repo: this.repo,
@@ -346,12 +345,14 @@ export class GitHubClient implements IApiProviderClient {
     })).data?.id;
   }
 
-  private async checkRateLimit(): Promise<void> {
+  public async getRateLimit(): Promise<RateLimit> {
     const rateLimit = (await this._client.rateLimit.get()).data;
 
-    if (rateLimit.resources.core.remaining === 0) {
-      console.warn('API request limit exceeded. Used', rateLimit.resources.core['used'], 'of', rateLimit.resources.core.limit, 'requests.');
-    }
+    return {
+      limit: rateLimit.resources.core.limit,
+      remaining: rateLimit.resources.core.remaining,
+      used: rateLimit.resources.core['used'],
+    };
   }
 
   private convertDataToUser(data: any): User {
