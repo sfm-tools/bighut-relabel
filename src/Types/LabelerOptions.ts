@@ -18,4 +18,12 @@ export type LabelerOptions = {
    */
   test?: (pullRequest: PullRequest) => boolean;
 
+  /**
+   * Warn about exceeding the number of API requests.
+   * Limit: 5000 requests per hour.
+   * You can specify any number within the given range.
+   * Default: no warns.
+   */
+  rateLimitNotify?: number;
+
 };

@@ -58,6 +58,7 @@ export class Labeler implements ILabeler {
   private async processPullRequests(test?: boolean): Promise<void> {
     const {
       threads,
+      rateLimitNotify,
       test: allowedToHandle,
     } = this._options;
 
@@ -76,6 +77,20 @@ export class Labeler implements ILabeler {
       chalk.yellow(test ? 'test' : 'fix'),
       'mode.'
     );
+
+    if (rateLimitNotify) {
+      const rateLimit = await this._client.getRateLimit();
+
+      if (rateLimit.used > rateLimitNotify) {
+        console.warn(
+          'Request exceeded notification: used',
+          rateLimit.used,
+          'of',
+          rateLimit.limit,
+          'requests.'
+        );
+      }
+    }
 
     const pullRequests = await this._client.getPullRequests(
       1,
