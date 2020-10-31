@@ -19,4 +19,16 @@ export interface ICache {
 
   clearAll(): void;
 
+  /**
+   * Loads saved data to cache.
+   * If the current instance already contains any data,
+   * it clears it and replaces it with the loaded data.
+   */
+  load(): Promise<void>;
+
+  /**
+   * Saves data.
+   */
+  save(): Promise<void>;
+
 }

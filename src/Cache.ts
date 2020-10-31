@@ -1,10 +1,19 @@
+import fs from 'fs';
 import NodeCache from 'node-cache';
 
 import { ICache } from './Interfaces';
 
+type CacheItem = { key: string, value: any, ttl: number };
+
 export class Cache implements ICache {
 
   private readonly _cache = new NodeCache();
+
+  private readonly _path: string;
+
+  constructor(path?: string) {
+    this._path = path;
+  }
 
   public has(key: string): boolean {
     return this._cache.has(key);
@@ -28,6 +37,57 @@ export class Cache implements ICache {
 
   public clearAll(): void {
     this._cache.flushAll();
+  }
+
+  public async load(): Promise<void> {
+    if (!this._path) {
+      throw new Error('"path" is required. Value must not be null or empty.');
+    }
+
+    this.clearAll();
+
+    if (!fs.existsSync(this._path)) {
+      return;
+    }
+
+    const data = JSON.parse(
+      await fs.readFileSync(this._path, 'utf8')
+    ) || [];
+
+    data.forEach((item: CacheItem): void => {
+      this._cache.set(
+        item.key,
+        item.value,
+        (item.ttl - new Date().getTime()) / 1000
+      );
+    });
+  }
+
+  public async save(): Promise<void> {
+    if (!this._path) {
+      throw new Error('"path" is required. Value must not be null or empty.');
+    }
+
+    const keys = this.keys();
+    const data = new Array<CacheItem>();
+
+    keys.forEach(
+      (key: string): void => {
+        data.push({
+          key,
+          ttl: this._cache.getTtl(key),
+          value: this._cache.get(key),
+        });
+      }
+    );
+
+    await fs.writeFileSync(
+      this._path,
+      JSON.stringify(data),
+      {
+        encoding: 'utf8',
+      }
+    );
   }
 
 }
