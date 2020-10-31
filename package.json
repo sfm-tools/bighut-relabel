@@ -33,6 +33,7 @@
     "typescript": "3.9.7"
   },
   "scripts": {
+    "build": "tsc",
     "test": "mocha -r ts-node/register tests/*.ts tests/**/*.ts",
     "nyc": "nyc --reporter=html mocha -r ts-node/register tests/*.ts tests/**/*.ts",
     "eslint": "eslint src/ --ext ts"
