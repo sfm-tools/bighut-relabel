@@ -6,6 +6,8 @@ export interface ICache {
 
   get<T>(key: string): T | undefined;
 
+  getTtl(key: string): number;
+
   /**
    * Adds value to cache. Returns true on success.
    *

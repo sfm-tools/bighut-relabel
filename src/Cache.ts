@@ -27,6 +27,10 @@ export class Cache implements ICache {
     return this._cache.get(key);
   }
 
+  public getTtl(key: string): number {
+    return this._cache.getTtl(key);
+  }
+
   public add<T>(key: string, value: T, ttl: number): boolean {
     return this._cache.set(key, value, ttl);
   }
