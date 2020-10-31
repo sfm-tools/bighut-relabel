@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import queue from 'queue';
 
-import { IApiProviderClient, Milestone } from './ApiProviders';
+import { IApiProviderClient, Milestone, PullRequest } from './ApiProviders';
 import { Cache } from './Cache';
 import { CacheableAction } from './CacheableAction';
 import {
@@ -119,14 +119,33 @@ export class Labeler implements ILabeler {
       await this._cache.load();
     }
 
+    const logSkipped = (pullRequest: PullRequest, reason: string): void => {
+      console.log(
+        'Pull Request #',
+        pullRequest.code.toString(), // string - so that there is no highlight in the terminal
+        'from',
+        pullRequest.sourceBranch.name,
+        'into',
+        pullRequest.targetBranch.name,
+        'by',
+        pullRequest.author.login
+      );
+      console.log('..skipped:', reason);
+    };
+
     for (const pullRequest of pullRequests) {
       if (allowedToHandle && !allowedToHandle(pullRequest)) {
+        logSkipped(pullRequest, 'labeler options');
         continue;
       }
 
       const cacheKey = `pr-${pullRequest.code}`;
 
       if (this._cache.has(cacheKey)) {
+        logSkipped(
+          pullRequest,
+          `cached until ${new Date(this._cache.getTtl(cacheKey))}`
+        );
         continue;
       }
 
