@@ -139,7 +139,7 @@ export class Labeler implements ILabeler {
         continue;
       }
 
-      const cacheKey = `pr-${pullRequest.code}`;
+      const cacheKey = `pr-${pullRequest.code}/${test === true}`;
 
       if (this._cache.has(cacheKey)) {
         logSkipped(
