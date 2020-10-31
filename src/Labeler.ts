@@ -110,109 +110,124 @@ export class Labeler implements ILabeler {
       }
     }
 
-    const pullRequests = await this._client.getPullRequests(
-      1,
-      this._options.limit
-    );
+    const limit = (this._options.limit > 100) ? 100 : this._options.limit;
+    const totalPages = (this._options.limit > 100)
+      ? Math.ceil(this._options.limit / 100)
+      : 1;
 
-    if (cacheOptions.ttl) {
-      await this._cache.load();
-    }
+    let page = 1;
 
-    const logSkipped = (pullRequest: PullRequest, reason: string): void => {
-      console.log(
-        'Pull Request #',
-        pullRequest.code.toString(), // string - so that there is no highlight in the terminal
-        'from',
-        pullRequest.sourceBranch.name,
-        'into',
-        pullRequest.targetBranch.name,
-        'by',
-        pullRequest.author.login
+    while (page <= totalPages) {
+      const pullRequests = await this._client.getPullRequests(
+        page,
+        limit
       );
-      console.log('..skipped:', reason);
-    };
 
-    for (const pullRequest of pullRequests) {
-      if (allowedToHandle && !allowedToHandle(pullRequest)) {
-        logSkipped(pullRequest, 'labeler options');
-        continue;
+      if (!pullRequests.length) {
+        break;
       }
 
-      const cacheKey = `pr-${pullRequest.code}`;
+      if (cacheOptions.ttl) {
+        await this._cache.load();
+      }
 
-      if (this._cache.has(cacheKey)) {
-        logSkipped(
-          pullRequest,
-          `cached until ${new Date(this._cache.getTtl(cacheKey))}`
+      const logSkipped = (pullRequest: PullRequest, reason: string): void => {
+        console.log(
+          'Pull Request #',
+          pullRequest.code.toString(), // string - so that there is no highlight in the terminal
+          'from',
+          pullRequest.sourceBranch.name,
+          'into',
+          pullRequest.targetBranch.name,
+          'by',
+          pullRequest.author.login
         );
-        continue;
+        console.log('..skipped:', reason);
+      };
+
+      for (const pullRequest of pullRequests) {
+        if (allowedToHandle && !allowedToHandle(pullRequest)) {
+          logSkipped(pullRequest, 'labeler options');
+          continue;
+        }
+
+        const cacheKey = `pr-${pullRequest.code}`;
+
+        if (this._cache.has(cacheKey)) {
+          logSkipped(
+            pullRequest,
+            `cached until ${new Date(this._cache.getTtl(cacheKey))}`
+          );
+          continue;
+        }
+
+        const context = new LabelerContext(pullRequest, test);
+
+        q.push(
+          async(): Promise<void> => {
+            context.log(
+              'Pull Request #',
+              context.pullRequest.code.toString(), // string - so that there is no highlight in the terminal
+              'from',
+              context.pullRequest.sourceBranch.name,
+              'into',
+              context.pullRequest.targetBranch.name,
+              'by',
+              context.pullRequest.author.login
+            );
+
+            context.log(`..${context.pullRequest.htmlUrl}`);
+
+            for (let i = 0, ic = this._actions.length; i < ic; ++i) {
+              const action = this._actions[i];
+
+              if (action.linked && !action.linked.executed) {
+                continue;
+              }
+
+              try {
+                await action.execute(context);
+              } catch (error) {
+                context.log(
+                  chalk.red(`..an error occurred while executing an action ${i + 1} of ${ic}:`),
+                  chalk.red(error.message)
+                );
+                (context.logger as unknown as IBufferable).flush();
+                throw error;
+              }
+
+              if (context.stopped) {
+                context.log(`..actions check stopped on ${i + 1} of ${ic}${context.stopComments ? '; comment: ' + context.stopComments : ''}`);
+                break;
+              }
+            }
+
+            const updateTasks = await this.createUpdateTasks(context);
+
+            if (!test && updateTasks.length) {
+              try {
+                await Promise.all(
+                  updateTasks.map(update => update())
+                );
+              } catch (error) {
+                context.log(
+                  chalk.red('..an error occurred while executing update tasks:'),
+                  chalk.red(error.message)
+                );
+                (context.logger as unknown as IBufferable).flush();
+                throw error;
+              }
+            }
+
+            (context.logger as unknown as IBufferable).flush();
+
+            cacheOptions.ttl
+              && this._cache.add(cacheKey, true, cacheOptions.ttl);
+          }
+        );
       }
 
-      const context = new LabelerContext(pullRequest, test);
-
-      q.push(
-        async(): Promise<void> => {
-          context.log(
-            'Pull Request #',
-            context.pullRequest.code.toString(), // string - so that there is no highlight in the terminal
-            'from',
-            context.pullRequest.sourceBranch.name,
-            'into',
-            context.pullRequest.targetBranch.name,
-            'by',
-            context.pullRequest.author.login
-          );
-
-          context.log(`..${context.pullRequest.htmlUrl}`);
-
-          for (let i = 0, ic = this._actions.length; i < ic; ++i) {
-            const action = this._actions[i];
-
-            if (action.linked && !action.linked.executed) {
-              continue;
-            }
-
-            try {
-              await action.execute(context);
-            } catch (error) {
-              context.log(
-                chalk.red(`..an error occurred while executing an action ${i + 1} of ${ic}:`),
-                chalk.red(error.message)
-              );
-              (context.logger as unknown as IBufferable).flush();
-              throw error;
-            }
-
-            if (context.stopped) {
-              context.log(`..actions check stopped on ${i + 1} of ${ic}${context.stopComments ? '; comment: ' + context.stopComments : ''}`);
-              break;
-            }
-          }
-
-          const updateTasks = await this.createUpdateTasks(context);
-
-          if (!test && updateTasks.length) {
-            try {
-              await Promise.all(
-                updateTasks.map(update => update())
-              );
-            } catch (error) {
-              context.log(
-                chalk.red('..an error occurred while executing update tasks:'),
-                chalk.red(error.message)
-              );
-              (context.logger as unknown as IBufferable).flush();
-              throw error;
-            }
-          }
-
-          (context.logger as unknown as IBufferable).flush();
-
-          cacheOptions.ttl
-            && this._cache.add(cacheKey, true, cacheOptions.ttl);
-        }
-      );
+      ++page;
     }
 
     await new Promise<void>((resolve): void => {
