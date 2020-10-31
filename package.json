@@ -1,7 +1,7 @@
 {
   "name": "bighut-relabel",
   "version": "1.0.0",
-  "description": "Labeler for Pull Requests on GitHub.",
+  "description": "Application for automatically analyzing and managing Pull Requests on GitHub.",
   "main": "index.js",
   "dependencies": {
     "@octokit/rest": "18.0.6",
@@ -50,7 +50,15 @@
     "labeler",
     "relabel",
     "analyzer",
-    "pull requests"
+    "fix",
+    "autofix",
+    "devops",
+    "codereview",
+    "workflow",
+    "git workflow",
+    "git",
+    "pull requests",
+    "infrastructure"
   ],
   "homepage": "https://github.com/sfm-tools/bighut-relabel#readme",
   "bugs": {
