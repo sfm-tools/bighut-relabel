@@ -4,7 +4,7 @@
 
 ## Features
 
-* [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface)
+* [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface).
 * Getting information about a Pull Request, including title, description, author info,
   labels, milestone, merge direction, conflicts, files, commits, and comments.
 * Updating title, description, labels, and milestone.
@@ -44,7 +44,6 @@ const options = {
     //                   ^^^^^^^^  ^^^^^^^^^^^^^^
     //                   user      repo
     token: '%YOUR GITHUB TOKEN HERE%',
-    // https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
   },
   // optional
   /*
