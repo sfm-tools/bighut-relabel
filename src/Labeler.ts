@@ -126,7 +126,16 @@ export class Labeler implements ILabeler {
               continue;
             }
 
-            await action.execute(context);
+            try {
+              await action.execute(context);
+            } catch (error) {
+              context.log(
+                chalk.red(`..an error occurred while executing an action ${i + 1} of ${ic}:`),
+                chalk.red(error.message)
+              );
+              (context.logger as unknown as IBufferable).flush();
+              throw error;
+            }
 
             if (context.stopped) {
               context.log(`..actions check stopped on ${i + 1} of ${ic}${context.stopComments ? '; comment: ' + context.stopComments : ''}`);
@@ -136,13 +145,22 @@ export class Labeler implements ILabeler {
 
           const updateTasks = await this.createUpdateTasks(context);
 
-          (context.logger as unknown as IBufferable).flush();
-
           if (!test && updateTasks.length) {
-            await Promise.all(
-              updateTasks.map(update => update())
-            );
+            try {
+              await Promise.all(
+                updateTasks.map(update => update())
+              );
+            } catch (error) {
+              context.log(
+                chalk.red('..an error occurred while executing update tasks:'),
+                chalk.red(error.message)
+              );
+              (context.logger as unknown as IBufferable).flush();
+              throw error;
+            }
           }
+
+          (context.logger as unknown as IBufferable).flush();
         }
       );
     }
