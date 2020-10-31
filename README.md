@@ -28,6 +28,7 @@ const config = createConfig();
 
 // automatic addition of labels depending on file extensions
 // please note, labels should already be present in the repository
+
 config
   .addLabel('back end')
   .whenFilePath(/\.cs$/gi);
