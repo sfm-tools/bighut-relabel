@@ -3,6 +3,10 @@ import { IConfig } from './Interfaces';
 import { Labeler } from './Labeler';
 import { LabelerOptions } from './Types';
 
+export { IConfig } from './Interfaces';
+export { LabelerContext } from './LabelerContext';
+export { TaskContext } from './Types';
+
 type Options = {
 
   /**
