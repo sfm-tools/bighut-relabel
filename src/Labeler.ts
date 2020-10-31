@@ -2,12 +2,14 @@ import chalk from 'chalk';
 import queue from 'queue';
 
 import { IApiProviderClient, Milestone } from './ApiProviders';
+import { Cache } from './Cache';
 import { CacheableAction } from './CacheableAction';
 import {
   IAction,
   IActionCollection,
   IActionExecutor,
   IBufferable,
+  ICache,
   IConfig,
   ILabeler,
 } from './Interfaces';
@@ -24,6 +26,8 @@ export class Labeler implements ILabeler {
 
   private readonly _milestones: CacheableAction<Array<Milestone>>;
 
+  private readonly _cache: ICache;
+
   constructor(
     config: IConfig | IActionCollection,
     apiProviderClient: IApiProviderClient,
@@ -34,11 +38,15 @@ export class Labeler implements ILabeler {
       {
         limit: 100,
         threads: 3,
+        cache: {
+          path: './.cache.json',
+        },
       } as LabelerOptions,
       options
     );
     this._client = apiProviderClient;
     this._actions = (config as IActionCollection).actions;
+    this._cache = new Cache(this._options.cache.path);
 
     // TODO: Something went wrong. This code shouldn't be here.
     // Need to figure out how to fix this.
@@ -60,6 +68,7 @@ export class Labeler implements ILabeler {
       threads,
       rateLimitNotify,
       test: allowedToHandle,
+      cache: cacheOptions,
     } = this._options;
 
     const q = queue({
@@ -97,8 +106,18 @@ export class Labeler implements ILabeler {
       this._options.limit
     );
 
+    if (cacheOptions.ttl) {
+      await this._cache.load();
+    }
+
     for (const pullRequest of pullRequests) {
       if (allowedToHandle && !allowedToHandle(pullRequest)) {
+        continue;
+      }
+
+      const cacheKey = `pr-${pullRequest.code}`;
+
+      if (this._cache.has(cacheKey)) {
         continue;
       }
 
@@ -161,6 +180,9 @@ export class Labeler implements ILabeler {
           }
 
           (context.logger as unknown as IBufferable).flush();
+
+          cacheOptions.ttl
+            && this._cache.add(cacheKey, true, cacheOptions.ttl);
         }
       );
     }
@@ -176,6 +198,10 @@ export class Labeler implements ILabeler {
 
       q.start();
     });
+
+    if (cacheOptions.ttl) {
+      this._cache.save();
+    }
   }
 
   private async createUpdateTasks(context: LabelerContext): Promise<Array<{ (): Promise<any> }>> {
