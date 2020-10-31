@@ -13,6 +13,16 @@ export class Cache implements ICache {
 
   constructor(path?: string) {
     this._path = path;
+
+    this.has = this.has.bind(this);
+    this.keys = this.keys.bind(this);
+    this.get = this.get.bind(this);
+    this.getTtl = this.getTtl.bind(this);
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
+    this.clearAll = this.clearAll.bind(this);
+    this.load = this.load.bind(this);
+    this.save = this.save.bind(this);
   }
 
   public has(key: string): boolean {
