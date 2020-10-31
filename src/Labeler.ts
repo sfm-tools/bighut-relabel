@@ -33,17 +33,26 @@ export class Labeler implements ILabeler {
     apiProviderClient: IApiProviderClient,
     options?: LabelerOptions,
   ) {
+    const cacheOptions = Object.assign(
+      {},
+      {
+        path: './.cache.json',
+      } as LabelerOptions['cache'],
+      options?.cache
+    );
+
     this._options = Object.assign(
       {},
       {
         limit: 100,
         threads: 3,
-        cache: {
-          path: './.cache.json',
-        },
       } as LabelerOptions,
-      options
+      {
+        ...options,
+        cache: cacheOptions,
+      }
     );
+
     this._client = apiProviderClient;
     this._actions = (config as IActionCollection).actions;
     this._cache = new Cache(this._options.cache.path);
