@@ -2,7 +2,8 @@
   "name": "bighut-relabel",
   "version": "1.0.0",
   "description": "Application for automatically analyzing and managing Pull Requests on GitHub.",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "files": ["dist"],
   "dependencies": {
     "@octokit/rest": "18.0.6",
     "@types/chalk": "2.2.0",
