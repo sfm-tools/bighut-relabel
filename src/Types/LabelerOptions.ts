@@ -26,4 +26,15 @@ export type LabelerOptions = {
    */
   rateLimitNotify?: number;
 
+  cache?: {
+    /**
+     * The path to the cache data file. Default: `./.cache.json`.
+     */
+    path?: string;
+    /**
+     * Time to live, is seconds. Default: 0 - without caching.
+     */
+    ttl?: number;
+  };
+
 };
