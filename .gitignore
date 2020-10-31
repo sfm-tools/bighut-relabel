@@ -106,3 +106,6 @@ dist
 # Compiled files
 dist/
 
+# Visual Studio Code
+.vscode/
+
