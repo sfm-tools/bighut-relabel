@@ -17,7 +17,7 @@ export class WhenContainsConflicts extends BaseCondition<boolean, DefaultConditi
 
     if (this.predicate) {
       return this.testResult(
-        mergeable === false || (mergeableState === 'dirty' && !merged)
+        (mergeable === false || mergeableState === 'dirty') && !merged
       );
     } else {
       return this.testResult(
