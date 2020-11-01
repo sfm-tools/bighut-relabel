@@ -40,6 +40,7 @@
     "build": "tsc",
     "test": "mocha -r ts-node/register tests/*.ts tests/**/*.ts",
     "nyc": "nyc --reporter=html mocha -r ts-node/register tests/*.ts tests/**/*.ts",
+    "coverage": "nyc --reporter=text-lcov mocha -r ts-node/register tests/*.ts tests/**/*.ts | ./node_modules/coveralls/bin/coveralls.js",
     "eslint": "eslint src/ --ext ts"
   },
   "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
