@@ -5,7 +5,6 @@
 ![License](https://badgen.net/npm/license/bighut-relabel)
 [![Build Status](https://travis-ci.org/sfm-tools/bighut-relabel.svg?branch=main)](https://travis-ci.org/sfm-tools/bighut-relabel)
 [![Coverage Status](https://coveralls.io/repos/github/sfm-tools/bighut-relabel/badge.svg?branch=main)](https://coveralls.io/github/sfm-tools/bighut-relabel?branch=main)
-![Last Commit](https://badgen.net/github/last-commit/sfm-tools/bighut-relabel/main)
 
 **Node.js** application for automatically analyzing and managing **Pull Requests** on **GitHub**.
 
