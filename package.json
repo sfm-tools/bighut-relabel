@@ -11,7 +11,6 @@
     "@types/chalk": "2.2.0",
     "axios": "0.19.2",
     "chalk": "4.1.0",
-    "github-api": "3.3.0",
     "node-cache": "5.1.2",
     "queue": "6.0.1"
   },
