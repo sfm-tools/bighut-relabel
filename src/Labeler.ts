@@ -16,6 +16,12 @@ import {
 import { LabelerContext } from './LabelerContext';
 import { LabelerOptions } from './Types';
 
+enum PullRequestCacheState {
+  AwaitingFix = 1,
+  Fixed = 2,
+  NoChanges = 3,
+}
+
 export class Labeler implements ILabeler {
 
   private readonly _options: LabelerOptions;
@@ -152,8 +158,18 @@ export class Labeler implements ILabeler {
         }
 
         const cacheKey = `pr-${pullRequest.code}`;
+        const cacheValue = this._cache.get<PullRequestCacheState>(cacheKey);
 
-        if (this._cache.has(cacheKey)) {
+        if (
+          (test && cacheValue)
+          || (
+            !test
+            && [
+              PullRequestCacheState.Fixed,
+              PullRequestCacheState.NoChanges
+            ].includes(cacheValue)
+          )
+        ) {
           logSkipped(
             pullRequest,
             `cached until ${new Date(this._cache.getTtl(cacheKey))}`
@@ -217,12 +233,23 @@ export class Labeler implements ILabeler {
                 (context.logger as unknown as IBufferable).flush();
                 throw error;
               }
+
+              cacheOptions.ttl
+                && this._cache.add<PullRequestCacheState>(
+                  cacheKey,
+                  PullRequestCacheState.Fixed,
+                  cacheOptions.ttl
+                );
+            } else {
+              cacheOptions.ttl
+                && this._cache.add<PullRequestCacheState>(
+                  cacheKey,
+                  updateTasks.length ? PullRequestCacheState.AwaitingFix : PullRequestCacheState.NoChanges,
+                  cacheOptions.ttl
+                );
             }
 
             (context.logger as unknown as IBufferable).flush();
-
-            cacheOptions.ttl
-              && this._cache.add(cacheKey, true, cacheOptions.ttl);
           }
         );
       }
