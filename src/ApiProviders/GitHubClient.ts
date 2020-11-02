@@ -61,7 +61,7 @@ export class GitHubClient implements IApiProviderClient {
       owner: this.owner,
       repo: this.repo,
       state: 'all',
-      sort: 'created',
+      sort: 'updated',
       direction: 'desc',
       page: page,
       per_page: pageSize || 100,
