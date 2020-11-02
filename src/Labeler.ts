@@ -294,7 +294,7 @@ export class Labeler implements ILabeler {
         (): Promise<void> => (
           updatePullRequestLabels(
             pullRequest.code,
-            Array.from(updater.addLabels)
+            Array.from(labels)
           )
         )
       );
