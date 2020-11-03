@@ -177,7 +177,11 @@ export class Labeler implements ILabeler {
           continue;
         }
 
-        const context = new LabelerContext(pullRequest, test);
+        const context = new LabelerContext(
+          pullRequest,
+          this._cache,
+          test
+        );
 
         q.push(
           async(): Promise<void> => {

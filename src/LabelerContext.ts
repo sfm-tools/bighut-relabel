@@ -1,5 +1,5 @@
 import { PullRequest } from './ApiProviders';
-import { ILogger } from './Interfaces';
+import { ICache, ILogger } from './Interfaces';
 import { Logger } from './Logger';
 import { Updater } from './Updater';
 
@@ -10,6 +10,8 @@ export class LabelerContext {
   private _stopComments: string = null;
 
   public readonly logger: ILogger = new Logger();
+
+  public readonly cache: ICache;
 
   /**
    * Indicates what is running in test mode.
@@ -47,8 +49,9 @@ export class LabelerContext {
    */
   public readonly data = new Map<string, any>();
 
-  constructor(pullRequest: PullRequest, test: boolean) {
+  constructor(pullRequest: PullRequest, cache: ICache, test: boolean) {
     this.pullRequest = pullRequest;
+    this.cache = cache;
     this.testMode = test;
 
     this.stop = this.stop.bind(this);
