@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import crypto from 'crypto';
 import queue from 'queue';
 
 import { IApiProviderClient, Milestone, PullRequest } from './ApiProviders';
@@ -106,6 +107,17 @@ export class Labeler implements ILabeler {
 
     if (cacheOptions.ttl) {
       await cache.load();
+
+      // compare hash
+      const hash = crypto
+        .createHash('sha256')
+        .update(JSON.stringify(cacheOptions))
+        .digest('base64');
+
+      if (cache.get('hash') !== hash) {
+        cache.clearAll();
+        cache.add('hash', hash, 30 * 24 * 60 * 60);
+      }
     }
 
     if (rateLimitNotify) {
