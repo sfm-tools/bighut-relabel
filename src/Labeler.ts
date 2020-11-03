@@ -251,7 +251,9 @@ export class Labeler implements ILabeler {
               cacheOptions.ttl
                 && cache.add<PullRequestCacheState>(
                   cacheKey,
-                  updateTasks.length ? PullRequestCacheState.AwaitingFix : PullRequestCacheState.NoChanges,
+                  updateTasks.length || context.fixable
+                    ? PullRequestCacheState.AwaitingFix
+                    : PullRequestCacheState.NoChanges,
                   cacheOptions.ttl
                 );
             }

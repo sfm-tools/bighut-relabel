@@ -6,6 +6,8 @@ import { Updater } from './Updater';
 
 export class LabelerContext {
 
+  private _fixable: boolean = false;
+
   private _stop: boolean = false;
 
   private _stopComments: string = null;
@@ -33,6 +35,14 @@ export class LabelerContext {
    */
   public get testMode(): boolean {
     return this._options.test || false;
+  }
+
+  /**
+   * Indicates that there are some changes that can be made in fix mode.
+   * Affects caching if caching is enabled.
+   */
+  public get fixable(): boolean {
+    return this._fixable;
   }
 
   /**
@@ -70,8 +80,23 @@ export class LabelerContext {
       options
     );
 
+    this.haveToFix = this.haveToFix.bind(this);
     this.stop = this.stop.bind(this);
     this.log = this.log.bind(this);
+  }
+
+  /**
+   * Notifies the Labeler that there are fixes for the given
+   * Pull Request that can be performed in fix mode.
+   *
+   * This method is for use with `ExecuteAction`.
+   * If you are using caching, then inside a custom action
+   * you can call this method so that in test mode the correct status
+   * is written to the cache, which will allow you to execute the action
+   * in fix mode without waiting for the cache to expire.
+   */
+  public haveToFix(): void {
+    this._fixable = true;
   }
 
   /**
