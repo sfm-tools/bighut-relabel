@@ -5,7 +5,10 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenCommitMessageCondition', () => {
-  const context = new LabelerContext(pullRequests[0], true);
+  const context = new LabelerContext({
+    pullRequest: pullRequests[0],
+    test: true,
+  });
 
   it('should return true when the specified substring is found in commit messages', async(): Promise<void> => {
     const when = new WhenCommitMessageCondition('bug');

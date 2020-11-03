@@ -6,7 +6,10 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenFileContentCondition', () => {
-  const context = new LabelerContext(pullRequests[0], true);
+  const context = new LabelerContext({
+    pullRequest: pullRequests[0],
+    test: true,
+  });
 
   it('should return true for an existing substring', async(): Promise<void> => {
     const when = new WhenFileContentCondition('awesome-application');

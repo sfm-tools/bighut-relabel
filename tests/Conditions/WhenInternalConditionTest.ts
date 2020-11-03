@@ -11,7 +11,10 @@ describe('WhenInternalCondition', () => {
   it('should be enabled the stopped option in the context instance', (): void => {
     const options = new WhenInternalConditionOptions(null);
     const when = new WhenInternalCondition(options);
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
 
     options.ignoreOtherActions();
 
@@ -23,7 +26,10 @@ describe('WhenInternalCondition', () => {
   it('should not be enabled the stopped option in the context instance', (): void => {
     const options = new WhenInternalConditionOptions(null);
     const when = new WhenInternalCondition(options);
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
 
     when.test(context);
 
@@ -36,7 +42,10 @@ describe('WhenInternalCondition', () => {
 
     options.nothing();
 
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
 
     expect(() => when.test(context)).to.throw(new NotSupportedParameterError('nothing').message);
   });

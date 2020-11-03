@@ -8,7 +8,11 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('SetTitleActionExecutor', () => {
 
   it('should add a task to change title', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const updater = context.updater;
     const action = new SetTitleAction('Awesome title', null);
     const executor = new SetTitleActionExecutor(action, null);
@@ -22,7 +26,11 @@ describe('SetTitleActionExecutor', () => {
   });
 
   it('should not add a task to change title', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const updater = context.updater;
     const action = new SetTitleAction('Awesome title', null);
     const executor = new SetTitleActionExecutor(action, null);

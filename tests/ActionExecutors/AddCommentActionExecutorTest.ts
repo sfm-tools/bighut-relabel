@@ -8,7 +8,11 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('AddCommentActionExecutor', () => {
 
   it('should add a task to comment comment', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const updater = context.updater;
     const action = new AddCommentAction('Awesome comment', null);
     const executor = new AddCommentActionExecutor(action, null);
@@ -22,7 +26,11 @@ describe('AddCommentActionExecutor', () => {
   });
 
   it('should not add a task to add comment', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const updater = context.updater;
     const action = new AddCommentAction('Awesome comment', null);
     const executor = new AddCommentActionExecutor(action, null);

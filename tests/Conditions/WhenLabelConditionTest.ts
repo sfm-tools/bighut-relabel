@@ -6,7 +6,10 @@ import { LabelerContext } from '../../src/LabelerContext';
 import { pullRequests } from '../Resources';
 
 describe('WhenLabelCondition', () => {
-  const context = new LabelerContext(pullRequests[0], true);
+  const context = new LabelerContext({
+    pullRequest: pullRequests[0],
+    test: true,
+  });
 
   it('should return true for an existing label using a string predicate', (): void => {
     const when = new WhenLabelCondition('enhancement');

@@ -11,7 +11,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true if the number of comments matches', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.equal(4);
 
@@ -23,7 +26,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return false when the number of comments non-matches', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.equal(123);
 
@@ -37,7 +43,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments greater than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.greaterThan(1);
 
@@ -49,7 +58,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return false when the number of comments less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.greaterThan(123);
 
@@ -63,7 +75,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments greater than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.greaterThanOrEqualTo(2);
 
@@ -75,7 +90,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments equals to the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.greaterThanOrEqualTo(4);
 
@@ -87,7 +105,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return false when the number of comments less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.greaterThanOrEqualTo(5);
 
@@ -101,7 +122,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.lessThan(42);
 
@@ -113,7 +137,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return false when the number of comments greater than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.lessThan(1);
 
@@ -127,7 +154,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.lessThanOrEqualTo(512);
 
@@ -139,7 +169,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return true when the number of comments equals to the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.lessThanOrEqualTo(4);
 
@@ -151,7 +184,10 @@ describe('WhenCommentCountCondition', () => {
     it('should return false when the number of comments greater than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
-      const context = new LabelerContext(pullRequests[0], true);
+      const context = new LabelerContext({
+        pullRequest: pullRequests[0],
+        test: true,
+      });
 
       options.lessThanOrEqualTo(1);
 

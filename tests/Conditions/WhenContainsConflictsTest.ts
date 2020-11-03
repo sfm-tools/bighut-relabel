@@ -13,7 +13,10 @@ describe('WhenContainsConflicts', () => {
 
   it('should return true for a pull request that does not contain conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(false);
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
     const result = await when.test(context);
 
     expect(result).to.be.true;
@@ -21,7 +24,10 @@ describe('WhenContainsConflicts', () => {
 
   it('should return false for a pull request that does not contain conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(true);
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
     const result = await when.test(context);
 
     expect(result).to.be.false;
@@ -29,7 +35,10 @@ describe('WhenContainsConflicts', () => {
 
   it('should return true for a pull request that contains conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(true);
-    const context = new LabelerContext(pullRequests[1], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[1],
+      test: true,
+    });
     const result = await when.test(context);
 
     expect(result).to.be.true;
@@ -37,7 +46,10 @@ describe('WhenContainsConflicts', () => {
 
   it('should return false for a pull request that contains conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(false);
-    const context = new LabelerContext(pullRequests[1], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[1],
+      test: true,
+    });
     const result = await when.test(context);
 
     expect(result).to.be.false;
@@ -49,7 +61,10 @@ describe('WhenContainsConflicts', () => {
 
     options.nothing();
 
-    const context = new LabelerContext(pullRequests[1], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[1],
+      test: true,
+    });
     const result = await when.test(context);
 
     expect(result).to.be.false;

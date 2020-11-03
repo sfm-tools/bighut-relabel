@@ -8,7 +8,11 @@ import { flossTomUser, pullRequests } from '../Resources';
 describe('SkipActionExecutor', () => {
 
   it('should have status executed', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const action = new SkipAction(null);
     const executor = new SkipActionExecutor(action, null);
 
@@ -21,7 +25,11 @@ describe('SkipActionExecutor', () => {
   });
 
   it('context should have the true value of the stopped property', async(): Promise<void> => {
-    const context = new LabelerContext(pullRequests[0], true);
+    const context = new LabelerContext({
+      pullRequest: pullRequests[0],
+      test: true,
+    });
+
     const action = new SkipAction(null);
     const executor = new SkipActionExecutor(action, null);
 
