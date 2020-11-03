@@ -12,12 +12,28 @@ export class LabelerContext {
 
   public readonly logger: ILogger = new Logger();
 
-  public readonly cache: ICache;
+  private readonly _options: LabelerContextOptions;
+
+  /**
+   * Current Pull Request.
+   */
+  public get pullRequest(): PullRequest {
+    return this._options.pullRequest;
+  }
+
+  /**
+   * Represents access to `Labeler` cache.
+   */
+  public get cache(): ICache {
+    return this._options.cache;
+  }
 
   /**
    * Indicates what is running in test mode.
    */
-  public readonly testMode: boolean = false;
+  public get testMode(): boolean {
+    return this._options.test || false;
+  }
 
   /**
    * Indicates to interrupt the processing of other actions
@@ -35,11 +51,6 @@ export class LabelerContext {
   }
 
   /**
-   * Current Pull Request.
-   */
-  public readonly pullRequest: PullRequest;
-
-  /**
    * Tasks to update the current Pull Request.
    */
   public readonly updater = new Updater();
@@ -51,9 +62,13 @@ export class LabelerContext {
   public readonly data = new Map<string, any>();
 
   constructor(options: LabelerContextOptions) {
-    this.pullRequest = options.pullRequest;
-    this.cache = options.cache || null;
-    this.testMode = options.test || false;
+    this._options = Object.assign(
+      {},
+      {
+        test: false,
+      },
+      options
+    );
 
     this.stop = this.stop.bind(this);
     this.log = this.log.bind(this);
