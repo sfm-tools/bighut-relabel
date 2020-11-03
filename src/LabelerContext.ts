@@ -1,6 +1,7 @@
 import { PullRequest } from './ApiProviders';
 import { ICache, ILogger } from './Interfaces';
 import { Logger } from './Logger';
+import { LabelerContextOptions } from './Types';
 import { Updater } from './Updater';
 
 export class LabelerContext {
@@ -49,10 +50,10 @@ export class LabelerContext {
    */
   public readonly data = new Map<string, any>();
 
-  constructor(pullRequest: PullRequest, cache: ICache, test: boolean) {
-    this.pullRequest = pullRequest;
-    this.cache = cache;
-    this.testMode = test;
+  constructor(options: LabelerContextOptions) {
+    this.pullRequest = options.pullRequest;
+    this.cache = options.cache || null;
+    this.testMode = options.test || false;
 
     this.stop = this.stop.bind(this);
     this.log = this.log.bind(this);

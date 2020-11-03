@@ -79,6 +79,8 @@ export class Labeler implements ILabeler {
   }
 
   private async processPullRequests(test?: boolean): Promise<void> {
+    const cache = this._cache;
+
     const {
       threads,
       rateLimitNotify,
@@ -134,7 +136,7 @@ export class Labeler implements ILabeler {
       }
 
       if (cacheOptions.ttl) {
-        await this._cache.load();
+        await cache.load();
       }
 
       const logSkipped = (pullRequest: PullRequest, reason: string): void => {
@@ -158,7 +160,7 @@ export class Labeler implements ILabeler {
         }
 
         const cacheKey = `pr-${pullRequest.code}`;
-        const cacheValue = this._cache.get<PullRequestCacheState>(cacheKey);
+        const cacheValue = cache.get<PullRequestCacheState>(cacheKey);
 
         if (
           (test && cacheValue)
@@ -172,16 +174,16 @@ export class Labeler implements ILabeler {
         ) {
           logSkipped(
             pullRequest,
-            `cached until ${new Date(this._cache.getTtl(cacheKey))}`
+            `cached until ${new Date(cache.getTtl(cacheKey))}`
           );
           continue;
         }
 
-        const context = new LabelerContext(
+        const context = new LabelerContext({
           pullRequest,
-          this._cache,
-          test
-        );
+          cache,
+          test,
+        });
 
         q.push(
           async(): Promise<void> => {
@@ -239,14 +241,14 @@ export class Labeler implements ILabeler {
               }
 
               cacheOptions.ttl
-                && this._cache.add<PullRequestCacheState>(
+                && cache.add<PullRequestCacheState>(
                   cacheKey,
                   PullRequestCacheState.Fixed,
                   cacheOptions.ttl
                 );
             } else {
               cacheOptions.ttl
-                && this._cache.add<PullRequestCacheState>(
+                && cache.add<PullRequestCacheState>(
                   cacheKey,
                   updateTasks.length ? PullRequestCacheState.AwaitingFix : PullRequestCacheState.NoChanges,
                   cacheOptions.ttl
@@ -274,7 +276,7 @@ export class Labeler implements ILabeler {
     });
 
     if (cacheOptions.ttl) {
-      this._cache.save();
+      cache.save();
     }
   }
 
