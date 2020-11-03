@@ -104,6 +104,10 @@ export class Labeler implements ILabeler {
       'mode.'
     );
 
+    if (cacheOptions.ttl) {
+      await cache.load();
+    }
+
     if (rateLimitNotify) {
       const rateLimit = await this._client.getRateLimit();
 
@@ -133,10 +137,6 @@ export class Labeler implements ILabeler {
 
       if (!pullRequests.length) {
         break;
-      }
-
-      if (cacheOptions.ttl) {
-        await cache.load();
       }
 
       const logSkipped = (pullRequest: PullRequest, reason: string): void => {
