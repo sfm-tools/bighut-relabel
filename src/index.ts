@@ -5,7 +5,7 @@ import { LabelerOptions } from './Types';
 
 export { IConfig } from './Interfaces';
 export { LabelerContext } from './LabelerContext';
-export { TaskContext } from './Types';
+export { TaskContext } from './Types'; // TODO: Remove in future releases
 
 type Options = {
 

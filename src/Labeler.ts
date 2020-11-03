@@ -299,8 +299,11 @@ export class Labeler implements ILabeler {
     if (updater.tasks.length) {
       for (const task of updater.tasks) {
         await task({
+          // TODO: Remove in future releases
           githubClient: this._client,
           labelerContext: context,
+          // --
+          ...context
         });
       }
     }
