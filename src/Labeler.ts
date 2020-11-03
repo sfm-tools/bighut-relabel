@@ -180,6 +180,7 @@ export class Labeler implements ILabeler {
         }
 
         const context = new LabelerContext({
+          apiProviderClient: this._client,
           pullRequest,
           cache,
           test,
