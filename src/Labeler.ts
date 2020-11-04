@@ -296,152 +296,162 @@ export class Labeler implements ILabeler {
   }
 
   private async createUpdateTasks(context: LabelerContext): Promise<Array<{ (): Promise<any> }>> {
-    const {
-      pullRequest,
-      updater,
-      log,
-    } = context;
+    try {
+      const {
+        pullRequest,
+        updater,
+        log,
+      } = context;
 
-    const {
-      updatePullRequestLabels,
-      updatePullRequestMilestone,
-      updatePullRequestTitile,
-      updatePullRequestDescription,
-      addCommentToPullRequest,
-    } = this._client;
+      const {
+        updatePullRequestLabels,
+        updatePullRequestMilestone,
+        updatePullRequestTitile,
+        updatePullRequestDescription,
+        addCommentToPullRequest,
+      } = this._client;
 
-    if (updater.tasks.length) {
-      for (const task of updater.tasks) {
-        await task({
+      if (updater.tasks.length) {
+        for (const task of updater.tasks) {
           // TODO: Remove in future releases
-          githubClient: this._client,
-          labelerContext: context,
+          context['githubClient'] = this._client;
+          context['labelerContext'] = context;
           // --
-          ...context
-        });
+
+          await task(context);
+        }
       }
-    }
 
-    const updateTasks = new Array<{ (): Promise<any> }>();
-    const labels = new Set<string>(pullRequest.labels);
+      const updateTasks = new Array<{ (): Promise<any> }>();
+      const labels = new Set<string>(pullRequest.labels);
 
-    if (updater.addLabels.size) {
-      updater.addLabels.forEach(labels.add, labels);
-    }
+      if (updater.addLabels.size) {
+        updater.addLabels.forEach(labels.add, labels);
+      }
 
-    if (updater.removeLabels.size) {
-      updater.removeLabels.forEach(labels.delete, labels);
-    }
+      if (updater.removeLabels.size) {
+        updater.removeLabels.forEach(labels.delete, labels);
+      }
 
-    if (Array.from(labels).sort().join() !== pullRequest.labels.sort().join()) {
-      log(
-        '..fix labels:',
-        chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
-        '=>',
-        chalk.green(labels.size ? Array.from(labels).join(', ') : '<empty>')
-      );
+      if (Array.from(labels).sort().join() !== pullRequest.labels.sort().join()) {
+        log(
+          '..fix labels:',
+          chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
+          '=>',
+          chalk.green(labels.size ? Array.from(labels).join(', ') : '<empty>')
+        );
 
-      updateTasks.push(
-        (): Promise<void> => (
-          updatePullRequestLabels(
-            pullRequest.code,
-            Array.from(labels)
+        updateTasks.push(
+          (): Promise<void> => (
+            updatePullRequestLabels(
+              pullRequest.code,
+              Array.from(labels)
+            )
           )
-        )
-      );
-    }
+        );
+      }
 
-    if (updater.title.counter && updater.title.value !== pullRequest.title) {
-      log(
-        '..fix title:',
-        chalk.yellow(pullRequest.title || '<empty>'),
-        '=>',
-        chalk.green(updater.title.value || '<empty>')
-      );
+      if (updater.title.counter && updater.title.value !== pullRequest.title) {
+        log(
+          '..fix title:',
+          chalk.yellow(pullRequest.title || '<empty>'),
+          '=>',
+          chalk.green(updater.title.value || '<empty>')
+        );
 
-      updateTasks.push(
-        (): Promise<void> => (
-          updatePullRequestTitile(
-            pullRequest.code,
-            updater.title.value
+        updateTasks.push(
+          (): Promise<void> => (
+            updatePullRequestTitile(
+              pullRequest.code,
+              updater.title.value
+            )
           )
-        )
-      );
-    }
+        );
+      }
 
-    if (updater.description.counter && updater.description.value !== pullRequest.description) {
-      log(
-        '..fix description:',
-        chalk.yellow(pullRequest.description || '<empty>'),
-        '=>',
-        chalk.green(updater.description.value || '<empty>')
-      );
+      if (updater.description.counter && updater.description.value !== pullRequest.description) {
+        log(
+          '..fix description:',
+          chalk.yellow(pullRequest.description || '<empty>'),
+          '=>',
+          chalk.green(updater.description.value || '<empty>')
+        );
 
-      updateTasks.push(
-        (): Promise<void> => (
-          updatePullRequestDescription(
-            pullRequest.code,
-            updater.description.value
+        updateTasks.push(
+          (): Promise<void> => (
+            updatePullRequestDescription(
+              pullRequest.code,
+              updater.description.value
+            )
           )
-        )
-      );
-    }
+        );
+      }
 
-    if (updater.milestone.counter) {
-      const milestones = await this._milestones.get();
-      const milestone = milestones.find(
-        (milestone: Milestone): boolean => (
-          milestone.name === updater.milestone.value
-        )
-      );
+      if (updater.milestone.counter) {
+        const milestones = await this._milestones.get();
+        const milestone = milestones.find(
+          (milestone: Milestone): boolean => (
+            milestone.name === updater.milestone.value
+          )
+        );
 
-      if (!milestone) {
-        log(chalk.red(`..milestone "${updater.milestone.value}" not found.`));
-      } else {
-        if (updater.milestone.value !== pullRequest.milestone?.name) {
+        if (!milestone) {
+          log(chalk.red(`..milestone "${updater.milestone.value}" not found.`));
+        } else {
+          if (updater.milestone.value !== pullRequest.milestone?.name) {
+            log(
+              '..fix milestone:',
+              chalk.yellow(pullRequest.milestone?.name || '<empty>'),
+              '=>',
+              chalk.green(milestone?.name || '<empty>')
+            );
+
+            updateTasks.push(
+              (): Promise<void> => (
+                updatePullRequestMilestone(
+                  pullRequest.code,
+                  milestone?.code ?? null,
+                )
+              )
+            );
+          }
+        }
+      }
+
+      if (updater.addComments.length) {
+        for (const comment of updater.addComments) {
           log(
-            '..fix milestone:',
-            chalk.yellow(pullRequest.milestone?.name || '<empty>'),
-            '=>',
-            chalk.green(milestone?.name || '<empty>')
+            '..add comment:',
+            chalk.green(
+              comment.substr(
+                0,
+                comment.includes('\n') ? comment.indexOf('\n') : comment.length
+              )
+            )
           );
 
           updateTasks.push(
-            (): Promise<void> => (
-              updatePullRequestMilestone(
+            (): Promise<number> => (
+              addCommentToPullRequest(
                 pullRequest.code,
-                milestone?.code ?? null,
+                comment
               )
             )
           );
         }
       }
+
+      return updateTasks;
+    } catch (error) {
+      context.log(
+        chalk.red('..error:'),
+        chalk.red(error.message)
+      );
+
+      (context.logger as unknown as IBufferable).flush();
+
+      throw error;
     }
-
-    if (updater.addComments.length) {
-      for (const comment of updater.addComments) {
-        log(
-          '..add comment:',
-          chalk.green(
-            comment.substr(
-              0,
-              comment.includes('\n') ? comment.indexOf('\n') : comment.length
-            )
-          )
-        );
-
-        updateTasks.push(
-          (): Promise<number> => (
-            addCommentToPullRequest(
-              pullRequest.code,
-              comment
-            )
-          )
-        );
-      }
-    }
-
-    return updateTasks;
   }
 
 }
