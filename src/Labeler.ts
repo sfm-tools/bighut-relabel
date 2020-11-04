@@ -284,6 +284,10 @@ export class Labeler implements ILabeler {
           resolve();
         }
 
+        if (e === 'error') {
+          console.error(args);
+        }
+
         return true;
       };
 
