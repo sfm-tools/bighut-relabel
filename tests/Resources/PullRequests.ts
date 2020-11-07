@@ -1,4 +1,11 @@
-import { Comment, Commit, File, PullRequest, PullRequestStatus } from '../../src/ApiProviders';
+import {
+  Comment,
+  Commit,
+  File,
+  PullRequest,
+  PullRequestStatus,
+  Review,
+} from '../../src/ApiProviders';
 import { CacheableAction } from '../../src/CacheableAction';
 import { flossTomUser, loftMossUser, msSoftLoUser } from './Users';
 
@@ -202,6 +209,22 @@ export const pullRequests: Array<PullRequest> = [
     state: 'open',
     title: 'Awesome pull request',
     createdDate: new Date(2020, 9, 18, 12, 51, 0),
+    reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
+      {
+        author: msSoftLoUser,
+        comment: null,
+        commintId: '2127cd8852b430ea586be97f82eb16c9d1ae2377',
+        createdDate: new Date(2020, 10, 7, 5, 23, 0),
+        state: 'APPROVED',
+      },
+      {
+        author: msSoftLoUser,
+        comment: null,
+        commintId: '2127cd8852b430ea586be97f82eb16c9d1ae2377',
+        createdDate: new Date(2020, 10, 7, 5, 23, 30),
+        state: 'COMMENTED',
+      },
+    ])),
     statusInfo: new CacheableAction(() => Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
@@ -254,6 +277,43 @@ export const pullRequests: Array<PullRequest> = [
     state: 'open',
     title: 'Readme fixes',
     createdDate: new Date(2020, 9, 24, 0, 30, 0),
+    reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
+      {
+        author: msSoftLoUser,
+        comment: null,
+        commintId: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
+        createdDate: new Date(2020, 10, 7, 5, 20, 0),
+        state: 'APPROVED',
+      },
+      {
+        author: flossTomUser,
+        comment: null,
+        commintId: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
+        createdDate: new Date(2020, 10, 7, 5, 22, 0),
+        state: 'CHANGES_REQUESTED',
+      },
+      {
+        author: loftMossUser,
+        comment: null,
+        commintId: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
+        createdDate: new Date(2020, 10, 7, 5, 22, 42),
+        state: 'COMMENTED',
+      },
+      {
+        author: flossTomUser,
+        comment: null,
+        commintId: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
+        createdDate: new Date(2020, 10, 7, 5, 23, 10),
+        state: 'COMMENTED',
+      },
+      {
+        author: msSoftLoUser,
+        comment: null,
+        commintId: '1121a3ee5e6b5b0d3255bfef95601890afd80701',
+        createdDate: new Date(2020, 10, 7, 5, 23, 15),
+        state: 'CHANGES_REQUESTED',
+      },
+    ])),
     statusInfo: new CacheableAction(() => Promise.resolve<PullRequestStatus>({
       merged: false,
       mergeable: true,
