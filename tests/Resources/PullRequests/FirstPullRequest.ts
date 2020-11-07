@@ -7,6 +7,7 @@ import {
   Review,
 } from '../../../src/ApiProviders';
 import { CacheableAction } from '../../../src/CacheableAction';
+import { issue1Branch, mainBranch } from '../Branches';
 import { flossTomUser, loftMossUser, msSoftLoUser } from '../Users';
 
 export const firstPullRequest: PullRequest = {
@@ -197,14 +198,8 @@ export const firstPullRequest: PullRequest = {
   id: 999000901,
   labels: ['enhancement', 'ui'],
   milestone: null,
-  sourceBranch: {
-    name: 'issue-1',
-    isExists: new CacheableAction(() => Promise.resolve(true)),
-  },
-  targetBranch: {
-    name: 'main',
-    isExists: new CacheableAction(() => Promise.resolve(true)),
-  },
+  sourceBranch: issue1Branch,
+  targetBranch: mainBranch,
   state: 'open',
   title: 'Awesome pull request',
   createdDate: new Date(2020, 9, 18, 12, 51, 0),

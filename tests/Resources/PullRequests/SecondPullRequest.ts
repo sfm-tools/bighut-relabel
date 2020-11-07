@@ -7,6 +7,7 @@ import {
   Review,
 } from '../../../src/ApiProviders';
 import { CacheableAction } from '../../../src/CacheableAction';
+import { issue2Branch, mainBranch } from '../Branches';
 import { flossTomUser, loftMossUser, msSoftLoUser } from '../Users';
 
 export const secondPullRequests: PullRequest = {
@@ -40,14 +41,8 @@ export const secondPullRequests: PullRequest = {
     code: 1,
     name: 'Version 2.0',
   },
-  sourceBranch: {
-    name: 'issue-2',
-    isExists: new CacheableAction(() => Promise.resolve(true)),
-  },
-  targetBranch: {
-    name: 'main',
-    isExists: new CacheableAction(() => Promise.resolve(true)),
-  },
+  sourceBranch: issue2Branch,
+  targetBranch: mainBranch,
   state: 'open',
   title: 'Readme fixes',
   createdDate: new Date(2020, 9, 24, 0, 30, 0),
