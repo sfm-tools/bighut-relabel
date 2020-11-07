@@ -1,4 +1,5 @@
 export {
+  ArrayConditionOptionsValues,
   ConditionOptionsValues,
   NumberConditionOptionsValues,
   WhenCommentTextConditionOptionsValues,

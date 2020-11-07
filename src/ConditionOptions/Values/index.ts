@@ -1,3 +1,4 @@
+export { ArrayConditionOptionsValues } from './ArrayConditionOptionsValues';
 export { ConditionOptionsValues } from './ConditionOptionsValues';
 export { NumberConditionOptionsValues } from './NumberConditionOptionsValues';
 export { WhenCommentTextConditionOptionsValues } from './WhenCommentTextConditionOptionsValues';
