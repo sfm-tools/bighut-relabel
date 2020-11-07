@@ -128,6 +128,9 @@ export class GitHubClient implements IApiProviderClient {
           commits: new CacheableAction(
             (): Promise<Array<Commit>> => this.getPullRequestCommits(item.number)
           ),
+          reviews: new CacheableAction(
+            (): Promise<Array<Review>> => this.getPullRequestReviewList(item.number)
+          ),
           statusInfo: new CacheableAction(
             (): Promise<PullRequestStatus> => this.getPullRequestStatus(item.number)
           ),

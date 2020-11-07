@@ -5,6 +5,7 @@ import { Commit } from './Commit';
 import { File } from './File';
 import { Milestone } from './Milestone';
 import { PullRequestStatus } from './PullRequestStatus';
+import { Review } from './Review';
 import { User } from './User';
 
 export type PullRequest = {
@@ -44,6 +45,8 @@ export type PullRequest = {
   commits: CacheableAction<Array<Commit>>;
 
   files: CacheableAction<Array<File>>;
+
+  reviews: CacheableAction<Array<Review>>;
 
   statusInfo: CacheableAction<PullRequestStatus>;
 
