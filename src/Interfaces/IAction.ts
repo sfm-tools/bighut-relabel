@@ -117,6 +117,11 @@ export interface IAction {
   whenHasNoConflicts(): DefaultConditionOptions;
 
   /**
+   * Checks that a pull request is approved.
+   */
+  whenApproved(): DefaultConditionOptions;
+
+  /**
    * Prohibits any other action if the current one meets all the conditions.
    */
   ignoreOthers(comments?: string): void;

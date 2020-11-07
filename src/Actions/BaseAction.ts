@@ -24,6 +24,7 @@ import {
   WhenLabelCondition,
   WhenMergeDirectionCondition,
   WhenMilestoneNameCondition,
+  WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
@@ -205,6 +206,15 @@ export abstract class BaseAction implements IAction {
   public whenHasNoConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
     const condition = new WhenContainsConflicts(false);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenApproved(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenReviewStateCondition('APPROVED');
 
     this.addCondition(condition);
 
