@@ -9,5 +9,6 @@ export {
   Milestone,
   PullRequest,
   PullRequestStatus,
+  Review,
   User,
 } from './Types';
