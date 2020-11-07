@@ -4,6 +4,7 @@ import {
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
   WhenNumberConditionOptions,
+  WhenReviewStateConditionOptions,
 } from '../ConditionOptions';
 import {
   WhenConditionPredicate,
@@ -119,12 +120,12 @@ export interface IAction {
   /**
    * Checks that a pull request is approved.
    */
-  whenApproved(): DefaultConditionOptions;
+  whenApproved(): WhenReviewStateConditionOptions;
 
   /**
    * Checks the requested changes for a pull request.
    */
-  whenChangesRequested(): DefaultConditionOptions;
+  whenChangesRequested(): WhenReviewStateConditionOptions;
 
   /**
    * Prohibits any other action if the current one meets all the conditions.

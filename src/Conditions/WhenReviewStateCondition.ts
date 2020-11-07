@@ -1,17 +1,26 @@
 import { Review } from '../ApiProviders';
-import { DefaultConditionOptions } from '../ConditionOptions';
+import { WhenReviewStateConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { BaseCondition } from './BaseCondition';
 
 type ReviewState = 'NO_REVIEW' | 'APPROVED' | 'CHANGES_REQUESTED';
+type Reviewer = { login: string, approved: boolean };
 
-export class WhenReviewStateCondition extends BaseCondition<ReviewState, DefaultConditionOptions> {
+export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenReviewStateConditionOptions> {
 
-  constructor(state: ReviewState) {
-    super(state);
+  constructor(state: ReviewState, options?: WhenReviewStateConditionOptions) {
+    super(state, options);
   }
 
   public async test(context: LabelerContext): Promise<boolean> {
+    const {
+      all,
+      oneOf,
+      value,
+    } = this.getOptions();
+
+    const users = [...value || []];
+    const hasUsers = !!users.length;
     const state = this.predicate;
     const reviews = await context.pullRequest.reviews.get();
 
@@ -30,37 +39,106 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, Default
     ).length;
 
     if (!changesRequested) {
-      approved = reviews.filter(
-        (review: Review): boolean => (
-          review.state === 'APPROVED'
-        )
-      ).length > 0;
+      if (hasUsers) {
+        if (oneOf) {
+          approved = reviews.filter(
+            (review: Review): boolean => (
+              review.state === 'APPROVED'
+              && users.includes(review.author.login)
+            )
+          ).length > 0;
+        }
+
+        if (all) {
+          approved = reviews.filter(
+            (review: Review): boolean => (
+              review.state === 'APPROVED'
+            )
+          ).every(
+            (review: Review): boolean => (
+              users.includes(review.author.login)
+            )
+          );
+        }
+      } else {
+        approved = reviews.filter(
+          (review: Review): boolean => (
+            review.state === 'APPROVED'
+          )
+        ).length > 0;
+      }
     } else {
-      const groups = reviews.reduce(
-        (r: { [key: string]: Array<boolean> }, current: Review): { [key: string]: Array<boolean> } => {
+      const reviewers = reviews.reduce(
+        (r: Array<Reviewer>, current: Review): Array<Reviewer> => {
           const login = current.author.login;
 
-          r[login] = r[login] || [];
+          let item = r.find((item: Reviewer): boolean => (
+            item.login === login
+          ));
 
-          if (current.state !== 'COMMENTED') {
-            r[login].push(current.state === 'APPROVED');
+          if (!item) {
+            item = {
+              login,
+              approved: undefined,
+            };
+
+            r.push(item);
           }
+
+          item.approved = (
+            current.state !== 'COMMENTED'
+              ? current.state === 'APPROVED'
+              : (
+                item.approved === undefined
+                  ? undefined
+                  : item.approved
+              )
+          );
 
           return r;
-        }, {}
+        },
+        new Array<{ login: string, approved: boolean }>()
       );
 
-      for (const login of Object.keys(groups)) {
-        const userReviews = groups[login];
+      for (const reviewer of reviewers) {
+        if (reviewer.approved === undefined) {
+          continue;
+        }
 
-        if (userReviews.length) {
-          approved = userReviews[userReviews.length - 1];
+        approved = reviewer.approved;
 
-          if (!approved) {
-            break;
+        if (users.length) {
+          if (oneOf) {
+            if (users.includes(reviewer.login)) {
+              break;
+            } else {
+              continue;
+            }
+          }
+
+          if (all) {
+            const index = users.indexOf(reviewer.login);
+
+            if (index !== -1) {
+              users.splice(index, 1);
+            }
+
+            if (users.length) {
+              continue;
+            } else {
+              break;
+            }
           }
         }
+
+        if (!approved) {
+          break;
+        }
       }
+    }
+
+    if (approved && all && hasUsers && users.length) {
+      approved = false;
     }
 
     if (state === 'APPROVED') {

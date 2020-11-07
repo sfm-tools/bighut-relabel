@@ -5,6 +5,7 @@ import {
   WhenFilePathConditionOptions,
   WhenInternalConditionOptions,
   WhenNumberConditionOptions,
+  WhenReviewStateConditionOptions,
 } from '../ConditionOptions';
 import {
   BaseCondition,
@@ -212,18 +213,24 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
-  public whenApproved(): DefaultConditionOptions {
-    const options = new DefaultConditionOptions(this);
-    const condition = new WhenReviewStateCondition('APPROVED');
+  public whenApproved(): WhenReviewStateConditionOptions {
+    const options = new WhenReviewStateConditionOptions(this);
+    const condition = new WhenReviewStateCondition(
+      'APPROVED',
+      options
+    );
 
     this.addCondition(condition);
 
     return options;
   }
 
-  public whenChangesRequested(): DefaultConditionOptions {
-    const options = new DefaultConditionOptions(this);
-    const condition = new WhenReviewStateCondition('CHANGES_REQUESTED');
+  public whenChangesRequested(): WhenReviewStateConditionOptions {
+    const options = new WhenReviewStateConditionOptions(this);
+    const condition = new WhenReviewStateCondition(
+      'CHANGES_REQUESTED',
+      options
+    );
 
     this.addCondition(condition);
 
