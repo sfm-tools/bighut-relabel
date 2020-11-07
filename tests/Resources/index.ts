@@ -1,4 +1,10 @@
 export {
+  issue1Branch,
+  issue2Branch,
+  mainBranch,
+  removedBranch,
+} from './Branches';
+export {
   flossMotUser,
   flossTomUser,
   loftMossUser,
