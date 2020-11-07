@@ -221,6 +221,15 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
+  public whenChangesRequested(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenReviewStateCondition('CHANGES_REQUESTED');
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
   public ignoreOthers(comments?: string): void {
     this.conditions.push(
       new WhenInternalCondition(

@@ -122,6 +122,11 @@ export interface IAction {
   whenApproved(): DefaultConditionOptions;
 
   /**
+   * Checks the requested changes for a pull request.
+   */
+  whenChangesRequested(): DefaultConditionOptions;
+
+  /**
    * Prohibits any other action if the current one meets all the conditions.
    */
   ignoreOthers(comments?: string): void;
