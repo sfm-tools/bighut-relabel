@@ -14,3 +14,4 @@ export { WhenFileContentConditionOptions } from './WhenFileContentConditionOptio
 export { WhenFilePathConditionOptions } from './WhenFilePathConditionOptions';
 export { WhenInternalConditionOptions } from './WhenInternalConditionOptions';
 export { WhenNumberConditionOptions } from './WhenNumberConditionOptions';
+export { WhenReviewStateConditionOptions } from './WhenReviewStateConditionOptions';
