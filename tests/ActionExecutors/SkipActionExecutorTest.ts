@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { SkipActionExecutor } from '../../src/ActionExecutors';
 import { SkipAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('SkipActionExecutor', () => {
 
   it('should have status executed', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -26,7 +26,7 @@ describe('SkipActionExecutor', () => {
 
   it('context should have the true value of the stopped property', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

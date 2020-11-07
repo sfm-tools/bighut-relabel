@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { SetTitleActionExecutor } from '../../src/ActionExecutors';
 import { SetTitleAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('SetTitleActionExecutor', () => {
 
   it('should add a task to change title', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('SetTitleActionExecutor', () => {
 
   it('should not add a task to change title', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

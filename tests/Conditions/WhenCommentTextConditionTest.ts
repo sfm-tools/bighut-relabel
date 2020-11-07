@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { WhenCommentTextConditionOptions } from '../../src/ConditionOptions';
 import { WhenCommentTextCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenCommentTextCondition', () => {
   const context = new LabelerContext({
-    pullRequest: pullRequests[0],
+    pullRequest: firstPullRequest,
     test: true,
   });
 

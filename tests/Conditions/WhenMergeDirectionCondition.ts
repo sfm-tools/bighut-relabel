@@ -2,11 +2,11 @@ import { expect } from 'chai';
 
 import { WhenMergeDirectionCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenMergeDirectionCondition', () => {
   const context = new LabelerContext({
-    pullRequest: pullRequests[0],
+    pullRequest: firstPullRequest,
     test: true,
   });
 

@@ -2,11 +2,11 @@ import { expect } from 'chai';
 
 import { WhenTitleCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenTitleCondition', () => {
   const context = new LabelerContext({
-    pullRequest: pullRequests[0],
+    pullRequest: firstPullRequest,
     test: true,
   });
 

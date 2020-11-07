@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { SetMilestoneActionExecutor } from '../../src/ActionExecutors';
 import { SetMilestoneAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('SetMilestoneActionExecutor', () => {
 
   it('should add a task to set milestone', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('SetMilestoneActionExecutor', () => {
 
   it('should not add a task to set milestone', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

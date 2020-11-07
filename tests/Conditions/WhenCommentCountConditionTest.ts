@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { WhenNumberConditionOptions } from '../../src/ConditionOptions';
 import { WhenCommentCountCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenCommentCountCondition', () => {
 
@@ -12,7 +12,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -27,7 +27,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -44,7 +44,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -59,7 +59,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -76,7 +76,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -91,7 +91,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -106,7 +106,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -123,7 +123,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -138,7 +138,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -155,7 +155,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -170,7 +170,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 
@@ -185,7 +185,7 @@ describe('WhenCommentCountCondition', () => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenCommentCountCondition(options);
       const context = new LabelerContext({
-        pullRequest: pullRequests[0],
+        pullRequest: firstPullRequest,
         test: true,
       });
 

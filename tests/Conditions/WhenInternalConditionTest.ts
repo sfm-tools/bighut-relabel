@@ -4,7 +4,7 @@ import { WhenInternalConditionOptions } from '../../src/ConditionOptions';
 import { WhenInternalCondition } from '../../src/Conditions';
 import { NotSupportedParameterError } from '../../src/Errors';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenInternalCondition', () => {
 
@@ -12,7 +12,7 @@ describe('WhenInternalCondition', () => {
     const options = new WhenInternalConditionOptions(null);
     const when = new WhenInternalCondition(options);
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('WhenInternalCondition', () => {
     const options = new WhenInternalConditionOptions(null);
     const when = new WhenInternalCondition(options);
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -43,7 +43,7 @@ describe('WhenInternalCondition', () => {
     options.nothing();
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

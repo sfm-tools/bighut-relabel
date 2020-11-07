@@ -11,4 +11,13 @@ export {
   loftSomsUser,
   msSoftLoUser,
 } from './Users';
-export { pullRequests } from './PullRequests';
+export {
+  approvedAndCommentedPullRequest,
+  approvedAndCommentedPullRequest2,
+  approvedSimplePullRequest,
+  changesRequestedSimplePullRequest,
+  firstPullRequest,
+  noReviewPullRequest,
+  partialApprovedAndCommentedPullRequest,
+  secondPullRequests,
+} from './PullRequests';

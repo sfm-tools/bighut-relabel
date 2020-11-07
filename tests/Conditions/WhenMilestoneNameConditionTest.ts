@@ -2,13 +2,13 @@ import { expect } from 'chai';
 
 import { WhenMilestoneNameCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest, secondPullRequests } from '../Resources';
 
 describe('WhenMilestoneNameCondition', () => {
 
   it('should return true for milestone matching name', (): void => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[1],
+      pullRequest: secondPullRequests,
       test: true,
     });
     const when = new WhenMilestoneNameCondition('Version 2.0');
@@ -18,7 +18,7 @@ describe('WhenMilestoneNameCondition', () => {
 
   it('should return false for milestone non-matching name', (): void => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[1],
+      pullRequest: secondPullRequests,
       test: true,
     });
     const when = new WhenMilestoneNameCondition('Version 3.0');
@@ -28,7 +28,7 @@ describe('WhenMilestoneNameCondition', () => {
 
   it('should return false when a milestone is null', (): void => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
     const when = new WhenMilestoneNameCondition('Version 2.0');

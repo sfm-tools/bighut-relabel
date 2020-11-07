@@ -4,7 +4,7 @@ import chaiAsPromised from 'chai-as-promised';
 import { DefaultConditionOptions } from '../../src/ConditionOptions';
 import { WhenContainsConflicts } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest, secondPullRequests } from '../Resources';
 
 use(chaiAsPromised);
 should();
@@ -14,7 +14,7 @@ describe('WhenContainsConflicts', () => {
   it('should return true for a pull request that does not contain conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(false);
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
     const result = await when.test(context);
@@ -25,7 +25,7 @@ describe('WhenContainsConflicts', () => {
   it('should return false for a pull request that does not contain conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(true);
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
     const result = await when.test(context);
@@ -36,7 +36,7 @@ describe('WhenContainsConflicts', () => {
   it('should return true for a pull request that contains conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(true);
     const context = new LabelerContext({
-      pullRequest: pullRequests[1],
+      pullRequest: secondPullRequests,
       test: true,
     });
     const result = await when.test(context);
@@ -47,7 +47,7 @@ describe('WhenContainsConflicts', () => {
   it('should return false for a pull request that contains conflicts', async(): Promise<void> => {
     const when = new WhenContainsConflicts(false);
     const context = new LabelerContext({
-      pullRequest: pullRequests[1],
+      pullRequest: secondPullRequests,
       test: true,
     });
     const result = await when.test(context);
@@ -62,7 +62,7 @@ describe('WhenContainsConflicts', () => {
     options.nothing();
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[1],
+      pullRequest: secondPullRequests,
       test: true,
     });
     const result = await when.test(context);

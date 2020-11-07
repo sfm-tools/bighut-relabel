@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { RemoveLabelActionExecutor } from '../../src/ActionExecutors';
 import { RemoveLabelAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('RemoveLabelActionExecutor', () => {
 
   it('should add an existing label to the remove list of the updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('RemoveLabelActionExecutor', () => {
 
   it('should not add an existing label to the remove list of the updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { WhenFileContentConditionOptions } from '../../src/ConditionOptions';
 import { WhenFileContentCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenFileContentCondition', () => {
   const context = new LabelerContext({
-    pullRequest: pullRequests[0],
+    pullRequest: firstPullRequest,
     test: true,
   });
 

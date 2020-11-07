@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { DefaultConditionOptions } from '../../src/ConditionOptions';
 import { WhenCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { pullRequests } from '../Resources';
+import { firstPullRequest } from '../Resources';
 
 describe('WhenCondition', () => {
 
@@ -13,7 +13,7 @@ describe('WhenCondition', () => {
     });
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -26,7 +26,7 @@ describe('WhenCondition', () => {
     });
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -42,7 +42,7 @@ describe('WhenCondition', () => {
     options.nothing();
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -58,7 +58,7 @@ describe('WhenCondition', () => {
     options.nothing();
 
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

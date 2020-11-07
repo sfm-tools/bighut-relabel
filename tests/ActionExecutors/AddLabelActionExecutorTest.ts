@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { AddLabelActionExecutor } from '../../src/ActionExecutors';
 import { AddLabelAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('AddLabelActionExecutor', () => {
 
   it('should add a label to the updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('AddLabelActionExecutor', () => {
 
   it('should not add any labels to updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -47,7 +47,7 @@ describe('AddLabelActionExecutor', () => {
 
   it('should not add any labels to updater when the request contains an excluded label', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 

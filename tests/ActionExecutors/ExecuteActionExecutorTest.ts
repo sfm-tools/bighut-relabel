@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { ExecuteActionExecutor } from '../../src/ActionExecutors';
 import { ExecuteAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
-import { flossTomUser, pullRequests } from '../Resources';
+import { firstPullRequest, flossTomUser } from '../Resources';
 
 describe('ExecuteActionExecutor', () => {
 
   it('should add a task to the updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
@@ -27,7 +27,7 @@ describe('ExecuteActionExecutor', () => {
 
   it('should not add any tasks to the updater', async(): Promise<void> => {
     const context = new LabelerContext({
-      pullRequest: pullRequests[0],
+      pullRequest: firstPullRequest,
       test: true,
     });
 
