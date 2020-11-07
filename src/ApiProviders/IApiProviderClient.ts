@@ -6,6 +6,7 @@ import {
   PullRequest,
   PullRequestStatus,
   RateLimit,
+  Review,
 } from './Types';
 
 export interface IApiProviderClient {
@@ -23,6 +24,8 @@ export interface IApiProviderClient {
   getFileRaw(branchName: string, filePath: string): Promise<string>;
 
   getPullRequestCommits(pullRequestNumber: number, page?: number): Promise<Array<Commit>>;
+
+  getPullRequestReviewList(pullRequestNumber: number, page?: number): Promise<Array<Review>>;
 
   getComments(pullRequestNumber: number, page?: number): Promise<Array<Comment>>;
 

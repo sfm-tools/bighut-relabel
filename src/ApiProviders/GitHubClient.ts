@@ -13,6 +13,7 @@ import {
   PullRequest,
   PullRequestStatus,
   RateLimit,
+  Review,
   User,
 } from './Types';
 
@@ -50,6 +51,7 @@ export class GitHubClient implements IApiProviderClient {
     this.getPullRequestFiles = this.getPullRequestFiles.bind(this);
     this.getPullRequestStatus = this.getPullRequestStatus.bind(this);
     this.getPullRequests = this.getPullRequests.bind(this);
+    this.getPullRequestReviewList = this.getPullRequestReviewList.bind(this);
     this.updatePullRequestDescription = this.updatePullRequestDescription.bind(this);
     this.updatePullRequestLabels = this.updatePullRequestLabels.bind(this);
     this.updatePullRequestMilestone = this.updatePullRequestMilestone.bind(this);
@@ -215,6 +217,32 @@ export class GitHubClient implements IApiProviderClient {
     if (data.length === 100) {
       result.push(
         ...(await this.getPullRequestCommits(pullRequestNumber, (page || 1) + 1))
+      );
+    }
+
+    return result;
+  }
+
+  public async getPullRequestReviewList(pullRequestNumber: number, page?: number): Promise<Array<Review>> {
+    const data = (await this._client.pulls.listReviews({
+      owner: this.owner,
+      repo: this.repo,
+      pull_number: pullRequestNumber,
+      per_page: 100,
+      page,
+    })).data || [];
+
+    const result = data.map((item): Review => ({
+      author: this.convertDataToUser(item.user),
+      commintId: item.commit_id,
+      comment: item.body,
+      state: item.state as any,
+      createdDate: new Date(item.submitted_at),
+    }));
+
+    if (data.length === 100) {
+      result.push(
+        ...(await this.getPullRequestReviewList(pullRequestNumber, (page || 1) + 1))
       );
     }
 
