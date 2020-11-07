@@ -7,4 +7,5 @@ export { Milestone } from './Milestone';
 export { PullRequest } from './PullRequest';
 export { PullRequestStatus } from './PullRequestStatus';
 export { RateLimit } from './RateLimit';
+export { Review } from './Review';
 export { User } from './User';
