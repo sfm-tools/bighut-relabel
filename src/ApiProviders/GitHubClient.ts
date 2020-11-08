@@ -52,6 +52,8 @@ export class GitHubClient implements IApiProviderClient {
     this.getPullRequestStatus = this.getPullRequestStatus.bind(this);
     this.getPullRequests = this.getPullRequests.bind(this);
     this.getPullRequestReviewList = this.getPullRequestReviewList.bind(this);
+    this.removeRequestedReviewers = this.removeRequestedReviewers.bind(this);
+    this.requestReviewers = this.requestReviewers.bind(this);
     this.updatePullRequestDescription = this.updatePullRequestDescription.bind(this);
     this.updatePullRequestLabels = this.updatePullRequestLabels.bind(this);
     this.updatePullRequestMilestone = this.updatePullRequestMilestone.bind(this);
