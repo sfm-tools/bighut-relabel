@@ -61,4 +61,9 @@ export interface IConfig {
    */
   skip(): IAction;
 
+  /**
+   * Requests a code review from the specified users.
+   */
+  requestReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
+
 }

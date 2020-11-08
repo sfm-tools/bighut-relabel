@@ -3,6 +3,7 @@ import {
   AddLabelActionExecutor,
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
+  RequestReviewersActionExecutor,
   SetDescriptionActionExecutor,
   SetMilestoneActionExecutor,
   SetTitleActionExecutor,
@@ -14,6 +15,7 @@ import {
   BaseAction,
   ExecuteAction,
   RemoveLabelAction,
+  RequestReviewersAction,
   SetDescriptionAction,
   SetMilestoneAction,
   SetTitleAction,
@@ -102,6 +104,15 @@ class Config implements IConfig, IActionCollection, ILinkingActions {
     return this.addAction(
       new SkipActionExecutor(
         new SkipAction(this),
+        this.getLink()
+      )
+    );
+  }
+
+  public requestReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction {
+    return this.addAction(
+      new RequestReviewersActionExecutor(
+        new RequestReviewersAction(usernames, this),
         this.getLink()
       )
     );
