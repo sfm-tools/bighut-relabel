@@ -378,21 +378,21 @@ export class GitHubClient implements IApiProviderClient {
     })).data?.id;
   }
 
-  public async requestReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void> {
+  public async requestReviewers(pullRequestNumber: number, usernames: Array<string>): Promise<void> {
     await this._client.pulls.requestReviewers({
       owner: this.owner,
       repo: this.repo,
       pull_number: pullRequestNumber,
-      reviewers: logins,
+      reviewers: usernames,
     });
   }
 
-  public async removeRequestedReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void> {
+  public async removeRequestedReviewers(pullRequestNumber: number, usernames: Array<string>): Promise<void> {
     await this._client.pulls.removeRequestedReviewers({
       owner: this.owner,
       repo: this.repo,
       pull_number: pullRequestNumber,
-      reviewers: logins,
+      reviewers: usernames,
     });
   }
 

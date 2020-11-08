@@ -43,9 +43,9 @@ export interface IApiProviderClient {
 
   addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number>;
 
-  requestReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void>;
+  requestReviewers(pullRequestNumber: number, usernames: Array<string>): Promise<void>;
 
-  removeRequestedReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void>;
+  removeRequestedReviewers(pullRequestNumber: number, usernames: Array<string>): Promise<void>;
 
   getRateLimit(): Promise<RateLimit>;
 
