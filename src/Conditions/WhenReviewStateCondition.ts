@@ -28,6 +28,29 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
       // NOTE: The list can only contain comments.
       // I think that we should take them into account too,
       // even if the PR was not approved or changes were not requested.
+
+      if (hasUsers) {
+        if (oneOf) {
+          return this.testResult(
+            reviews.filter(
+              (review: Review): boolean => (
+                !users.includes(review.author.login)
+              )
+            ).length > 0
+          );
+        }
+
+        if (all) {
+          return this.testResult(
+            reviews.every(
+              (review: Review): boolean => (
+                !users.includes(review.author.login)
+              )
+            )
+          );
+        }
+      }
+
       return this.testResult(!reviews.length);
     }
 
