@@ -1,3 +1,10 @@
+## v1.2.0 (November 9, 2020)
+
+* Added actions `requestReviewers` and `removeRequestedReviewers`.
+* Added conditions `whenNotReviewed`, `whenApproved`, and `whenChangesRequested`.
+* Improved unit tests.
+* Updated dependencies.
+
 ## v1.1.0 (November 5, 2020)
 
 * Improved caching.
