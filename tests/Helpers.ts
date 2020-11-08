@@ -1,4 +1,4 @@
-import { CacheableAction } from '../../src/CacheableAction';
+import { CacheableAction } from '../src/CacheableAction';
 
 export function emptyCacheableAction<T>(): CacheableAction<T> {
   return new CacheableAction(() => Promise.resolve<T>(undefined));

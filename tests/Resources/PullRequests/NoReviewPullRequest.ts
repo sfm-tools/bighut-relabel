@@ -6,8 +6,8 @@ import {
   PullRequestStatus,
   Review,
 } from '../../../src/ApiProviders';
+import { emptyCacheableAction, emptyListOfCacheableAction } from '../../Helpers';
 import { issue1Branch, mainBranch } from '../Branches';
-import { emptyCacheableAction, emptyListOfCacheableAction } from '../Helpers';
 import { msSoftLoUser } from '../Users';
 
 export const noReviewPullRequest: PullRequest = {

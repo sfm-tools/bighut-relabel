@@ -7,8 +7,8 @@ import {
   Review,
 } from '../../../src/ApiProviders';
 import { CacheableAction } from '../../../src/CacheableAction';
+import { emptyCacheableAction, emptyListOfCacheableAction } from '../../Helpers';
 import { issue1Branch, mainBranch } from '../Branches';
-import { emptyCacheableAction, emptyListOfCacheableAction } from '../Helpers';
 import { flossTomUser, loftSomsUser, msSoftLoUser } from '../Users';
 
 export const approvedAndCommentedPullRequest2: PullRequest = {
