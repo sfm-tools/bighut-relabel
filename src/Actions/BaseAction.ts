@@ -213,6 +213,18 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
+  public whenNotReviewed(): WhenReviewStateConditionOptions {
+    const options = new WhenReviewStateConditionOptions(this);
+    const condition = new WhenReviewStateCondition(
+      'NO_REVIEW',
+      options
+    );
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
   public whenApproved(): WhenReviewStateConditionOptions {
     const options = new WhenReviewStateConditionOptions(this);
     const condition = new WhenReviewStateCondition(
