@@ -26,7 +26,7 @@
     "chai-as-promised": "7.1.1",
     "coveralls": "3.1.0",
     "eslint": "7.13.0",
-    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-import": "2.22.1",
     "eslint-plugin-simple-import-sort": "5.0.3",
     "eslint-plugin-sort-exports": "0.3.2",
     "mocha": "8.1.3",
