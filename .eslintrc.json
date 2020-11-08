@@ -16,6 +16,7 @@
   },
   "plugins": [
     "@typescript-eslint",
+    "unused-imports",
     "import",
     "simple-import-sort",
     "sort-exports"
@@ -61,6 +62,7 @@
         "allowSingleLine": false
       }
     ],
-    "semi": "error"
+    "semi": "error",
+    "unused-imports/no-unused-imports-ts": "error"
   }
 }
