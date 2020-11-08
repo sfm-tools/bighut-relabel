@@ -308,11 +308,13 @@ export class Labeler implements ILabeler {
       } = context;
 
       const {
+        addCommentToPullRequest,
+        removeRequestedReviewers,
+        requestReviewers,
         updatePullRequestLabels,
         updatePullRequestMilestone,
         updatePullRequestTitile,
         updatePullRequestDescription,
-        addCommentToPullRequest,
       } = this._client;
 
       if (updater.tasks.length) {
@@ -443,6 +445,38 @@ export class Labeler implements ILabeler {
             )
           );
         }
+      }
+
+      if (updater.requestReviewers.size) {
+        log(
+          '..request code review:',
+          chalk.green(Array.from(updater.requestReviewers).join(', '))
+        );
+
+        updateTasks.push(
+          (): Promise<void> => (
+            requestReviewers(
+              pullRequest.code,
+              Array.from(updater.requestReviewers)
+            )
+          )
+        );
+      }
+
+      if (updater.removeRequestedReviewers.size) {
+        log(
+          '..withdraw request code review:',
+          chalk.green(Array.from(updater.removeRequestedReviewers).join(', '))
+        );
+
+        updateTasks.push(
+          (): Promise<void> => (
+            removeRequestedReviewers(
+              pullRequest.code,
+              Array.from(updater.removeRequestedReviewers)
+            )
+          )
+        );
       }
 
       return updateTasks;
