@@ -59,6 +59,10 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
               users.includes(review.author.login)
             )
           );
+
+          if (approved) {
+            users.splice(0, users.length);
+          }
         }
       } else {
         approved = reviews.filter(
@@ -120,7 +124,12 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
             const index = users.indexOf(reviewer.login);
 
             if (index !== -1) {
-              users.splice(index, 1);
+              if (
+                (state === 'APPROVED' && approved)
+                || (state === 'CHANGES_REQUESTED' && !approved)
+              ) {
+                users.splice(index, 1);
+              }
             }
 
             if (users.length) {
@@ -137,8 +146,14 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
       }
     }
 
-    if (approved && all && hasUsers && users.length) {
-      approved = false;
+    if (all && hasUsers && users.length) {
+      if (approved) {
+        approved = false;
+      }
+
+      if (changesRequested) {
+        changesRequested = false;
+      }
     }
 
     if (state === 'APPROVED') {
