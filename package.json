@@ -1,7 +1,7 @@
 {
   "name": "bighut-relabel",
   "version": "1.2.0",
-  "description": "Application for automatically analyzing and managing Pull Requests on GitHub.",
+  "description": "Application for automatically analyzing and managing pull requests on GitHub.",
   "main": "dist/index.js",
   "files": [
     "dist"
