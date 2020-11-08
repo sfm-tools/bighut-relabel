@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import { AddLabelActionExecutor } from '../src/ActionExecutors';
 import { BaseAction } from '../src/Actions';
 import {
   WhenAuthorLoginCondition,
@@ -23,6 +24,7 @@ import {
   WhenTitleCondition,
 } from '../src/Conditions';
 import { createConfig } from '../src/Config';
+import { IActionCollection } from '../src/Interfaces';
 
 describe('BaseAction', () => {
 
@@ -264,6 +266,21 @@ describe('BaseAction', () => {
 
     expect(action.conditions.length).to.be.equal(1);
     expect(action.conditions[0]).to.be.instanceof(WhenReviewStateCondition);
+  });
+
+  it('then', (): void => {
+    const config = createConfig();
+    const action = config.addLabel('first action') as BaseAction;
+
+    action
+      .when((): boolean => true)
+      .then()
+      .addLabel('second action');
+
+    expect(action.conditions.length).to.be.equal(1);
+    expect(action.conditions[0]).to.be.instanceof(WhenCondition);
+    expect((config as unknown as IActionCollection).actions.length).to.be.equal(2);
+    expect((config as unknown as IActionCollection).actions[1]).to.be.instanceof(AddLabelActionExecutor);
   });
 
 });
