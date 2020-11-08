@@ -4,6 +4,7 @@ import { WhenReviewStateConditionOptions } from '../../src/ConditionOptions';
 import { WhenReviewStateCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
 import {
+  approvedAndCommentedPullRequest2,
   approvedSimplePullRequest,
   changesRequestedSimplePullRequest,
   flossMotUser,
@@ -35,6 +36,91 @@ describe('WhenReviewStateCondition', () => {
         pullRequest: approvedSimplePullRequest,
         test: true,
       });
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+
+    it('should return false for a pull request with a "changes required" state', async(): Promise<void> => {
+      const when = new WhenReviewStateCondition('NO_REVIEW');
+      const context = new LabelerContext({
+        pullRequest: changesRequestedSimplePullRequest,
+        test: true,
+      });
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+
+    it('should return true for a pull request that has not been reviewed by the specified users', async(): Promise<void> => {
+      const options = new WhenReviewStateConditionOptions(null);
+      const when = new WhenReviewStateCondition('NO_REVIEW', options);
+      const context = new LabelerContext({
+        pullRequest: approvedSimplePullRequest,
+        test: true,
+      });
+
+      options.all([
+        flossTomUser.login,
+        loftMossUser.login,
+      ]);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return true for a pull request that has not been reviewed by one of specified user', async(): Promise<void> => {
+      const options = new WhenReviewStateConditionOptions(null);
+      const when = new WhenReviewStateCondition('NO_REVIEW', options);
+      const context = new LabelerContext({
+        pullRequest: approvedAndCommentedPullRequest2,
+        test: true,
+      });
+
+      options.oneOf([
+        msSoftLoUser.login,
+        loftMossUser.login,
+      ]);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return false for a pull request that was viewed by one of the specified users', async(): Promise<void> => {
+      const options = new WhenReviewStateConditionOptions(null);
+      const when = new WhenReviewStateCondition('NO_REVIEW', options);
+      const context = new LabelerContext({
+        pullRequest: approvedSimplePullRequest,
+        test: true,
+      });
+
+      options.all([
+        flossTomUser.login,
+        msSoftLoUser.login,
+      ]);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+
+    it('should return false for a pull request that has not been reviewed by the specified users with the nothing option', async(): Promise<void> => {
+      const options = new WhenReviewStateConditionOptions(null);
+      const when = new WhenReviewStateCondition('NO_REVIEW', options);
+      const context = new LabelerContext({
+        pullRequest: approvedSimplePullRequest,
+        test: true,
+      });
+
+      options
+        .all([
+          flossTomUser.login,
+          loftMossUser.login,
+        ])
+        .nothing();
+
       const result = await when.test(context);
 
       expect(result).to.be.false;
