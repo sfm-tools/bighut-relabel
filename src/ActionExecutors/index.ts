@@ -3,6 +3,7 @@ export { AddLabelActionExecutor } from './AddLabelActionExecutor';
 export { BaseActionExecutor } from './BaseActionExecutor';
 export { ExecuteActionExecutor } from './ExecuteActionExecutor';
 export { RemoveLabelActionExecutor } from './RemoveLabelActionExecutor';
+export { RemoveRequestedReviewersActionExecutor } from './RemoveRequestedReviewersActionExecutor';
 export { RequestReviewersActionExecutor } from './RequestReviewersActionExecutor';
 export { SetDescriptionActionExecutor } from './SetDescriptionActionExecutor';
 export { SetMilestoneActionExecutor } from './SetMilestoneActionExecutor';
