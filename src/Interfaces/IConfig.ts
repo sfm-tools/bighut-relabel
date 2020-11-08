@@ -66,4 +66,9 @@ export interface IConfig {
    */
   requestReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
 
+  /**
+   * Removes the code review request for the specified users.
+   */
+  removeRequestedReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
+
 }

@@ -3,6 +3,7 @@ import {
   AddLabelActionExecutor,
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
+  RemoveRequestedReviewersActionExecutor,
   RequestReviewersActionExecutor,
   SetDescriptionActionExecutor,
   SetMilestoneActionExecutor,
@@ -15,6 +16,7 @@ import {
   BaseAction,
   ExecuteAction,
   RemoveLabelAction,
+  RemoveRequestedReviewersAction,
   RequestReviewersAction,
   SetDescriptionAction,
   SetMilestoneAction,
@@ -113,6 +115,15 @@ class Config implements IConfig, IActionCollection, ILinkingActions {
     return this.addAction(
       new RequestReviewersActionExecutor(
         new RequestReviewersAction(usernames, this),
+        this.getLink()
+      )
+    );
+  }
+
+  public removeRequestedReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction {
+    return this.addAction(
+      new RemoveRequestedReviewersActionExecutor(
+        new RemoveRequestedReviewersAction(usernames, this),
         this.getLink()
       )
     );
