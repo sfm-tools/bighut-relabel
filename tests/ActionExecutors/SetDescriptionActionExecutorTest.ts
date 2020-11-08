@@ -45,4 +45,33 @@ describe('SetDescriptionActionExecutor', () => {
     expect(updater.description.value).to.not.equal(action.description);
   });
 
+  it('should add a task to change description using function', async(): Promise<void> => {
+    const context = new LabelerContext({
+      pullRequest: firstPullRequest,
+      test: true,
+    });
+
+    const updater = context.updater;
+    const action = new SetDescriptionAction(
+      (description: string): string => (
+        description?.includes('some string')
+          ? description
+          : 'Awesome description'
+      ),
+      null
+    );
+    const executor = new SetDescriptionActionExecutor(action, null);
+
+    action
+      .whenAuthorLogin(flossTomUser.login);
+
+    await executor.execute(context);
+
+    expect(updater.description.value)
+      .to
+      .equal(
+        action.getDescription(firstPullRequest.description, context)
+      );
+  });
+
 });
