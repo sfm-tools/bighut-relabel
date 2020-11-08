@@ -7,17 +7,19 @@
 ![Last Commit](https://badgen.net/github/last-commit/sfm-tools/bighut-relabel/main)
 [![Node Version](https://badgen.net/npm/node/bighut-relabel)](https://www.npmjs.com/package/bighut-relabel)
 
-**Node.js** application for automatically analyzing and managing **Pull Requests** on **GitHub**.
+**Node.js** application for automatically analyzing and managing
+**[pull requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests)**
+on **GitHub**.
 
 ## Features
 
 * [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface).
-* Getting information about a Pull Request, including title, description, author info,
+* Getting information about a pull request, including title, description, author info,
   labels, milestone, merge direction, conflicts, files, commits, comments, and reviewers.
 * Updating title, description, labels, and milestone.
-* Adding new comments to Pull Requests.
+* Adding new comments to pull requests.
 * Creation and removing code review requests.
-* Simple conditions for Pull Requests analysis.
+* Simple conditions for pull requests analysis.
 * Flex customization.
 
 ## Install
