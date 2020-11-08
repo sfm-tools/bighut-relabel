@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { title } from 'process';
 
 import { SetTitleActionExecutor } from '../../src/ActionExecutors';
 import { SetTitleAction } from '../../src/Actions';
