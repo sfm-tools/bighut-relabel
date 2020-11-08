@@ -1,0 +1,22 @@
+{
+  "name": "labeler-example",
+  "version": "1.0.0",
+  "description": "Example of configuring bighut-relabel.",
+  "main": "index.ts",
+  "scripts": {
+    "check": "./node_modules/ts-node/dist/bin.js index.ts --test",
+    "fix": "./node_modules/ts-node/dist/bin.js index.ts",
+    "start": "./node_modules/ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "14.14.6",
+    "ts-node": "9.0.0",
+    "typescript": "4.0.5"
+  },
+  "dependencies": {
+    "bighut-relabel": "^1.0.0"
+  }
+}
