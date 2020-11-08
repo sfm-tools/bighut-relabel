@@ -5,45 +5,45 @@ import { IAction } from './IAction';
 export interface IConfig {
 
   /**
-   * Adds a comment to a Pull Request.
+   * Adds a comment to a pull request.
    *
    * @param text Comment text.
    */
   addComment(text: string): IAction;
 
   /**
-   * Adds a label to a Pull Request.
+   * Adds a label to a pull request.
    *
    * @param label Existing in repository label to add.
    */
   addLabel(label: string): IAction;
 
   /**
-   * Removes a label from a Pull Request.
+   * Removes a label from a pull request.
    *
-   * @param label Existing in repository label to remove from Pull Request.
+   * @param label Existing in repository label to remove from pull request.
    */
   removeLabel(label: string): IAction;
 
   /**
-   * Updates title of a Pull Request.
+   * Updates title of a pull request.
    *
-   * @param title Title to set to Pull Request.
+   * @param title Title to set to pull request.
    */
   setTitle(title: string | { (title: string, context?: LabelerContext): string }): IAction;
 
   /**
-   * Updates description of a Pull Request.
+   * Updates description of a pull request.
    *
-   * @param title Description to set to Pull Request.
+   * @param title Description to set to pull request.
    */
   setDescription(description: string | { (description: string, context?: LabelerContext): string }): IAction;
 
   /**
-   * Updates milestone of a Pull Request.
+   * Updates milestone of a pull request.
    *
-   * @param milestoneName Existing in repository milestone to add to Pull Request.
-   * The null value is to remove the milestone from Pull Request.
+   * @param milestoneName Existing in repository milestone to add to pull request.
+   * The null value is to remove the milestone from pull request.
    */
   setMilestone(milestoneName: string | { (milestoneName: string, context?: LabelerContext): string }): IAction;
 
