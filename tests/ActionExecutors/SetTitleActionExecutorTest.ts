@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { title } from 'process';
 
 import { SetTitleActionExecutor } from '../../src/ActionExecutors';
 import { SetTitleAction } from '../../src/Actions';
@@ -23,6 +24,36 @@ describe('SetTitleActionExecutor', () => {
     await executor.execute(context);
 
     expect(updater.title.value).to.equal(action.title);
+  });
+
+  it('should add a task to change title using function', async(): Promise<void> => {
+    const context = new LabelerContext({
+      pullRequest: firstPullRequest,
+      test: true,
+    });
+
+    const updater = context.updater;
+    const action = new SetTitleAction(
+      (title: string): string => (
+        title.includes('Awesome')
+          ? title
+          : 'Awesome title'
+      ),
+      null
+    );
+
+    const executor = new SetTitleActionExecutor(action, null);
+
+    action
+      .whenAuthorLogin(flossTomUser.login);
+
+    await executor.execute(context);
+
+    expect(updater.title.value)
+      .to
+      .equal(
+        action.getTitle(firstPullRequest.title, context)
+      );
   });
 
   it('should not add a task to change title', async(): Promise<void> => {
