@@ -17,6 +17,7 @@ import {
   WhenLabelCondition,
   WhenMergeDirectionCondition,
   WhenMilestoneNameCondition,
+  WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
@@ -233,6 +234,36 @@ describe('BaseAction', () => {
 
     expect(action.conditions.length).to.be.equal(1);
     expect(action.conditions[0]).to.be.instanceof(WhenTitleCondition);
+  });
+
+  it('whenNotReviewed', (): void => {
+    const config = createConfig();
+    const action = config.addLabel('awaiting review') as BaseAction;
+
+    action.whenNotReviewed();
+
+    expect(action.conditions.length).to.be.equal(1);
+    expect(action.conditions[0]).to.be.instanceof(WhenReviewStateCondition);
+  });
+
+  it('whenApproved', (): void => {
+    const config = createConfig();
+    const action = config.addLabel('approved') as BaseAction;
+
+    action.whenApproved();
+
+    expect(action.conditions.length).to.be.equal(1);
+    expect(action.conditions[0]).to.be.instanceof(WhenReviewStateCondition);
+  });
+
+  it('whenChangesRequested', (): void => {
+    const config = createConfig();
+    const action = config.addLabel('changes requested') as BaseAction;
+
+    action.whenChangesRequested();
+
+    expect(action.conditions.length).to.be.equal(1);
+    expect(action.conditions[0]).to.be.instanceof(WhenReviewStateCondition);
   });
 
 });
