@@ -13,9 +13,10 @@
 
 * [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface).
 * Getting information about a Pull Request, including title, description, author info,
-  labels, milestone, merge direction, conflicts, files, commits, and comments.
+  labels, milestone, merge direction, conflicts, files, commits, comments, and reviewers.
 * Updating title, description, labels, and milestone.
-* Programmatically adding new comments to Pull Requests.
+* Adding new comments to Pull Requests.
+* Creation and removing code review requests.
 * Simple conditions for Pull Requests analysis.
 * Flex customization.
 
