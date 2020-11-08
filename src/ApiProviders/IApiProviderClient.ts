@@ -43,6 +43,8 @@ export interface IApiProviderClient {
 
   addCommentToPullRequest(pullRequestNumber: number, text: string): Promise<number>;
 
+  requestReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void>;
+
   getRateLimit(): Promise<RateLimit>;
 
 }

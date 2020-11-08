@@ -376,6 +376,15 @@ export class GitHubClient implements IApiProviderClient {
     })).data?.id;
   }
 
+  public async requestReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void> {
+    await this._client.pulls.requestReviewers({
+      owner: this.owner,
+      repo: this.repo,
+      pull_number: pullRequestNumber,
+      reviewers: logins,
+    });
+  }
+
   public async getRateLimit(): Promise<RateLimit> {
     const rateLimit = (await this._client.rateLimit.get()).data;
 
