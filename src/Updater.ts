@@ -19,6 +19,11 @@ export class Updater {
   public readonly removeLabels = new Set<string>();
 
   /**
+   * List of usernames to request a code review.
+   */
+  public readonly requestReviewers = new Set<string>();
+
+  /**
    * Pull Request title to update.
    */
   public readonly title = new UpdateValue<string>();
