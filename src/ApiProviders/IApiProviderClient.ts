@@ -45,6 +45,8 @@ export interface IApiProviderClient {
 
   requestReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void>;
 
+  removeRequestedReviewers(pullRequestNumber: number, logins: Array<string>): Promise<void>;
+
   getRateLimit(): Promise<RateLimit>;
 
 }
