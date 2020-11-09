@@ -37,7 +37,7 @@ https://github.com/sfm-tools/bighut-relabel
                    owner     repo
 ```
 
-2. Check the `./index.ts` file.
+2. Check the `./config.ts` file.
 
 3. Run one of two commands in the terminal:
 
