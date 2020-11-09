@@ -47,6 +47,8 @@ export interface IApiProviderClient {
 
   removeRequestedReviewers(pullRequestNumber: number, usernames: Array<string>): Promise<void>;
 
+  deleteBranch(branchName: string): Promise<void>;
+
   getRateLimit(): Promise<RateLimit>;
 
 }

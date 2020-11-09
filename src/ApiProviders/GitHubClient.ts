@@ -44,6 +44,7 @@ export class GitHubClient implements IApiProviderClient {
     this.branchIsExists = this.branchIsExists.bind(this);
     this.getRateLimit = this.getRateLimit.bind(this);
     this.convertDataToUser = this.convertDataToUser.bind(this);
+    this.deleteBranch = this.deleteBranch.bind(this);
     this.getComments = this.getComments.bind(this);
     this.getFileRaw = this.getFileRaw.bind(this);
     this.getMilestones = this.getMilestones.bind(this);
@@ -393,6 +394,14 @@ export class GitHubClient implements IApiProviderClient {
       repo: this.repo,
       pull_number: pullRequestNumber,
       reviewers: usernames,
+    });
+  }
+
+  public async deleteBranch(branchName: string): Promise<void> {
+    await this._client.git.deleteRef({
+      owner: this.owner,
+      repo: this.repo,
+      ref: branchName,
     });
   }
 
