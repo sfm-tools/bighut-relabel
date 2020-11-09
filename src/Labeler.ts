@@ -308,6 +308,7 @@ export class Labeler implements ILabeler {
       } = context;
 
       const {
+        deleteBranch,
         addCommentToPullRequest,
         removeRequestedReviewers,
         requestReviewers,
@@ -476,6 +477,23 @@ export class Labeler implements ILabeler {
               Array.from(updater.removeRequestedReviewers)
             )
           )
+        );
+      }
+
+      if (updater.deleteBranches.size) {
+        log(
+          '..delete branches:',
+          chalk.green(Array.from(updater.deleteBranches).join(', '))
+        );
+
+        updater.deleteBranches.forEach(
+          (branchName: string): void => {
+            updateTasks.push(
+              (): Promise<void> => (
+                deleteBranch(branchName)
+              )
+            );
+          }
         );
       }
 
