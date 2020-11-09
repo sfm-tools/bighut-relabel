@@ -401,7 +401,7 @@ export class GitHubClient implements IApiProviderClient {
     await this._client.git.deleteRef({
       owner: this.owner,
       repo: this.repo,
-      ref: branchName,
+      ref: `heads/${branchName}`,
     });
   }
 
