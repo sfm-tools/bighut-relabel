@@ -1,6 +1,6 @@
 import { createConfig, IConfig } from 'bighut-relabel';
 
-export function makeExampleConfig(): IConfig {
+export function makeConfig(): IConfig {
   const config = createConfig();
 
   config
