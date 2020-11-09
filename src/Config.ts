@@ -1,6 +1,7 @@
 import {
   AddCommentActionExecutor,
   AddLabelActionExecutor,
+  DeleteBranchActionExecutor,
   ExecuteActionExecutor,
   RemoveLabelActionExecutor,
   RemoveRequestedReviewersActionExecutor,
@@ -14,6 +15,7 @@ import {
   AddCommentAction,
   AddLabelAction,
   BaseAction,
+  DeleteBranchAction,
   ExecuteAction,
   RemoveLabelAction,
   RemoveRequestedReviewersAction,
@@ -124,6 +126,15 @@ class Config implements IConfig, IActionCollection, ILinkingActions {
     return this.addAction(
       new RemoveRequestedReviewersActionExecutor(
         new RemoveRequestedReviewersAction(usernames, this),
+        this.getLink()
+      )
+    );
+  }
+
+  public deleteBranch(branchName: string): IAction {
+    return this.addAction(
+      new DeleteBranchActionExecutor(
+        new DeleteBranchAction(branchName, this),
         this.getLink()
       )
     );
