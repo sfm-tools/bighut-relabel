@@ -134,6 +134,11 @@ export interface IAction {
   whenChangesRequested(): WhenReviewStateConditionOptions;
 
   /**
+   * Checks that a pull request is in the Open state.
+   */
+  whenOpen(): DefaultConditionOptions;
+
+  /**
    * Prohibits any other action if the current one meets all the conditions.
    */
   ignoreOthers(comments?: string): void;
