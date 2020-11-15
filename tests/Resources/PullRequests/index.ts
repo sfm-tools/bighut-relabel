@@ -4,6 +4,7 @@ export { approvedSimplePullRequest } from './ApprovedSimplePullRequest';
 export { changesRequestedSimplePullRequest } from './ChangesRequestedSimplePullRequest';
 export { closedPullRequest } from './ClosedPullRequest';
 export { firstPullRequest } from './FirstPullRequest';
+export { mergedPullRequest } from './MergedPullRequest';
 export { noReviewPullRequest } from './NoReviewPullRequest';
 export { partialApprovedAndCommentedPullRequest } from './PartialApprovedAndCommentedPullRequest';
 export { secondPullRequests } from './SecondPullRequest';
