@@ -145,6 +145,11 @@ export interface IAction {
   whenClosed(): DefaultConditionOptions;
 
   /**
+   * Checks that a pull request is in the Merged state.
+   */
+  whenWasMerged(): DefaultConditionOptions;
+
+  /**
    * Prohibits any other action if the current one meets all the conditions.
    */
   ignoreOthers(comments?: string): void;

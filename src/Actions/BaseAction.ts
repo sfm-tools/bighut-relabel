@@ -268,6 +268,15 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
+  public whenWasMerged(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenState('merged');
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
   public ignoreOthers(comments?: string): void {
     this.conditions.push(
       new WhenInternalCondition(
