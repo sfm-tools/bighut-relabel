@@ -1,7 +1,7 @@
 export { AddCommentAction } from './AddCommentAction';
 export { AddLabelAction } from './AddLabelAction';
 export { BaseAction } from './BaseAction';
-export { DeleteBranchAction } from './DeleteBranchAction';
+export { DeleteSourceBranchAction } from './DeleteSourceBranchAction';
 export { ExecuteAction } from './ExecuteAction';
 export { RemoveLabelAction } from './RemoveLabelAction';
 export { RemoveRequestedReviewersAction } from './RemoveRequestedReviewersAction';

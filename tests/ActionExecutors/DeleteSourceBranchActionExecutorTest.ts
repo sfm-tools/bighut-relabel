@@ -1,21 +1,21 @@
 import { expect } from 'chai';
 
-import { DeleteBranchActionExecutor } from '../../src/ActionExecutors';
-import { DeleteBranchAction } from '../../src/Actions';
+import { DeleteSourceBranchActionExecutor } from '../../src/ActionExecutors';
+import { DeleteSourceBranchAction } from '../../src/Actions';
 import { LabelerContext } from '../../src/LabelerContext';
 import { firstPullRequest } from '../Resources';
 
-describe('DeleteBranchActionExecutor', () => {
+describe('DeleteSourceBranchActionExecutor', () => {
 
-  it('should add a branch to the remove list of the updater', async(): Promise<void> => {
+  it('should add a source branch to the remove list of the updater', async(): Promise<void> => {
     const context = new LabelerContext({
       pullRequest: firstPullRequest,
       test: true,
     });
 
     const updater = context.updater;
-    const action = new DeleteBranchAction(firstPullRequest.sourceBranch.name, null);
-    const executor = new DeleteBranchActionExecutor(action, null);
+    const action = new DeleteSourceBranchAction(null);
+    const executor = new DeleteSourceBranchActionExecutor(action, null);
 
     await executor.execute(context);
 

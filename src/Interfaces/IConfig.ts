@@ -72,8 +72,8 @@ export interface IConfig {
   removeRequestedReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
 
   /**
-   * Deletes the specified branch. ATTENTION: This action cannot be undone!
+   * Deletes the source branch. ATTENTION: This action cannot be undone!
    */
-  deleteBranch(branchName: string): IAction;
+  deleteSourceBranch(): IAction;
 
 }
