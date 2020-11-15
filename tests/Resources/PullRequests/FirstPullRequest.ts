@@ -193,6 +193,15 @@ export const firstPullRequest: PullRequest = {
       }
       `)),
     },
+    {
+      additions: 42,
+      changes: 0,
+      deletions: 0,
+      status: 'modified',
+      filePath: 'Backend/Controllers/MessagesController.cs',
+      patch: undefined,
+      content: new CacheableAction(() => Promise.reject(new Error('404 File not found.'))),
+    },
   ])),
   htmlUrl: 'https://github.com/sfm-tools/bighut-relabel/pulls/1',
   id: 999000901,
