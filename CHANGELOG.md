@@ -1,3 +1,8 @@
+## v1.3.0 (November 17, 2020)
+
+* Added `deleteSourceBranch` action.
+* Added conditions `whenOpen`, `whenClosed`, and `whenWasMerged`.
+
 ## v1.2.0 (November 9, 2020)
 
 * Added actions `requestReviewers` and `removeRequestedReviewers`.
