@@ -1,6 +1,7 @@
 export { AddCommentActionExecutor } from './AddCommentActionExecutor';
 export { AddLabelActionExecutor } from './AddLabelActionExecutor';
 export { BaseActionExecutor } from './BaseActionExecutor';
+export { DeleteSourceBranchActionExecutor } from './DeleteSourceBranchActionExecutor';
 export { ExecuteActionExecutor } from './ExecuteActionExecutor';
 export { RemoveLabelActionExecutor } from './RemoveLabelActionExecutor';
 export { RemoveRequestedReviewersActionExecutor } from './RemoveRequestedReviewersActionExecutor';

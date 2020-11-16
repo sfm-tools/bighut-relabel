@@ -29,6 +29,11 @@ export class Updater {
   public readonly removeRequestedReviewers = new Set<string>();
 
   /**
+   * List of branches to delete.
+   */
+  public readonly deleteBranches = new Set<string>();
+
+  /**
    * Pull Request title to update.
    */
   public readonly title = new UpdateValue<string>();

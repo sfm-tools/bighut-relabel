@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { fix, test } from 'bighut-relabel';
-import { makeExampleConfig } from './config';
+import { makeConfig } from './config';
 
 type GitHub = { token: string, owner: string, repo: string };
 type Auth = { github: GitHub };
@@ -19,7 +19,7 @@ if (!fs.existsSync(authPath)) {
 const auth: Auth = JSON.parse(fs.readFileSync(authPath, 'utf8'));
 
 // create config
-const config = makeExampleConfig();
+const config = makeConfig();
 
 // repository options
 const options = {

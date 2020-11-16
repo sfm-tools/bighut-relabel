@@ -27,6 +27,7 @@ import {
   WhenMilestoneNameCondition,
   WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
+  WhenState,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
@@ -243,6 +244,33 @@ export abstract class BaseAction implements IAction {
       'CHANGES_REQUESTED',
       options
     );
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenOpen(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenState('open');
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenClosed(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenState('closed');
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenWasMerged(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenState('merged');
 
     this.addCondition(condition);
 
