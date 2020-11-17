@@ -16,16 +16,23 @@ export class WhenState extends BaseCondition<PullRequestState, DefaultConditionO
       mergedDate,
     } = context.pullRequest;
 
+    let result = false;
+
     switch (this.predicate) {
       case 'open':
-        return state === 'open';
+        result = state === 'open';
+        break;
 
       case 'merged':
-        return !!mergedDate;
+        result = !!mergedDate;
+        break;
 
       case 'closed':
-        return state === 'closed' && !mergedDate;
+        result = state === 'closed' && !mergedDate;
+        break;
     }
+
+    return this.testResult(result);
   }
 
 }
