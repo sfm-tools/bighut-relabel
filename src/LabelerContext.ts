@@ -107,6 +107,9 @@ export class LabelerContext {
     this._stopComments = comments;
   }
 
+  /**
+   * @deprecated Please use `logger` instead.
+   */
   public log(message?: any, ...optionalParams: Array<any>): void {
     this.logger.log(message, ...optionalParams);
   }
