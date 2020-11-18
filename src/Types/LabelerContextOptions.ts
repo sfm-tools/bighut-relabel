@@ -1,5 +1,5 @@
 import { IApiProviderClient, PullRequest } from '../ApiProviders';
-import { ICache } from '../Interfaces';
+import { ICache, ILogger } from '../Interfaces';
 
 export type LabelerContextOptions = {
 
@@ -10,5 +10,7 @@ export type LabelerContextOptions = {
   cache?: ICache;
 
   test?: boolean;
+
+  logger?: ILogger;
 
 }
