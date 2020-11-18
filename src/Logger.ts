@@ -3,6 +3,7 @@ import winston, { format, Logger as WinstonLogger, LoggerOptions } from 'winston
 
 import { IBufferable, ILogger } from './Interfaces';
 
+// TODO: Think about splitting into two: Logger and BufferableLogger.
 export class Logger implements IBufferable, ILogger {
 
   private readonly _buffer = new Array<{ (): void }>();
