@@ -6,6 +6,14 @@ import { IBufferable, ILogger, IUpdaterActionsLogger } from './Interfaces';
 // TODO: Think about splitting into two: Logger and BufferableLogger.
 export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
+  public static readonly defaultLevels = {
+    error: 0,
+    warn: 1,
+    action: 2,
+    info: 3,
+    debug: 4,
+  };
+
   private readonly _buffer = new Array<{ (): void }>();
 
   private readonly _logger: WinstonLogger;
@@ -20,13 +28,7 @@ export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
     if (!options) {
       options = {
-        levels: {
-          error: 0,
-          warn: 1,
-          action: 2,
-          info: 3,
-          debug: 4,
-        },
+        levels: Logger.defaultLevels,
         level: 'info',
         format: format.combine(
           format.timestamp(),
