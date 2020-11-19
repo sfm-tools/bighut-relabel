@@ -16,7 +16,7 @@ export class WhenCommentCountCondition extends BaseCondition<DefaultPredicateTyp
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
-    } = super.getOptions();
+    } = super.getOptions(context);
 
     const { comments: count } = await context.pullRequest.statusInfo.get();
 

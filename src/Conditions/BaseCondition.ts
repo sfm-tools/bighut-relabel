@@ -76,7 +76,7 @@ export abstract class BaseCondition<
    * Returns the specified result depending on the value of the nothing option.
    */
   protected testResult(value: boolean, context: LabelerContext): boolean {
-    const { nothing } = this.getOptions();
+    const { nothing } = this.getOptions(context);
     const result = (
       value && !nothing
     )
@@ -98,10 +98,22 @@ export abstract class BaseCondition<
 
     return result;
   }
-  }
 
-  protected getOptions(): ConditionOptionsValues<TConditionOptions> {
-    return (this.options?.['values'] || {}) as ConditionOptionsValues<TConditionOptions>;
+  protected getOptions(context: LabelerContext): ConditionOptionsValues<TConditionOptions> {
+    const result = (this.options?.['values'] || {}) as ConditionOptionsValues<TConditionOptions>;
+
+    context.logger.debug(
+      '{class}.{method}: pr#{pullRequest.code}: found {count} options',
+      {
+        class: this.constructor.name,
+        method: this.test.name,
+        options: result,
+        count: Object.keys(result).length,
+        pullRequest: context.pullRequest,
+      }
+    );
+
+    return result;
   }
 
 }

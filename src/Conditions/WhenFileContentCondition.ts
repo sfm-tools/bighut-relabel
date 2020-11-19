@@ -13,7 +13,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
     const {
       onlyModifiedFiles,
       onlyNewFiles,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     const files = await context.pullRequest.files.get();
 

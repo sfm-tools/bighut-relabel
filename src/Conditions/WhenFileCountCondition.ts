@@ -16,7 +16,7 @@ export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, 
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
-    } = super.getOptions();
+    } = super.getOptions(context);
 
     const { changedFiles } = await context.pullRequest.statusInfo.get();
 

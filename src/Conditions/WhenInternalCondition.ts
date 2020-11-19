@@ -15,7 +15,7 @@ export class WhenInternalCondition extends BaseCondition<DefaultPredicateType, W
       ignoreOtherActions,
       comments,
       nothing,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     if (nothing) {
       throw new NotSupportedParameterError('nothing');

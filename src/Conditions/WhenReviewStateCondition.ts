@@ -17,7 +17,7 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
       all,
       oneOf,
       value,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     const users = [...value || []];
     const hasUsers = !!users.length;

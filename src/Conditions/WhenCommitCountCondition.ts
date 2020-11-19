@@ -16,7 +16,7 @@ export class WhenCommitCountCondition extends BaseCondition<DefaultPredicateType
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
-    } = super.getOptions();
+    } = super.getOptions(context);
 
     const { commits: count } = await context.pullRequest.statusInfo.get();
 

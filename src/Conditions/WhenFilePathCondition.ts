@@ -6,12 +6,13 @@ import { BaseCondition } from './BaseCondition';
 export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, WhenFilePathConditionOptions> {
 
   public async test(context: LabelerContext): Promise<boolean> {
+    const options = this.getOptions(context);
     const {
       excludeFilePath,
       excludeModifiedFiles,
       excludeNewFiles,
       excludeRemovedFiles,
-    } = super.getOptions();
+    } = options;
 
     const files = await context.pullRequest.files.get();
 
