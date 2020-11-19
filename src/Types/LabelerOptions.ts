@@ -44,6 +44,6 @@ export type LabelerOptions = {
    *
    * Default: `info`.
    */
-  log?: boolean | 'error' | 'warning' | 'info' | 'debug' | LoggerOptions;
+  log?: boolean | 'error' | 'warning' | 'info' | 'action' | 'debug' | LoggerOptions;
 
 };
