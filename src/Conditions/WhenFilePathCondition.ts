@@ -53,7 +53,7 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

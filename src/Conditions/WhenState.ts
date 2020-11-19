@@ -32,7 +32,7 @@ export class WhenState extends BaseCondition<PullRequestState, DefaultConditionO
         break;
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

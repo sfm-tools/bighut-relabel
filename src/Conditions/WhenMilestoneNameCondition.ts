@@ -12,7 +12,8 @@ export class WhenMilestoneNameCondition extends BaseCondition {
       this.testStringValue(
         milestone?.name,
         context
-      )
+      ),
+      context
     );
   }
 

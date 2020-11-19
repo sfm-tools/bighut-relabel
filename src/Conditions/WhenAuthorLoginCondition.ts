@@ -8,7 +8,8 @@ export class WhenAuthorLoginCondition extends BaseCondition {
       this.testStringValue(
         context.pullRequest.author.login,
         context
-      )
+      ),
+      context
     );
   }
 

@@ -47,7 +47,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

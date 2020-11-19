@@ -22,26 +22,26 @@ export class WhenCommitCountCondition extends BaseCondition<DefaultPredicateType
 
     // TODO: helper
     if (equal && count === equal) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (greaterThan && count > greaterThan) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (greaterThanOrEqualTo && count >= greaterThanOrEqualTo) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (lessThan && count < lessThan) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (lessThanOrEqualTo && count <= lessThanOrEqualTo) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
-    return this.testResult(false);
+    return this.testResult(false, context);
   }
 
 }

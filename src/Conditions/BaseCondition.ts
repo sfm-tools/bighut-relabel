@@ -75,15 +75,29 @@ export abstract class BaseCondition<
   /**
    * Returns the specified result depending on the value of the nothing option.
    */
-  protected testResult(result: boolean): boolean {
+  protected testResult(value: boolean, context: LabelerContext): boolean {
     const { nothing } = this.getOptions();
-
-    return (
-      result && !nothing
+    const result = (
+      value && !nothing
     )
     || (
-      !result && !!nothing
+      !value && !!nothing
     );
+
+    context.logger.debug(
+      '{class}.{method}: pr#{pullRequest.code}: the value "{value}" when option nothing is "{nothing}" then result is "{result}""',
+      {
+        class: this.constructor.name,
+        method: this.test.name,
+        nothing,
+        value,
+        result,
+        pullRequest: context.pullRequest,
+      }
+    );
+
+    return result;
+  }
   }
 
   protected getOptions(): ConditionOptionsValues<TConditionOptions> {
