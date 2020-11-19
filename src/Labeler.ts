@@ -16,6 +16,7 @@ import {
   IConfig,
   ILabeler,
   ILogger,
+  IUpdaterActionsLogger,
 } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
 import { Logger } from './Logger';
@@ -310,8 +311,9 @@ export class Labeler implements ILabeler {
     const {
       pullRequest,
       updater,
-      logger,
     } = context;
+
+    const logger = context.logger as ILogger & IUpdaterActionsLogger;
 
     try {
       const {
@@ -348,7 +350,7 @@ export class Labeler implements ILabeler {
       }
 
       if (Array.from(labels).sort().join() !== pullRequest.labels.sort().join()) {
-        logger.info(
+        logger.action(
           'fix labels: {current} => {new}',
           {
             current: chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
@@ -367,7 +369,7 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.title.counter && updater.title.value !== pullRequest.title) {
-        logger.info(
+        logger.action(
           'fix title: {current} => {new}',
           {
             current: chalk.yellow(pullRequest.title || '<empty>'),
@@ -386,7 +388,7 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.description.counter && updater.description.value !== pullRequest.description) {
-        logger.info(
+        logger.action(
           'fix description: {current} => {new}',
           {
             current: chalk.yellow(pullRequest.description || '<empty>'),
@@ -413,10 +415,10 @@ export class Labeler implements ILabeler {
         );
 
         if (!milestone) {
-          logger.info(chalk.red(`milestone "${updater.milestone.value}" not found.`));
+          logger.action(chalk.red(`milestone "${updater.milestone.value}" not found.`));
         } else {
           if (updater.milestone.value !== pullRequest.milestone?.name) {
-            logger.info(
+            logger.action(
               'fix milestone: {current} => {new}',
               {
                 current: chalk.yellow(pullRequest.milestone?.name || '<empty>'),
@@ -438,7 +440,7 @@ export class Labeler implements ILabeler {
 
       if (updater.addComments.length) {
         for (const comment of updater.addComments) {
-          logger.info(
+          logger.action(
             'add comment: {comment}',
             {
               comment: chalk.green(
@@ -462,7 +464,7 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.requestReviewers.size) {
-        logger.info(
+        logger.action(
           'request code review: {users}',
           {
             users: chalk.green(Array.from(updater.requestReviewers).join(', ')),
@@ -480,7 +482,7 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.removeRequestedReviewers.size) {
-        logger.info(
+        logger.action(
           'withdraw request code review: {users}',
           {
             users: chalk.green(Array.from(updater.removeRequestedReviewers).join(', ')),
@@ -498,7 +500,7 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.deleteBranches.size) {
-        logger.info(
+        logger.action(
           'delete branches: {branches}',
           {
             branches: chalk.green(Array.from(updater.deleteBranches).join(', ')),
@@ -528,6 +530,13 @@ export class Labeler implements ILabeler {
     if (this._options.log === false) {
       // in any case, we leave the output to the console
       return new Logger({
+        levels: {
+          error: 0,
+          warn: 1,
+          action: 2,
+          info: 3,
+          debug: 4,
+        },
         level: 'info',
         format: format.combine(
           format.timestamp(),
@@ -546,6 +555,13 @@ export class Labeler implements ILabeler {
     const maxsize = 10 * 1000 * 1000; // 10 Mb
 
     return new Logger({
+      levels: {
+        error: 0,
+        warn: 1,
+        action: 2,
+        info: 3,
+        debug: 4,
+      },
       level: typeof this._options.log === 'string' && this._options.log ? this._options.log : 'info',
       format: format.combine(
         format.timestamp(),
