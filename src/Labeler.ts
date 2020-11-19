@@ -529,39 +529,20 @@ export class Labeler implements ILabeler {
   private createLogger(): ILogger & IBufferable {
     if (this._options.log === false) {
       // in any case, we leave the output to the console
-      return new Logger({
-        levels: {
-          error: 0,
-          warn: 1,
-          action: 2,
-          info: 3,
-          debug: 4,
-        },
-        level: 'info',
-        format: format.combine(
-          format.timestamp(),
-          format.printf(info => `${info.timestamp} ${info.level}: ${stringFomat(info.message, info)}`),
-        ),
-        transports: [
-          new winston.transports.Console(),
-        ],
-      });
+      return new Logger();
     }
 
     if (typeof this._options.log === 'object' && this._options.log) {
-      return new Logger(this._options.log);
+      return new Logger({
+        ...this._options.log,
+        levels: Logger.defaultLevels,
+      });
     }
 
     const maxsize = 10 * 1000 * 1000; // 10 Mb
 
     return new Logger({
-      levels: {
-        error: 0,
-        warn: 1,
-        action: 2,
-        info: 3,
-        debug: 4,
-      },
+      levels: Logger.defaultLevels,
       level: typeof this._options.log === 'string' && this._options.log ? this._options.log : 'info',
       format: format.combine(
         format.timestamp(),
