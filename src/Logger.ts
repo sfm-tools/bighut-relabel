@@ -20,6 +20,13 @@ export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
     if (!options) {
       options = {
+        levels: {
+          error: 0,
+          warn: 1,
+          action: 2,
+          info: 3,
+          debug: 4,
+        },
         level: 'info',
         format: format.combine(
           format.timestamp(),
