@@ -1,10 +1,10 @@
 import stringFomat from 'string-format';
 import winston, { format, Logger as WinstonLogger, LoggerOptions } from 'winston';
 
-import { IBufferable, ILogger } from './Interfaces';
+import { IBufferable, ILogger, IUpdaterActionsLogger } from './Interfaces';
 
 // TODO: Think about splitting into two: Logger and BufferableLogger.
-export class Logger implements IBufferable, ILogger {
+export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
   private readonly _buffer = new Array<{ (): void }>();
 
@@ -36,6 +36,12 @@ export class Logger implements IBufferable, ILogger {
 
   public log(message?: any, ...meta: Array<any>): void {
     this.info(message, ...meta);
+  }
+
+  public action(message: string, ...meta: Array<any>): void {
+    this._buffer.push((): void => {
+      this._logger.log('action', message, ...meta);
+    });
   }
 
   public info(message: string, ...meta: Array<any>): void {
