@@ -7,7 +7,7 @@ export { IConfig } from './Interfaces';
 export { LabelerContext } from './LabelerContext';
 export { TaskContext } from './Types'; // TODO: Remove in future releases
 
-type Options = {
+export type RepositoryOptions = {
 
   /**
    * Pull Requests processing config.
@@ -33,18 +33,18 @@ export { createConfig } from './Config';
 /**
  * Applies the specified configuration to the specified repository.
  */
-export function fix(options: Options): Promise<void> {
+export function fix(options: RepositoryOptions): Promise<void> {
   return run(options, false);
 }
 
 /**
  * Tests the specified configuration without taking any action to modify the repository.
  */
-export function test(options: Options): Promise<void> {
+export function test(options: RepositoryOptions): Promise<void> {
   return run(options, true);
 }
 
-function run(options: Options, test: boolean): Promise<void> {
+function run(options: RepositoryOptions, test: boolean): Promise<void> {
   const {
     config,
     auth,
