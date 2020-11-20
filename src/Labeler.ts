@@ -699,12 +699,14 @@ export class Labeler implements ILabeler {
         new winston.transports.Console(),
         new winston.transports.File({
           level: 'error',
+          dirname: 'logs',
           filename: 'bighut-relabel-error.log',
           maxFiles: 0,
           maxsize,
           format: format.logstash(),
         }),
         new winston.transports.File({
+          dirname: 'logs',
           filename: 'bighut-relabel.log',
           maxFiles: 0,
           maxsize,
