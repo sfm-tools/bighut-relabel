@@ -47,7 +47,7 @@ type CustomRepositoryOptions = BaseRepositoryOptions & {
   /**
    * Allows to specify a custom API client instance.
    */
-  client?: IApiProviderClient;
+  client: IApiProviderClient;
 
 };
 
