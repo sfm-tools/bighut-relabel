@@ -8,7 +8,7 @@ export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
   public static readonly defaultLevels = {
     error: 0,
-    warn: 1,
+    warning: 1,
     action: 2,
     info: 3,
     debug: 4,
