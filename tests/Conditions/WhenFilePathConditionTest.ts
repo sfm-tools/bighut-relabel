@@ -78,4 +78,16 @@ describe('WhenFilePathCondition', () => {
     expect(result).to.be.false;
   });
 
+  it('should return true twice for the match found', async(): Promise<void> => {
+    const regExp = /.json/g;
+    const options = new WhenFilePathConditionOptions(null);
+    const when = new WhenFilePathCondition(regExp, options);
+
+    const result = await when.test(context);
+    const result2 = await when.test(context);
+
+    expect(result).to.be.true;
+    expect(result2).to.be.true;
+  });
+
 });
