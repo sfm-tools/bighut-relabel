@@ -94,6 +94,28 @@ describe('Logger', () => {
       });
   });
 
+  it('should contain debug item', (): void => {
+    const writer = new streams.WritableStream();
+    const logger = new Logger({
+      levels: Logger.defaultLevels,
+      level: 'debug',
+      transports: [
+        new winston.transports.Stream({
+          stream: writer,
+        }),
+      ],
+    });
+
+    logger.debug('some debug');
+    logger.flush();
+
+    expect(JSON.parse(writer.toString()))
+      .to.be.deep.equal({
+        message: 'some debug',
+        level: 'debug'
+      });
+  });
+
   it('should remain empty when adding "info" entry when the level is "action"', (): void => {
     const writer = new streams.WritableStream();
     const logger = new Logger({
