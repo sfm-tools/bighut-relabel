@@ -20,6 +20,7 @@ export class Logger implements IBufferable, ILogger, IUpdaterActionsLogger {
 
   constructor(options?: LoggerOptions) {
     this.log = this.log.bind(this);
+    this.action = this.action.bind(this);
     this.info = this.info.bind(this);
     this.warning = this.warning.bind(this);
     this.error = this.error.bind(this);
