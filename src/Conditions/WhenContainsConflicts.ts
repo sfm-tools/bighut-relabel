@@ -17,11 +17,13 @@ export class WhenContainsConflicts extends BaseCondition<boolean, DefaultConditi
 
     if (this.predicate) {
       return this.testResult(
-        (mergeable === false || mergeableState === 'dirty') && !merged
+        (mergeable === false || mergeableState === 'dirty') && !merged,
+        context
       );
     } else {
       return this.testResult(
-        mergeable === true && mergeableState !== 'dirty'
+        mergeable === true && mergeableState !== 'dirty',
+        context
       );
     }
   }

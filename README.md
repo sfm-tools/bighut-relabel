@@ -7,18 +7,19 @@
 ![Last Commit](https://badgen.net/github/last-commit/sfm-tools/bighut-relabel/main)
 [![Node Version](https://badgen.net/npm/node/bighut-relabel)](https://www.npmjs.com/package/bighut-relabel)
 
-**Node.js** application for automatically analyzing and managing
+**Node.js** library for automatically analyzing and managing
 **[pull requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests)**
 on **GitHub**.
 
 ## Features
 
 * [Fluent API](https://en.wikipedia.org/wiki/Fluent_interface).
-* Getting information about a pull request, including title, description, author info,
+* Getting information about a pull request, including state, title, description, author info,
   labels, milestone, merge direction, conflicts, files, commits, comments, and reviewers.
 * Updating title, description, labels, and milestone.
 * Adding new comments to pull requests.
 * Creation and removing code review requests.
+* Deleting branches.
 * Simple conditions for pull requests analysis.
 * Flex customization.
 
@@ -48,17 +49,17 @@ config
   .whenFilePath(/\.(((t|j)sx?)|(s?css))$/gi);
 
 // repository options
-const options = {
+const repository = {
   config: config,
   auth: {
     owner: '%GITHUB USERNAME OR ORG NAME HERE%',
     repo:  '%GITHUB REPOSITORY NAME HERE%',
     // https://github.com/sfm-tools/bighut-relabel
     //                   ^^^^^^^^  ^^^^^^^^^^^^^^
-    //                   user      repo
+    //                   owner     repo
     token: '%YOUR GITHUB TOKEN HERE%',
   },
-  // optional
+  // optional settings
   /*
   options: {
     threads: 10,
@@ -67,15 +68,16 @@ const options = {
     cache: {
       ttl: 600, // caching for 600 seconds
     },
+    log: 'actions', // levels: info (default), action, warining, error, debug, custom
   }
   */
 };
 
 // preview - without making any changes to pull requests
-test(options);
+test(repository);
 
 // or apply changes to pull requests
-// fix(options);
+// fix(repository);
 ```
 
 ## License

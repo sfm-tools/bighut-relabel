@@ -16,31 +16,31 @@ export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, 
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
-    } = super.getOptions();
+    } = super.getOptions(context);
 
     const { changedFiles } = await context.pullRequest.statusInfo.get();
 
     if (equal && changedFiles === equal) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (greaterThan && changedFiles > greaterThan) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (greaterThanOrEqualTo && changedFiles >= greaterThanOrEqualTo) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (lessThan && changedFiles < lessThan) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
     if (lessThanOrEqualTo && changedFiles <= lessThanOrEqualTo) {
-      return this.testResult(true);
+      return this.testResult(true, context);
     }
 
-    return this.testResult(false);
+    return this.testResult(false, context);
   }
 
 }

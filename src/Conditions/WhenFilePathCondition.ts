@@ -6,27 +6,77 @@ import { BaseCondition } from './BaseCondition';
 export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, WhenFilePathConditionOptions> {
 
   public async test(context: LabelerContext): Promise<boolean> {
+    const options = this.getOptions(context);
     const {
       excludeFilePath,
       excludeModifiedFiles,
       excludeNewFiles,
       excludeRemovedFiles,
-    } = super.getOptions();
+    } = options;
 
     const files = await context.pullRequest.files.get();
 
+    context.logger.debug(
+      '{class}.{method}: pr#{pullRequest.code}: checking {count} files',
+      {
+        class: this.constructor.name,
+        method: this.test.name,
+        count: files.length,
+        pullRequest: context.pullRequest,
+        options,
+      }
+    );
+
     let result = false;
 
-    for (const file of files) {
+    for (let i = 0, ic = files.length; i < ic; ++i) {
+      const file = files[i];
+
       if (excludeRemovedFiles && file.status === 'removed') {
+        context.logger.debug(
+          '{class}.{method}: pr#{pullRequest.code}: skip removed file "{file.filePath}"',
+          {
+            class: this.constructor.name,
+            method: this.test.name,
+            index: i,
+            count: ic,
+            file,
+            pullRequest: context.pullRequest,
+            options,
+          }
+        );
         continue;
       }
 
       if (excludeModifiedFiles && file.status === 'modified') {
+        context.logger.debug(
+          '{class}.{method}: pr#{pullRequest.code}: skip modified file "{file.filePath}"',
+          {
+            class: this.constructor.name,
+            method: this.test.name,
+            index: i,
+            count: ic,
+            file,
+            pullRequest: context.pullRequest,
+            options,
+          }
+        );
         continue;
       }
 
       if (excludeNewFiles && file.status === 'added') {
+        context.logger.debug(
+          '{class}.{method}: pr#{pullRequest.code}: skip added file "{file.filePath}"',
+          {
+            class: this.constructor.name,
+            method: this.test.name,
+            index: i,
+            count: ic,
+            file,
+            pullRequest: context.pullRequest,
+            options,
+          }
+        );
         continue;
       }
 
@@ -42,6 +92,18 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
         }
 
         if (isExcluded) {
+          context.logger.debug(
+            '{class}.{method}: pr#{pullRequest.code}: skip excluded file "{file.filePath}"',
+            {
+              class: this.constructor.name,
+              method: this.test.name,
+              index: i,
+              count: ic,
+              file,
+              pullRequest: context.pullRequest,
+              options,
+            }
+          );
           continue;
         }
       }
@@ -53,7 +115,7 @@ export class WhenFilePathCondition extends BaseCondition<DefaultPredicateType, W
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

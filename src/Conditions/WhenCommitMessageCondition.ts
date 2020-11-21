@@ -23,7 +23,7 @@ export class WhenCommitMessageCondition extends BaseCondition {
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

@@ -8,7 +8,8 @@ export class WhenSourceBranchNameCondition extends BaseCondition {
       this.testStringValue(
         context.pullRequest.sourceBranch.name,
         context
-      )
+      ),
+      context
     );
   }
 

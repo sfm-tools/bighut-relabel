@@ -4,10 +4,10 @@ import { WhenConditionPredicate } from './Types';
 
 export class WhenCondition extends BaseCondition<WhenConditionPredicate> {
 
-  public test(context: LabelerContext): boolean {
-    return this.testResult(
-      this.predicate(context)
-    );
+  public async test(context: LabelerContext): Promise<boolean> {
+    const result = await this.predicate(context);
+
+    return this.testResult(result, context);
   }
 
 }

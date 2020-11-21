@@ -1,3 +1,5 @@
+import { LoggerOptions } from 'winston';
+
 import { PullRequest } from '../ApiProviders';
 
 export type LabelerOptions = {
@@ -36,5 +38,12 @@ export type LabelerOptions = {
      */
     ttl?: number;
   };
+
+  /**
+   * Defines logging options.
+   *
+   * Default: `info`.
+   */
+  log?: boolean | 'error' | 'warning' | 'info' | 'action' | 'debug' | LoggerOptions;
 
 };

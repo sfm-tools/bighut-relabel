@@ -7,7 +7,7 @@ export class WhenMergeDirectionCondition extends BaseCondition<Array<MergeDirect
   public test(context: LabelerContext): boolean {
     const {
       nothing,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     for (const direction of this.predicate) {
       if (

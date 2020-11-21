@@ -7,3 +7,4 @@ export { IConfig } from './IConfig';
 export { ILabeler } from './ILabeler';
 export { ILinkingActions } from './ILinkingActions';
 export { ILogger } from './ILogger';
+export { IUpdaterActionsLogger } from './IUpdaterActionsLogger';

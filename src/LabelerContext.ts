@@ -12,8 +12,6 @@ export class LabelerContext {
 
   private _stopComments: string = null;
 
-  public readonly logger: ILogger = new Logger();
-
   private readonly _options: LabelerContextOptions;
 
   /**
@@ -21,6 +19,13 @@ export class LabelerContext {
    */
   public get pullRequest(): PullRequest {
     return this._options.pullRequest;
+  }
+
+  /**
+   * Represents context logger.
+   */
+  public get logger(): ILogger {
+    return this._options.logger;
   }
 
   /**
@@ -72,9 +77,10 @@ export class LabelerContext {
   public readonly data = new Map<string, any>();
 
   constructor(options: LabelerContextOptions) {
-    this._options = Object.assign(
+    this._options = Object.assign<Partial<LabelerContextOptions>, Partial<LabelerContextOptions>, LabelerContextOptions>(
       {},
       {
+        logger: new Logger(),
         test: false,
       },
       options
@@ -107,6 +113,9 @@ export class LabelerContext {
     this._stopComments = comments;
   }
 
+  /**
+   * @deprecated Please use `logger` instead.
+   */
   public log(message?: any, ...optionalParams: Array<any>): void {
     this.logger.log(message, ...optionalParams);
   }

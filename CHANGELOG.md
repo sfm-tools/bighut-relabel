@@ -1,3 +1,12 @@
+## v1.4.0 (November 21, 2020)
+
+* Added async support for `WhenCondition`.
+* Removed `TaskContext`. Please use `LabelerContext` instead.
+* Improved `Logger` using **@winstonjs**.
+* Improved config.
+* Preventing logical bugs in conditions when using regular expressions with the global flag.
+* Fixed bug with the `nothing` option in `WhenState`.
+
 ## v1.3.0 (November 17, 2020)
 
 * Added `deleteSourceBranch` action.

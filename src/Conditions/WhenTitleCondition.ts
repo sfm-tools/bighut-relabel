@@ -17,7 +17,8 @@ export class WhenTitleCondition extends BaseCondition {
       this.testStringValue(
         title,
         context
-      )
+      ),
+      context
     );
   }
 

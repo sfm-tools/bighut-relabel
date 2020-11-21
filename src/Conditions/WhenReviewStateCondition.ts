@@ -17,7 +17,7 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
       all,
       oneOf,
       value,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     const users = [...value || []];
     const hasUsers = !!users.length;
@@ -36,7 +36,8 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
               (review: Review): boolean => (
                 !users.includes(review.author.login)
               )
-            ).length > 0
+            ).length > 0,
+            context
           );
         }
 
@@ -46,12 +47,13 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
               (review: Review): boolean => (
                 !users.includes(review.author.login)
               )
-            )
+            ),
+            context
           );
         }
       }
 
-      return this.testResult(!reviews.length);
+      return this.testResult(!reviews.length, context);
     }
 
     let approved = false;
@@ -180,11 +182,11 @@ export class WhenReviewStateCondition extends BaseCondition<ReviewState, WhenRev
     }
 
     if (state === 'APPROVED') {
-      return this.testResult(approved);
+      return this.testResult(approved, context);
     }
 
     if (state === 'CHANGES_REQUESTED') {
-      return this.testResult(changesRequested && !approved);
+      return this.testResult(changesRequested && !approved, context);
     }
 
     throw new Error(`State "${state}" is not supported.`);

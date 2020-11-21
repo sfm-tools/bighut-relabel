@@ -21,29 +21,30 @@ const auth: Auth = JSON.parse(fs.readFileSync(authPath, 'utf8'));
 // create config
 const config = makeConfig();
 
-// repository options
-const options = {
+// repository settings
+const repository = {
   config,
   auth: {
     owner: auth.github.owner,
     repo: auth.github.repo,
     token: auth.github.token,
   },
-  // additional settings
   /*
+  // additional settings
   options: {
-    threads: 10,
-    limit: 50,
+    threads: 10, // default: 3
+    limit: 50, // default: 100
     rateLimitNotify: 2500, // because the number of requests to the GitHub API is limited to 5000 requests per hour
     cache: {
       ttl: 600, // caching for 600 seconds
     },
-  }
+    log: 'action', // you can use log level: info (default), action, warning, error, debug, and also custom winstone logger options
+  },
   */
 };
 
 if (process.argv.includes('--test')) {
-  test(options);
+  test(repository);
 } else {
-  fix(options);
+  fix(repository);
 }

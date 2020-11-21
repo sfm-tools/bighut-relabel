@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 import crypto from 'crypto';
 import queue from 'queue';
+import stringFomat from 'string-format';
+import winston, { format } from 'winston';
 
 import { IApiProviderClient, Milestone, PullRequest } from './ApiProviders';
 import { Cache } from './Cache';
@@ -13,8 +15,11 @@ import {
   ICache,
   IConfig,
   ILabeler,
+  ILogger,
+  IUpdaterActionsLogger,
 } from './Interfaces';
 import { LabelerContext } from './LabelerContext';
+import { Logger } from './Logger';
 import { LabelerOptions } from './Types';
 
 enum PullRequestCacheState {
@@ -40,6 +45,12 @@ export class Labeler implements ILabeler {
     apiProviderClient: IApiProviderClient,
     options?: LabelerOptions,
   ) {
+    this.createLogger = this.createLogger.bind(this);
+    this.test = this.test.bind(this);
+    this.fix = this.fix.bind(this);
+    this.processPullRequests = this.processPullRequests.bind(this);
+    this.createUpdateTasks = this.createUpdateTasks.bind(this);
+
     const cacheOptions = Object.assign(
       {},
       {
@@ -72,14 +83,55 @@ export class Labeler implements ILabeler {
   }
 
   public test(): Promise<void> {
-    return this.processPullRequests(true);
+    try {
+      return this.processPullRequests(true);
+    } catch(error) {
+      const logger = this.createLogger();
+      logger.error(
+        '{class}.{method}: an error occurred during processing: {error.message}',
+        {
+          class: this.constructor.name,
+          method: this.test.name,
+          error: error instanceof Error
+            && {
+              name: error.name,
+              message: error.message,
+              stack: error.stack
+            }
+            || error,
+        }
+      );
+      logger.flush();
+      throw error;
+    }
   }
 
   public fix(): Promise<void> {
-    return this.processPullRequests();
+    try {
+      return this.processPullRequests();
+    } catch(error) {
+      const logger = this.createLogger();
+      logger.error(
+        '{class}.{method}: an error occurred during processing: {error.message}',
+        {
+          class: this.constructor.name,
+          method: this.test.name,
+          error: error instanceof Error
+            && {
+              name: error.name,
+              message: error.message,
+              stack: error.stack
+            }
+            || error,
+        }
+      );
+      logger.flush();
+      throw error;
+    }
   }
 
   private async processPullRequests(test?: boolean): Promise<void> {
+    const logger = this.createLogger();
     const cache = this._cache;
 
     const {
@@ -94,16 +146,16 @@ export class Labeler implements ILabeler {
       concurrency: threads,
     });
 
-    console.log(
-      'Processing pull requests for',
-      chalk.yellow(this._client.repo),
-      'using',
-      chalk.yellow(this._client.owner),
-      'token',
-      'in',
-      chalk.yellow(test ? 'test' : 'fix'),
-      'mode.'
+    logger.info(
+      'Processing pull requests for {repo} using {owner} token in {mode} mode.',
+      {
+        repo: chalk.yellow(this._client.repo),
+        owner: chalk.yellow(this._client.owner),
+        mode: chalk.yellow(test ? 'test' : 'fix'),
+      }
     );
+
+    logger.flush();
 
     if (cacheOptions.ttl) {
       await cache.load();
@@ -124,13 +176,11 @@ export class Labeler implements ILabeler {
       const rateLimit = await this._client.getRateLimit();
 
       if (rateLimit.used > rateLimitNotify) {
-        console.warn(
-          'Request exceeded notification: used',
-          rateLimit.used,
-          'of',
-          rateLimit.limit,
-          'requests.'
+        logger.warning(
+          'Request exceeded notification: used {used} of {limit} requests.',
+          rateLimit,
         );
+        logger.flush();
       }
     }
 
@@ -152,17 +202,24 @@ export class Labeler implements ILabeler {
       }
 
       const logSkipped = (pullRequest: PullRequest, reason: string): void => {
-        console.log(
-          'Pull Request #',
-          pullRequest.code.toString(), // string - so that there is no highlight in the terminal
-          'from',
-          pullRequest.sourceBranch.name,
-          'into',
-          pullRequest.targetBranch.name,
-          'by',
-          pullRequest.author.login
+        logger.info(
+          'Pull Request #{code} from {sourceBranch.name} into {targetBranch.name} by {author.login}',
+          {
+            code: pullRequest.code,
+            sourceBranch: {
+              name: pullRequest.sourceBranch.name,
+            },
+            targetBranch: {
+              name: pullRequest.targetBranch.name,
+            },
+            author: pullRequest.author
+              && {
+                login: pullRequest.author.login,
+              },
+          }
         );
-        console.log('..skipped:', reason);
+        logger.info(`skipped: ${reason}`);
+        logger.flush();
       };
 
       for (const pullRequest of pullRequests) {
@@ -193,6 +250,7 @@ export class Labeler implements ILabeler {
 
         const context = new LabelerContext({
           apiProviderClient: this._client,
+          logger: this.createLogger(),
           pullRequest,
           cache,
           test,
@@ -200,18 +258,24 @@ export class Labeler implements ILabeler {
 
         q.push(
           async(): Promise<void> => {
-            context.log(
-              'Pull Request #',
-              context.pullRequest.code.toString(), // string - so that there is no highlight in the terminal
-              'from',
-              context.pullRequest.sourceBranch.name,
-              'into',
-              context.pullRequest.targetBranch.name,
-              'by',
-              context.pullRequest.author.login
+            context.logger.info(
+              'Pull Request #{code} from {sourceBranch.name} into {targetBranch.name} by {author.login}',
+              {
+                code: pullRequest.code,
+                sourceBranch: {
+                  name: pullRequest.sourceBranch.name,
+                },
+                targetBranch: {
+                  name: pullRequest.targetBranch.name,
+                },
+                author: pullRequest.author
+                  && {
+                    login: pullRequest.author.login,
+                  },
+              }
             );
 
-            context.log(`..${context.pullRequest.htmlUrl}`);
+            context.logger.info(context.pullRequest.htmlUrl);
 
             for (let i = 0, ic = this._actions.length; i < ic; ++i) {
               const action = this._actions[i];
@@ -223,16 +287,41 @@ export class Labeler implements ILabeler {
               try {
                 await action.execute(context);
               } catch (error) {
-                context.log(
-                  chalk.red(`..an error occurred while executing an action ${i + 1} of ${ic}:`),
-                  chalk.red(error.message)
+                context.logger.error(
+                  'an error occurred while executing an action {index} of {total}: {error.message}',
+                  {
+                    index: i + 1,
+                    total: ic,
+                    error: error instanceof Error
+                      && {
+                        name: error.name,
+                        message: error.message,
+                        stack: error.stack
+                      }
+                      || error,
+                    pullRequest,
+                    action: {
+                      class: action.constructor.name,
+                      executed: action.executed,
+                    },
+                  }
                 );
                 (context.logger as unknown as IBufferable).flush();
                 throw error;
               }
 
               if (context.stopped) {
-                context.log(`..actions check stopped on ${i + 1} of ${ic}${context.stopComments ? '; comment: ' + context.stopComments : ''}`);
+                context.logger.info(
+                  'actions check stopped on {index} of {total}; comment: {comment}',
+                  {
+                    index: i + 1,
+                    total: ic,
+                    comment: context.stopComments || '<empty>',
+                    pullRequest: {
+                      code: pullRequest.code,
+                    },
+                  }
+                );
                 break;
               }
             }
@@ -245,9 +334,19 @@ export class Labeler implements ILabeler {
                   updateTasks.map(update => update())
                 );
               } catch (error) {
-                context.log(
-                  chalk.red('..an error occurred while executing update tasks:'),
-                  chalk.red(error.message)
+                context.logger.error(
+                  'an error occurred while executing update tasks: {error.message}',
+                  {
+                    pullRequest,
+                    updater: context.updater,
+                    error: error instanceof Error
+                      && {
+                        name: error.name,
+                        message: error.message,
+                        stack: error.stack
+                      }
+                      || error,
+                  }
                 );
                 (context.logger as unknown as IBufferable).flush();
                 throw error;
@@ -285,7 +384,19 @@ export class Labeler implements ILabeler {
         }
 
         if (e === 'error') {
-          console.error(args);
+          logger.error(
+            'unhandled exception',
+            {
+              error: args?.[0] instanceof Error
+                && {
+                  name: args[0].name,
+                  message: args[0].message,
+                  stack: args[0].stack
+                }
+                || args,
+            }
+          );
+          logger.flush();
         }
 
         return true;
@@ -300,13 +411,14 @@ export class Labeler implements ILabeler {
   }
 
   private async createUpdateTasks(context: LabelerContext): Promise<Array<{ (): Promise<any> }>> {
-    try {
-      const {
-        pullRequest,
-        updater,
-        log,
-      } = context;
+    const {
+      pullRequest,
+      updater,
+    } = context;
 
+    const logger = context.logger as ILogger & IUpdaterActionsLogger;
+
+    try {
       const {
         deleteBranch,
         addCommentToPullRequest,
@@ -320,11 +432,6 @@ export class Labeler implements ILabeler {
 
       if (updater.tasks.length) {
         for (const task of updater.tasks) {
-          // TODO: Remove in future releases
-          context['githubClient'] = this._client;
-          context['labelerContext'] = context;
-          // --
-
           await task(context);
         }
       }
@@ -341,11 +448,15 @@ export class Labeler implements ILabeler {
       }
 
       if (Array.from(labels).sort().join() !== pullRequest.labels.sort().join()) {
-        log(
-          '..fix labels:',
-          chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
-          '=>',
-          chalk.green(labels.size ? Array.from(labels).join(', ') : '<empty>')
+        logger.action(
+          'fix labels: {current} => {new}',
+          {
+            current: chalk.yellow(pullRequest.labels.length ? pullRequest.labels.join(', ') : '<empty>'),
+            new: chalk.green(labels.size ? Array.from(labels).join(', ') : '<empty>'),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updateTasks.push(
@@ -359,11 +470,15 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.title.counter && updater.title.value !== pullRequest.title) {
-        log(
-          '..fix title:',
-          chalk.yellow(pullRequest.title || '<empty>'),
-          '=>',
-          chalk.green(updater.title.value || '<empty>')
+        logger.action(
+          'fix title: {current} => {new}',
+          {
+            current: chalk.yellow(pullRequest.title || '<empty>'),
+            new: chalk.green(updater.title.value || '<empty>'),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updateTasks.push(
@@ -377,11 +492,15 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.description.counter && updater.description.value !== pullRequest.description) {
-        log(
-          '..fix description:',
-          chalk.yellow(pullRequest.description || '<empty>'),
-          '=>',
-          chalk.green(updater.description.value || '<empty>')
+        logger.action(
+          'fix description: {current} => {new}',
+          {
+            current: chalk.yellow(pullRequest.description || '<empty>'),
+            new: chalk.green(updater.description.value || '<empty>'),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updateTasks.push(
@@ -403,14 +522,24 @@ export class Labeler implements ILabeler {
         );
 
         if (!milestone) {
-          log(chalk.red(`..milestone "${updater.milestone.value}" not found.`));
+          logger.error(
+            'milestone "{milestone}" not found.',
+            {
+              milestone: updater.milestone.value,
+              pullRequest,
+            }
+          );
         } else {
           if (updater.milestone.value !== pullRequest.milestone?.name) {
-            log(
-              '..fix milestone:',
-              chalk.yellow(pullRequest.milestone?.name || '<empty>'),
-              '=>',
-              chalk.green(milestone?.name || '<empty>')
+            logger.action(
+              'fix milestone: {current} => {new}',
+              {
+                current: chalk.yellow(pullRequest.milestone?.name || '<empty>'),
+                new: chalk.green(milestone?.name || '<empty>'),
+                pullRequest: {
+                  code: pullRequest.code,
+                },
+              }
             );
 
             updateTasks.push(
@@ -427,14 +556,19 @@ export class Labeler implements ILabeler {
 
       if (updater.addComments.length) {
         for (const comment of updater.addComments) {
-          log(
-            '..add comment:',
-            chalk.green(
-              comment.substr(
-                0,
-                comment.includes('\n') ? comment.indexOf('\n') : comment.length
-              )
-            )
+          logger.action(
+            'add comment: {comment}',
+            {
+              comment: chalk.green(
+                comment.substr(
+                  0,
+                  comment.includes('\n') ? comment.indexOf('\n') : comment.length
+                )
+              ),
+              pullRequest: {
+                code: pullRequest.code,
+              },
+            }
           );
 
           updateTasks.push(
@@ -449,9 +583,14 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.requestReviewers.size) {
-        log(
-          '..request code review:',
-          chalk.green(Array.from(updater.requestReviewers).join(', '))
+        logger.action(
+          'request code review: {users}',
+          {
+            users: chalk.green(Array.from(updater.requestReviewers).join(', ')),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updateTasks.push(
@@ -465,9 +604,14 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.removeRequestedReviewers.size) {
-        log(
-          '..withdraw request code review:',
-          chalk.green(Array.from(updater.removeRequestedReviewers).join(', '))
+        logger.action(
+          'withdraw request code review: {users}',
+          {
+            users: chalk.green(Array.from(updater.removeRequestedReviewers).join(', ')),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updateTasks.push(
@@ -481,9 +625,14 @@ export class Labeler implements ILabeler {
       }
 
       if (updater.deleteBranches.size) {
-        log(
-          '..delete branches:',
-          chalk.green(Array.from(updater.deleteBranches).join(', '))
+        logger.action(
+          'delete branches: {branches}',
+          {
+            branches: chalk.green(Array.from(updater.deleteBranches).join(', ')),
+            pullRequest: {
+              code: pullRequest.code,
+            },
+          }
         );
 
         updater.deleteBranches.forEach(
@@ -499,15 +648,67 @@ export class Labeler implements ILabeler {
 
       return updateTasks;
     } catch (error) {
-      context.log(
-        chalk.red('..error:'),
-        chalk.red(error.message)
+      logger.error(
+        error.message || error,
+        {
+          pullRequest,
+          error: error instanceof Error
+            && {
+              name: error.name,
+              message: error.message,
+              stack: error.stack
+            }
+            || error,
+        }
       );
 
-      (context.logger as unknown as IBufferable).flush();
+      (logger as unknown as IBufferable).flush();
 
       throw error;
     }
+  }
+
+  private createLogger(): ILogger & IBufferable {
+    if (this._options.log === false) {
+      // in any case, we leave the output to the console
+      return new Logger();
+    }
+
+    if (typeof this._options.log === 'object' && this._options.log) {
+      return new Logger({
+        ...this._options.log,
+        levels: Logger.defaultLevels,
+      });
+    }
+
+    const maxsize = 10 * 1000 * 1000; // 10 Mb
+
+    return new Logger({
+      levels: Logger.defaultLevels,
+      level: typeof this._options.log === 'string' && this._options.log ? this._options.log : 'info',
+      format: format.combine(
+        format.timestamp(),
+        format.printf(info => `${info.timestamp} ${info.level}: ${stringFomat(info.message, info)}`),
+      ),
+      transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({
+          level: 'error',
+          dirname: 'logs',
+          filename: 'bighut-relabel-error.log',
+          maxFiles: 0,
+          maxsize,
+          format: format.logstash(),
+        }),
+        new winston.transports.File({
+          dirname: 'logs',
+          filename: 'bighut-relabel.log',
+          maxFiles: 0,
+          maxsize,
+          format: format.logstash(),
+        }),
+      ],
+    });
   }
 
 }

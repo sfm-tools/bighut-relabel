@@ -13,7 +13,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
     const {
       authorLogin,
       creationDateRange,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     const comments = await context.pullRequest.comments.get();
 
@@ -47,7 +47,7 @@ export class WhenCommentTextCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }

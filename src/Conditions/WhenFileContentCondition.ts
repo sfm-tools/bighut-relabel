@@ -1,5 +1,3 @@
-import chalk from 'chalk';
-
 import { WhenFileContentConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { DefaultPredicateType, StringComparer } from '../Types';
@@ -15,7 +13,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
     const {
       onlyModifiedFiles,
       onlyNewFiles,
-    } = this.getOptions();
+    } = this.getOptions(context);
 
     const files = await context.pullRequest.files.get();
 
@@ -35,11 +33,11 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
         result = this.testStringValue(content, context);
       } catch (error) {
         if (error instanceof Error) {
-          context.log(chalk.red(`..file "${file.filePath}" not found.`));
+          context.logger.error('file "{filePath}" not found.', file);
         } else if (typeof error === 'string') {
-          context.log(error);
+          context.logger.error(error);
         } else {
-          context.log(error);
+          context.logger.error(error);
         }
       }
 
@@ -48,7 +46,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
       }
     }
 
-    return this.testResult(result);
+    return this.testResult(result, context);
   }
 
 }
