@@ -75,7 +75,7 @@ describe('WhenCondition', () => {
 
   it('test of true async predicate result should return true', async(): Promise<void> => {
     const when = new WhenCondition((context: LabelerContext): Promise<boolean> => {
-      return new Promise(resolve => setTimeout(() => resolve(true), 100));
+      return new Promise(resolve => setTimeout(() => resolve(true), 10));
     });
 
     const context = new LabelerContext({
