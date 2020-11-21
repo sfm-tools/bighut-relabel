@@ -5,7 +5,6 @@ import { LabelerOptions } from './Types';
 
 export { IConfig } from './Interfaces';
 export { LabelerContext } from './LabelerContext';
-export { TaskContext } from './Types'; // TODO: Remove in future releases
 export { Auth, GitHubClient, IApiProviderClient };
 
 type BaseRepositoryOptions = {
