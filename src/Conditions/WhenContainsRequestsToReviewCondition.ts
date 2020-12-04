@@ -2,7 +2,7 @@ import { DefaultConditionOptions } from '../ConditionOptions';
 import { LabelerContext } from '../LabelerContext';
 import { BaseCondition } from './BaseCondition';
 
-export class WhenContainsRequestsToReview extends BaseCondition<boolean, DefaultConditionOptions> {
+export class WhenContainsRequestsToReviewCondition extends BaseCondition<boolean, DefaultConditionOptions> {
 
   constructor(hasConflicts: boolean, options?: DefaultConditionOptions) {
     super(hasConflicts, options);

@@ -10,7 +10,7 @@ import {
   WhenCommitMessageCondition,
   WhenCondition,
   WhenContainsConflicts,
-  WhenContainsRequestsToReview,
+  WhenContainsRequestsToReviewCondition,
   WhenDescriptionCondition,
   WhenFileContentCondition,
   WhenFileCountCondition,
@@ -247,7 +247,7 @@ describe('BaseAction', () => {
     action.whenHasRequestsToReview();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenContainsRequestsToReview);
+    expect(action.conditions[0]).to.be.instanceof(WhenContainsRequestsToReviewCondition);
   });
 
   it('whenHasNoRequestsToReview', (): void => {
@@ -257,7 +257,7 @@ describe('BaseAction', () => {
     action.whenHasNoRequestsToReview();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenContainsRequestsToReview);
+    expect(action.conditions[0]).to.be.instanceof(WhenContainsRequestsToReviewCondition);
   });
 
   it('whenNotReviewed', (): void => {
