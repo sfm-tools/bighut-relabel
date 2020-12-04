@@ -10,6 +10,7 @@ export {
 export { BaseConditionOptions } from './BaseConditionOptions';
 export { DefaultConditionOptions } from './DefaultConditionOptions';
 export { WhenCommentTextConditionOptions } from './WhenCommentTextConditionOptions';
+export { WhenContainsRequestsToReviewConditionOptions } from './WhenContainsRequestsToReviewConditionOptions';
 export { WhenFileContentConditionOptions } from './WhenFileContentConditionOptions';
 export { WhenFilePathConditionOptions } from './WhenFilePathConditionOptions';
 export { WhenInternalConditionOptions } from './WhenInternalConditionOptions';
