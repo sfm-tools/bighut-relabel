@@ -13,6 +13,7 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
     const {
       onlyModifiedFiles,
       onlyNewFiles,
+      excludePaths,
     } = this.getOptions(context);
 
     const files = await context.pullRequest.files.get();
@@ -20,6 +21,10 @@ export class WhenFileContentCondition extends BaseCondition<DefaultPredicateType
     let result = false;
 
     for (const file of files) {
+      if (excludePaths && this.testStringValue(file.filePath, context, excludePaths)) {
+        continue;
+      }
+
       if (onlyModifiedFiles && file.status !== 'modified') {
         continue;
       }

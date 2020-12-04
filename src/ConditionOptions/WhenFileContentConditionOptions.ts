@@ -1,3 +1,4 @@
+import { StringTestValue } from '../Types';
 import { BaseConditionOptions } from './BaseConditionOptions';
 import { WhenFileContentConditionOptionsValues } from './Values';
 
@@ -13,6 +14,12 @@ export class WhenFileContentConditionOptions extends BaseConditionOptions<WhenFi
   public onlyModifiedFiles(): WhenFileContentConditionOptions {
     this.values.onlyModifiedFiles = true;
     this.values.onlyNewFiles = false;
+
+    return this;
+  }
+
+  public excludePaths(test: StringTestValue): WhenFileContentConditionOptions {
+    this.values.excludePaths = test;
 
     return this;
   }
