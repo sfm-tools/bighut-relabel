@@ -200,7 +200,7 @@ export abstract class BaseAction implements IAction {
 
   public whenHasConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflictsCondition(true);
+    const condition = new WhenContainsConflictsCondition(true, options);
 
     this.addCondition(condition);
 
@@ -209,7 +209,7 @@ export abstract class BaseAction implements IAction {
 
   public whenHasNoConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflictsCondition(false);
+    const condition = new WhenContainsConflictsCondition(false, options);
 
     this.addCondition(condition);
 
@@ -272,7 +272,7 @@ export abstract class BaseAction implements IAction {
 
   public whenOpen(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenStateCondition('open');
+    const condition = new WhenStateCondition('open', options);
 
     this.addCondition(condition);
 
@@ -281,7 +281,7 @@ export abstract class BaseAction implements IAction {
 
   public whenClosed(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenStateCondition('closed');
+    const condition = new WhenStateCondition('closed', options);
 
     this.addCondition(condition);
 
@@ -290,7 +290,7 @@ export abstract class BaseAction implements IAction {
 
   public whenWasMerged(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenStateCondition('merged');
+    const condition = new WhenStateCondition('merged', options);
 
     this.addCondition(condition);
 
