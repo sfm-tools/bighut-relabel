@@ -16,7 +16,7 @@ import {
   WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
-  WhenContainsConflicts,
+  WhenContainsConflictsCondition,
   WhenContainsRequestsToReviewCondition,
   WhenDescriptionCondition,
   WhenFileContentCondition,
@@ -199,7 +199,7 @@ export abstract class BaseAction implements IAction {
 
   public whenHasConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflicts(true);
+    const condition = new WhenContainsConflictsCondition(true);
 
     this.addCondition(condition);
 
@@ -208,7 +208,7 @@ export abstract class BaseAction implements IAction {
 
   public whenHasNoConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflicts(false);
+    const condition = new WhenContainsConflictsCondition(false);
 
     this.addCondition(condition);
 

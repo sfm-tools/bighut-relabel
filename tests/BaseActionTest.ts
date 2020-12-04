@@ -9,7 +9,7 @@ import {
   WhenCommitCountCondition,
   WhenCommitMessageCondition,
   WhenCondition,
-  WhenContainsConflicts,
+  WhenContainsConflictsCondition,
   WhenContainsRequestsToReviewCondition,
   WhenDescriptionCondition,
   WhenFileContentCondition,
@@ -167,7 +167,7 @@ describe('BaseAction', () => {
     action.whenHasConflicts();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenContainsConflicts);
+    expect(action.conditions[0]).to.be.instanceof(WhenContainsConflictsCondition);
   });
 
   it('whenHasNoConflicts', (): void => {
@@ -177,7 +177,7 @@ describe('BaseAction', () => {
     action.whenHasNoConflicts();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenContainsConflicts);
+    expect(action.conditions[0]).to.be.instanceof(WhenContainsConflictsCondition);
   });
 
   it('whenLabel', (): void => {

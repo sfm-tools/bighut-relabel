@@ -8,7 +8,7 @@ export { WhenCommentTextCondition } from './WhenCommentTextCondition';
 export { WhenCommitCountCondition } from './WhenCommitCountCondition';
 export { WhenCommitMessageCondition } from './WhenCommitMessageCondition';
 export { WhenCondition } from './WhenCondition';
-export { WhenContainsConflicts } from './WhenContainsConflicts';
+export { WhenContainsConflictsCondition } from './WhenContainsConflictsCondition';
 export { WhenContainsRequestsToReviewCondition } from './WhenContainsRequestsToReviewCondition';
 export { WhenDescriptionCondition } from './WhenDescriptionCondition';
 export { WhenFileContentCondition } from './WhenFileContentCondition';
