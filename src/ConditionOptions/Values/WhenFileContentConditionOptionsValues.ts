@@ -9,4 +9,6 @@ export type WhenFileContentConditionOptionsValues = ConditionOptionsValues & {
 
   excludePaths?: StringTestValue;
 
+  includeOnlyPaths?: StringTestValue;
+
 };

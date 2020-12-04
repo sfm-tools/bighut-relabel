@@ -24,4 +24,10 @@ export class WhenFileContentConditionOptions extends BaseConditionOptions<WhenFi
     return this;
   }
 
+  public includeOnlyPaths(test: StringTestValue): WhenFileContentConditionOptions {
+    this.values.includeOnlyPaths = test;
+
+    return this;
+  }
+
 }
