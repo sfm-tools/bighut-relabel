@@ -106,6 +106,7 @@ export class GitHubClient implements IApiProviderClient {
             code: item.milestone.number,
             name: item.milestone.title,
           },
+          requestedReviewers: item.requested_reviewers?.map(this.convertDataToUser) || [],
           createdDate: item.created_at && new Date(item.created_at),
           updatedDate: item.updated_at && new Date(item.updated_at),
           mergedDate: item.merged_at && new Date(item.merged_at),
