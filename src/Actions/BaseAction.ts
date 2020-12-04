@@ -17,6 +17,7 @@ import {
   WhenCondition,
   WhenConditionPredicate,
   WhenContainsConflicts,
+  WhenContainsRequestsToReview,
   WhenDescriptionCondition,
   WhenFileContentCondition,
   WhenFileCountCondition,
@@ -208,6 +209,24 @@ export abstract class BaseAction implements IAction {
   public whenHasNoConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
     const condition = new WhenContainsConflicts(false);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenHasRequestsToReview(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenContainsRequestsToReview(true);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenHasNoRequestsToReview(): DefaultConditionOptions {
+    const options = new DefaultConditionOptions(this);
+    const condition = new WhenContainsRequestsToReview(false);
 
     this.addCondition(condition);
 

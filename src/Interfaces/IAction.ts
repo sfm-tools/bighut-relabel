@@ -118,6 +118,16 @@ export interface IAction {
   whenHasNoConflicts(): DefaultConditionOptions;
 
   /**
+   * Checks that there are requests to reviewers in a pull request.
+   */
+  whenHasRequestsToReview(): DefaultConditionOptions;
+
+  /**
+   * Checks that there are no requests to reviewers in a pull request.
+   */
+  whenHasNoRequestsToReview(): DefaultConditionOptions;
+
+  /**
    * Checks that a pull request was not reviewed
    * (has no code review comments, has not been approved or requested changes).
    */
