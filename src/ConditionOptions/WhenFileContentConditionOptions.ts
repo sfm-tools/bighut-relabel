@@ -18,12 +18,20 @@ export class WhenFileContentConditionOptions extends BaseConditionOptions<WhenFi
     return this;
   }
 
+  /**
+   * Ignores paths to matching files.
+   * This option takes precedence over `includeOnlyPaths`.
+   */
   public excludePaths(test: StringTestValue): WhenFileContentConditionOptions {
     this.values.excludePaths = test;
 
     return this;
   }
 
+  /**
+   * Checks only matching files.
+   * If the path is excluded (`excludePaths`), then this option will not work.
+   */
   public includeOnlyPaths(test: StringTestValue): WhenFileContentConditionOptions {
     this.values.includeOnlyPaths = test;
 
