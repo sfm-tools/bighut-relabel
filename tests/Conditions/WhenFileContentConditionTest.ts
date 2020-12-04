@@ -93,4 +93,50 @@ describe('WhenFileContentCondition', () => {
     expect(result).to.be.true;
   });
 
+  it('should return false for an existing substring in an unsuitable file type', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.includeOnlyPaths(/\.json$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.false;
+  });
+
+  it('should return true for an existing substring when file type match', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.includeOnlyPaths(/\.cs$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.true;
+  });
+
+  it('should return false for an existing substring in a file of a suitable type when the same type has been excluded', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.excludePaths(/\.cs$/);
+    options.includeOnlyPaths(/\.cs$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.false;
+  });
+
+  it('should return true for an existing substring in a file of a suitable type when other types have been excluded', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.excludePaths(/\.json$/);
+    options.includeOnlyPaths(/\.cs$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.true;
+  });
+
 });
