@@ -1,6 +1,7 @@
 import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
+  WhenContainsRequestsToReviewConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
   WhenInternalConditionOptions,
@@ -215,18 +216,18 @@ export abstract class BaseAction implements IAction {
     return options;
   }
 
-  public whenHasRequestsToReview(): DefaultConditionOptions {
-    const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsRequestsToReviewCondition(true);
+  public whenHasRequestsToReview(): WhenContainsRequestsToReviewConditionOptions {
+    const options = new WhenContainsRequestsToReviewConditionOptions(this);
+    const condition = new WhenContainsRequestsToReviewCondition(true, options);
 
     this.addCondition(condition);
 
     return options;
   }
 
-  public whenHasNoRequestsToReview(): DefaultConditionOptions {
-    const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsRequestsToReviewCondition(false);
+  public whenHasNoRequestsToReview(): WhenContainsRequestsToReviewConditionOptions {
+    const options = new WhenContainsRequestsToReviewConditionOptions(this);
+    const condition = new WhenContainsRequestsToReviewCondition(false, options);
 
     this.addCondition(condition);
 
