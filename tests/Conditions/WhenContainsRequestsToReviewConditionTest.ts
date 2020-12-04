@@ -5,7 +5,7 @@ import { WhenContainsRequestsToReviewCondition } from '../../src/Conditions';
 import { LabelerContext } from '../../src/LabelerContext';
 import { firstPullRequest, noReviewPullRequest } from '../Resources';
 
-describe('WhenContainsRequestsToReview', () => {
+describe('WhenContainsRequestsToReviewCondition', () => {
 
   it('should return true for a pull request that contains requests to reviewers when reviewers are expected', (): void => {
     const when = new WhenContainsRequestsToReviewCondition(true);
