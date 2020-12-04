@@ -28,7 +28,7 @@ import {
   WhenMilestoneNameCondition,
   WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
-  WhenState,
+  WhenStateCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
@@ -271,7 +271,7 @@ export abstract class BaseAction implements IAction {
 
   public whenOpen(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('open');
+    const condition = new WhenStateCondition('open');
 
     this.addCondition(condition);
 
@@ -280,7 +280,7 @@ export abstract class BaseAction implements IAction {
 
   public whenClosed(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('closed');
+    const condition = new WhenStateCondition('closed');
 
     this.addCondition(condition);
 
@@ -289,7 +289,7 @@ export abstract class BaseAction implements IAction {
 
   public whenWasMerged(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('merged');
+    const condition = new WhenStateCondition('merged');
 
     this.addCondition(condition);
 

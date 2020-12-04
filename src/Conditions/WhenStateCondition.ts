@@ -4,7 +4,7 @@ import { BaseCondition } from './BaseCondition';
 
 type PullRequestState = 'open' | 'closed' | 'merged';
 
-export class WhenState extends BaseCondition<PullRequestState, DefaultConditionOptions> {
+export class WhenStateCondition extends BaseCondition<PullRequestState, DefaultConditionOptions> {
 
   constructor(state: PullRequestState, options?: DefaultConditionOptions) {
     super(state, options);

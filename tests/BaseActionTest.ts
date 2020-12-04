@@ -21,7 +21,7 @@ import {
   WhenMilestoneNameCondition,
   WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
-  WhenState,
+  WhenStateCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../src/Conditions';
@@ -297,7 +297,7 @@ describe('BaseAction', () => {
     action.whenOpen();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenState);
+    expect(action.conditions[0]).to.be.instanceof(WhenStateCondition);
   });
 
   it('whenClosed', (): void => {
@@ -307,7 +307,7 @@ describe('BaseAction', () => {
     action.whenClosed();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenState);
+    expect(action.conditions[0]).to.be.instanceof(WhenStateCondition);
   });
 
   it('whenWasMerged', (): void => {
@@ -317,7 +317,7 @@ describe('BaseAction', () => {
     action.whenWasMerged();
 
     expect(action.conditions.length).to.be.equal(1);
-    expect(action.conditions[0]).to.be.instanceof(WhenState);
+    expect(action.conditions[0]).to.be.instanceof(WhenStateCondition);
   });
 
   it('then', (): void => {

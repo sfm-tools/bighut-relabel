@@ -20,6 +20,6 @@ export { WhenMergeDirectionCondition } from './WhenMergeDirectionCondition';
 export { WhenMilestoneNameCondition } from './WhenMilestoneNameCondition';
 export { WhenReviewStateCondition } from './WhenReviewStateCondition';
 export { WhenSourceBranchNameCondition } from './WhenSourceBranchNameCondition';
-export { WhenState } from './WhenState';
+export { WhenStateCondition } from './WhenStateCondition';
 export { WhenTargetBranchNameCondition } from './WhenTargetBranchNameCondition';
 export { WhenTitleCondition } from './WhenTitleCondition';
