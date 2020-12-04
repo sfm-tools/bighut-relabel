@@ -50,4 +50,6 @@ export type PullRequest = {
 
   statusInfo: CacheableAction<PullRequestStatus>;
 
+  requestedReviewers?: Array<User>;
+
 };
