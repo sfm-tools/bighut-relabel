@@ -71,4 +71,26 @@ describe('WhenFileContentCondition', () => {
     expect(result).to.be.false;
   });
 
+  it('should return false for an existing substring in the excluded file', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.excludePaths(/\.cs$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.false;
+  });
+
+  it('should return true for an existing substring when other file types are excluded', async(): Promise<void> => {
+    const options = new WhenFileContentConditionOptions(null);
+    const when = new WhenFileContentCondition(/ValuesController/, options);
+
+    options.excludePaths(/\.json$/);
+
+    const result = await when.test(context);
+
+    expect(result).to.be.true;
+  });
+
 });
