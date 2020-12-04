@@ -28,6 +28,9 @@ export const approvedSimplePullRequest: PullRequest = {
   commits: emptyListOfCacheableAction<Commit>(),
   files: emptyListOfCacheableAction<File>(),
   statusInfo: emptyCacheableAction<PullRequestStatus>(),
+  requestedReviewers: [
+    msSoftLoUser,
+  ],
   reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
     {
       author: msSoftLoUser,

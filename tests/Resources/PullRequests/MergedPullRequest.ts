@@ -29,4 +29,5 @@ export const mergedPullRequest: PullRequest = {
   files: emptyListOfCacheableAction<File>(),
   statusInfo: emptyCacheableAction<PullRequestStatus>(),
   reviews: emptyListOfCacheableAction<Review>(),
+  requestedReviewers: [],
 };

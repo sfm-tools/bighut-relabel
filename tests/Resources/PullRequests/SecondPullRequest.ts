@@ -46,6 +46,7 @@ export const secondPullRequests: PullRequest = {
   state: 'open',
   title: 'Readme fixes',
   createdDate: new Date(2020, 9, 24, 0, 30, 0),
+  requestedReviewers: [],
   reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
     {
       author: msSoftLoUser,

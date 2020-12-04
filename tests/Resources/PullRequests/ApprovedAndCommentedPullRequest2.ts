@@ -28,6 +28,9 @@ export const approvedAndCommentedPullRequest2: PullRequest = {
   commits: emptyListOfCacheableAction<Commit>(),
   files: emptyListOfCacheableAction<File>(),
   statusInfo: emptyCacheableAction<PullRequestStatus>(),
+  requestedReviewers: [
+    loftSomsUser,
+  ],
   reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
     {
       author: msSoftLoUser,
