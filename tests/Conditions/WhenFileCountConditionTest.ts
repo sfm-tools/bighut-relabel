@@ -150,7 +150,7 @@ describe('WhenFileCountCondition', () => {
     });
   });
 
-  describe('greaterThanOrEqualTo', () => {
+  describe('lessThanOrEqualTo', () => {
     it('should return true when the number of files less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
