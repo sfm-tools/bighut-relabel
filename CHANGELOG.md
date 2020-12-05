@@ -1,3 +1,11 @@
+## v1.5.0 (December 5, 2020)
+
+* Added `excludePaths` and `includeOnlyPaths` options for `whenFileContent` condition.
+* Added `between` option for `whenFileCount`, `whenCommentCount`, and `whenCommitCount` conditions.
+* Added `whenHasRequestsToReview` and `whenHasNoRequestsToReview` conditions.
+* Fixed bugs with missed options in `whenHasConflicts`, `whenHasNoConflicts`,
+  `whenOpen`, `whenClosed`, and `whenWasMerged` conditions.
+
 ## v1.4.0 (November 21, 2020)
 
 * Added async support for `WhenCondition`.
@@ -16,7 +24,6 @@
 
 * Added actions `requestReviewers` and `removeRequestedReviewers`.
 * Added conditions `whenNotReviewed`, `whenApproved`, and `whenChangesRequested`.
-* Improved unit tests.
 * Updated dependencies.
 
 ## v1.1.0 (November 5, 2020)
