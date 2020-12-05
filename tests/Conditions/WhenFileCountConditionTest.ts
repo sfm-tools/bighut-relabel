@@ -197,4 +197,36 @@ describe('WhenFileCountCondition', () => {
     });
   });
 
+  describe('between', () => {
+    it('should return true if the number of files falls within the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options.between(2, 10);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the number of files is outside the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options.between(10, 25);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+  });
+
 });
