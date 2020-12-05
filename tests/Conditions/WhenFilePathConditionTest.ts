@@ -69,9 +69,9 @@ describe('WhenFilePathCondition', () => {
 
   it('should return false for an existing file that was excluded using excludeFilePath option', async(): Promise<void> => {
     const options = new WhenFilePathConditionOptions(null);
-    const when = new WhenFilePathCondition(/.json/g, options);
+    const when = new WhenFilePathCondition(/\.json$/, options);
 
-    options.excludeFilePath(/package.json/g);
+    options.excludeFilePath(/package\.json/);
 
     const result = await when.test(context);
 
