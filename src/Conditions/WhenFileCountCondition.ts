@@ -16,10 +16,12 @@ export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, 
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
+      between,
     } = super.getOptions(context);
 
     const { changedFiles } = await context.pullRequest.statusInfo.get();
 
+    // TODO: helper
     if (equal && changedFiles === equal) {
       return this.testResult(true, context);
     }
@@ -37,6 +39,10 @@ export class WhenFileCountCondition extends BaseCondition<DefaultPredicateType, 
     }
 
     if (lessThanOrEqualTo && changedFiles <= lessThanOrEqualTo) {
+      return this.testResult(true, context);
+    }
+
+    if (between && changedFiles >= between.from && changedFiles <= between.to) {
       return this.testResult(true, context);
     }
 
