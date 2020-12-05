@@ -234,7 +234,7 @@ export const firstPullRequest: PullRequest = {
     mergeable: true,
     mergeableState: 'clean',
     rebaseable: true,
-    changedFiles: 7,
+    changedFiles: 8,
     comments: 4,
     commits: 3,
   })),

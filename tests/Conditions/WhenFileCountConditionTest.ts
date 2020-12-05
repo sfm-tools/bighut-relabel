@@ -16,7 +16,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.equal(7);
+      options.equal(8);
 
       const result = await when.test(context);
 
@@ -95,7 +95,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.greaterThanOrEqualTo(7);
+      options.greaterThanOrEqualTo(8);
 
       const result = await when.test(context);
 
@@ -110,7 +110,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.greaterThanOrEqualTo(8);
+      options.greaterThanOrEqualTo(9);
 
       const result = await when.test(context);
 
@@ -174,7 +174,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.lessThanOrEqualTo(7);
+      options.lessThanOrEqualTo(8);
 
       const result = await when.test(context);
 
