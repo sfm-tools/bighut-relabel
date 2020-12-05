@@ -113,7 +113,7 @@ class Config implements IConfig, IActionCollection, ILinkingActions {
     );
   }
 
-  public requestReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction {
+  public requestReviewers(usernames: string | Array<string> | { (context?: LabelerContext): Array<string> }): IAction {
     return this.addAction(
       new RequestReviewersActionExecutor(
         new RequestReviewersAction(usernames, this),

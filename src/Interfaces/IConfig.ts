@@ -64,7 +64,7 @@ export interface IConfig {
   /**
    * Requests a code review from the specified users.
    */
-  requestReviewers(usernames: Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
+  requestReviewers(usernames: string | Array<string> | { (context?: LabelerContext): Array<string> }): IAction;
 
   /**
    * Removes the code review request for the specified users.
