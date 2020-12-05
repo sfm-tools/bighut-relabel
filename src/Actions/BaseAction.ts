@@ -1,6 +1,7 @@
 import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
+  WhenContainsRequestsToReviewConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
   WhenInternalConditionOptions,
@@ -16,7 +17,8 @@ import {
   WhenCommitMessageCondition,
   WhenCondition,
   WhenConditionPredicate,
-  WhenContainsConflicts,
+  WhenContainsConflictsCondition,
+  WhenContainsRequestsToReviewCondition,
   WhenDescriptionCondition,
   WhenFileContentCondition,
   WhenFileCountCondition,
@@ -27,7 +29,7 @@ import {
   WhenMilestoneNameCondition,
   WhenReviewStateCondition,
   WhenSourceBranchNameCondition,
-  WhenState,
+  WhenStateCondition,
   WhenTargetBranchNameCondition,
   WhenTitleCondition,
 } from '../Conditions';
@@ -198,7 +200,7 @@ export abstract class BaseAction implements IAction {
 
   public whenHasConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflicts(true);
+    const condition = new WhenContainsConflictsCondition(true, options);
 
     this.addCondition(condition);
 
@@ -207,7 +209,25 @@ export abstract class BaseAction implements IAction {
 
   public whenHasNoConflicts(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenContainsConflicts(false);
+    const condition = new WhenContainsConflictsCondition(false, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenHasRequestsToReview(): WhenContainsRequestsToReviewConditionOptions {
+    const options = new WhenContainsRequestsToReviewConditionOptions(this);
+    const condition = new WhenContainsRequestsToReviewCondition(true, options);
+
+    this.addCondition(condition);
+
+    return options;
+  }
+
+  public whenHasNoRequestsToReview(): WhenContainsRequestsToReviewConditionOptions {
+    const options = new WhenContainsRequestsToReviewConditionOptions(this);
+    const condition = new WhenContainsRequestsToReviewCondition(false, options);
 
     this.addCondition(condition);
 
@@ -252,7 +272,7 @@ export abstract class BaseAction implements IAction {
 
   public whenOpen(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('open');
+    const condition = new WhenStateCondition('open', options);
 
     this.addCondition(condition);
 
@@ -261,7 +281,7 @@ export abstract class BaseAction implements IAction {
 
   public whenClosed(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('closed');
+    const condition = new WhenStateCondition('closed', options);
 
     this.addCondition(condition);
 
@@ -270,7 +290,7 @@ export abstract class BaseAction implements IAction {
 
   public whenWasMerged(): DefaultConditionOptions {
     const options = new DefaultConditionOptions(this);
-    const condition = new WhenState('merged');
+    const condition = new WhenStateCondition('merged', options);
 
     this.addCondition(condition);
 

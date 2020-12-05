@@ -33,4 +33,13 @@ export class WhenNumberConditionOptions extends BaseConditionOptions<NumberCondi
     return this;
   }
 
+  public between(from: number, to: number): WhenNumberConditionOptions {
+    this.values.between = {
+      from,
+      to,
+    };
+
+    return this;
+  }
+
 }

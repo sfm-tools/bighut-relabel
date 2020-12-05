@@ -10,7 +10,7 @@ import { CacheableAction } from '../../../src/CacheableAction';
 import { issue2Branch, mainBranch } from '../Branches';
 import { flossTomUser, loftMossUser, msSoftLoUser } from '../Users';
 
-export const secondPullRequests: PullRequest = {
+export const secondPullRequest: PullRequest = {
   author: loftMossUser,
   code: 2,
   comments: new CacheableAction(() => Promise.resolve<Array<Comment>>([])),
@@ -46,6 +46,7 @@ export const secondPullRequests: PullRequest = {
   state: 'open',
   title: 'Readme fixes',
   createdDate: new Date(2020, 9, 24, 0, 30, 0),
+  requestedReviewers: [],
   reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
     {
       author: msSoftLoUser,

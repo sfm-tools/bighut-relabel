@@ -9,7 +9,7 @@ export class RequestReviewersAction extends BaseAction {
   public readonly getUsernames: { (context: LabelerContext): Array<string> };
 
   constructor(
-    usernames: Array<string> | { (context?: LabelerContext): Array<string> },
+    usernames: string | Array<string> | { (context?: LabelerContext): Array<string> },
     config: IConfig
   ) {
     super(config);
@@ -17,7 +17,7 @@ export class RequestReviewersAction extends BaseAction {
     if (typeof usernames === 'function') {
       this.getUsernames = usernames;
     } else {
-      this.usernames = usernames;
+      this.usernames = [].concat(usernames);
     }
   }
 

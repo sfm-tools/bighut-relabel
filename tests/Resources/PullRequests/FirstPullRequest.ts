@@ -212,6 +212,7 @@ export const firstPullRequest: PullRequest = {
   state: 'open',
   title: 'Awesome pull request',
   createdDate: new Date(2020, 9, 18, 12, 51, 0),
+  requestedReviewers: [],
   reviews: new CacheableAction(() => Promise.resolve<Array<Review>>([
     {
       author: msSoftLoUser,
@@ -233,7 +234,7 @@ export const firstPullRequest: PullRequest = {
     mergeable: true,
     mergeableState: 'clean',
     rebaseable: true,
-    changedFiles: 7,
+    changedFiles: 8,
     comments: 4,
     commits: 3,
   })),

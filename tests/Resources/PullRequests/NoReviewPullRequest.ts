@@ -8,7 +8,7 @@ import {
 } from '../../../src/ApiProviders';
 import { emptyCacheableAction, emptyListOfCacheableAction } from '../../Helpers';
 import { issue1Branch, mainBranch } from '../Branches';
-import { msSoftLoUser } from '../Users';
+import { flossMotUser, loftSomsUser, msSoftLoUser } from '../Users';
 
 export const noReviewPullRequest: PullRequest = {
   author: msSoftLoUser,
@@ -28,4 +28,8 @@ export const noReviewPullRequest: PullRequest = {
   files: emptyListOfCacheableAction<File>(),
   statusInfo: emptyCacheableAction<PullRequestStatus>(),
   reviews: emptyListOfCacheableAction<Review>(),
+  requestedReviewers: [
+    flossMotUser,
+    loftSomsUser,
+  ],
 };

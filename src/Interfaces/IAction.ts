@@ -1,6 +1,7 @@
 import {
   DefaultConditionOptions,
   WhenCommentTextConditionOptions,
+  WhenContainsRequestsToReviewConditionOptions,
   WhenFileContentConditionOptions,
   WhenFilePathConditionOptions,
   WhenNumberConditionOptions,
@@ -116,6 +117,16 @@ export interface IAction {
    * Checks for conflicts in a pull request.
    */
   whenHasNoConflicts(): DefaultConditionOptions;
+
+  /**
+   * Checks that there are requests to reviewers in a pull request.
+   */
+  whenHasRequestsToReview(): WhenContainsRequestsToReviewConditionOptions;
+
+  /**
+   * Checks that there are no requests to reviewers in a pull request.
+   */
+  whenHasNoRequestsToReview(): WhenContainsRequestsToReviewConditionOptions;
 
   /**
    * Checks that a pull request was not reviewed

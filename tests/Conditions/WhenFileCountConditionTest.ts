@@ -16,7 +16,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.equal(7);
+      options.equal(8);
 
       const result = await when.test(context);
 
@@ -95,7 +95,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.greaterThanOrEqualTo(7);
+      options.greaterThanOrEqualTo(8);
 
       const result = await when.test(context);
 
@@ -110,7 +110,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.greaterThanOrEqualTo(8);
+      options.greaterThanOrEqualTo(9);
 
       const result = await when.test(context);
 
@@ -150,7 +150,7 @@ describe('WhenFileCountCondition', () => {
     });
   });
 
-  describe('greaterThanOrEqualTo', () => {
+  describe('lessThanOrEqualTo', () => {
     it('should return true when the number of files less than the specified value', async(): Promise<void> => {
       const options = new WhenNumberConditionOptions(null);
       const when = new WhenFileCountCondition(options);
@@ -174,7 +174,7 @@ describe('WhenFileCountCondition', () => {
         test: true,
       });
 
-      options.lessThanOrEqualTo(7);
+      options.lessThanOrEqualTo(8);
 
       const result = await when.test(context);
 
@@ -190,6 +190,74 @@ describe('WhenFileCountCondition', () => {
       });
 
       options.lessThanOrEqualTo(0);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('between', () => {
+    it('should return true if the number of files falls within the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options.between(2, 10);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the number of files is outside the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options.between(10, 25);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('greaterThanOrEqualTo + lessThanOrEqualTo', () => {
+    it('should return true if the number of files falls within the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options
+        .greaterThanOrEqualTo(2)
+        .lessThanOrEqualTo(8);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the number of files is outside the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options
+        .greaterThanOrEqualTo(9)
+        .lessThanOrEqualTo(20);
 
       const result = await when.test(context);
 

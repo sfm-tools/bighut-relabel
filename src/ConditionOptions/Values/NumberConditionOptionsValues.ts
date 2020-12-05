@@ -12,4 +12,9 @@ export type NumberConditionOptionsValues = ConditionOptionsValues & {
 
   greaterThanOrEqualTo?: number;
 
+  between?: {
+    from: number;
+    to: number;
+  }
+
 };
