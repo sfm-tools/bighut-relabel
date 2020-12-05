@@ -16,6 +16,7 @@ export class WhenCommitCountCondition extends BaseCondition<DefaultPredicateType
       greaterThanOrEqualTo,
       lessThan,
       lessThanOrEqualTo,
+      between,
     } = super.getOptions(context);
 
     const { commits: count } = await context.pullRequest.statusInfo.get();
@@ -38,6 +39,10 @@ export class WhenCommitCountCondition extends BaseCondition<DefaultPredicateType
     }
 
     if (lessThanOrEqualTo && count <= lessThanOrEqualTo) {
+      return this.testResult(true, context);
+    }
+
+    if (between && count >= between.from && count <= between.to) {
       return this.testResult(true, context);
     }
 
