@@ -42,11 +42,11 @@ const config = createConfig();
 
 config
   .addLabel('back end')
-  .whenFilePath(/\.cs$/gi);
+  .whenFilePath(/\.cs$/);
 
 config
   .addLabel('front end')
-  .whenFilePath(/\.(((t|j)sx?)|(s?css))$/gi);
+  .whenFilePath(/\.(((t|j)sx?)|(s?css))$/);
 
 // repository options
 const repository = {
