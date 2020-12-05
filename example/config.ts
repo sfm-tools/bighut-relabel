@@ -5,15 +5,15 @@ export function makeConfig(): IConfig {
 
   config
     .addLabel('back end')
-    .whenFilePath(/\.cs$/gi);
+    .whenFilePath(/\.cs$/);
 
   config
     .addLabel('front end')
-    .whenFilePath(/\.(((t|j)sx?)|(s?css))$/gi);
+    .whenFilePath(/\.(((t|j)sx?)|(s?css))$/);
 
   config
     .addLabel('database')
-    .whenFilePath(/\.sql$/gi);
+    .whenFilePath(/\.sql$/);
 
   return config;
 }
