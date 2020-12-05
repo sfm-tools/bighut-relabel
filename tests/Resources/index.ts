@@ -19,5 +19,5 @@ export {
   firstPullRequest,
   noReviewPullRequest,
   partialApprovedAndCommentedPullRequest,
-  secondPullRequests,
+  secondPullRequest,
 } from './PullRequests';

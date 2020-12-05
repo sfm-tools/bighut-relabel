@@ -7,4 +7,4 @@ export { firstPullRequest } from './FirstPullRequest';
 export { mergedPullRequest } from './MergedPullRequest';
 export { noReviewPullRequest } from './NoReviewPullRequest';
 export { partialApprovedAndCommentedPullRequest } from './PartialApprovedAndCommentedPullRequest';
-export { secondPullRequests } from './SecondPullRequest';
+export { secondPullRequest } from './SecondPullRequest';

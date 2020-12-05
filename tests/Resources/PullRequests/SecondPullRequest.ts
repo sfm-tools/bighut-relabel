@@ -10,7 +10,7 @@ import { CacheableAction } from '../../../src/CacheableAction';
 import { issue2Branch, mainBranch } from '../Branches';
 import { flossTomUser, loftMossUser, msSoftLoUser } from '../Users';
 
-export const secondPullRequests: PullRequest = {
+export const secondPullRequest: PullRequest = {
   author: loftMossUser,
   code: 2,
   comments: new CacheableAction(() => Promise.resolve<Array<Comment>>([])),
