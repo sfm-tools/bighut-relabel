@@ -229,4 +229,40 @@ describe('WhenFileCountCondition', () => {
     });
   });
 
+  describe('greaterThanOrEqualTo + lessThanOrEqualTo', () => {
+    it('should return true if the number of files falls within the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options
+        .greaterThanOrEqualTo(2)
+        .lessThanOrEqualTo(8);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.true;
+    });
+
+    it('should return false if the number of files is outside the specified range', async(): Promise<void> => {
+      const options = new WhenNumberConditionOptions(null);
+      const when = new WhenFileCountCondition(options);
+      const context = new LabelerContext({
+        pullRequest: firstPullRequest,
+        test: true,
+      });
+
+      options
+        .greaterThanOrEqualTo(9)
+        .lessThanOrEqualTo(20);
+
+      const result = await when.test(context);
+
+      expect(result).to.be.false;
+    });
+  });
+
 });
