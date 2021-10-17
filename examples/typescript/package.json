@@ -5,9 +5,9 @@
   "description": "An example of bighut-relabel configuration.",
   "main": "index.ts",
   "scripts": {
-    "check": "./node_modules/ts-node/dist/bin.js index.ts --test",
-    "fix": "./node_modules/ts-node/dist/bin.js index.ts",
-    "start": "./node_modules/ts-node index.ts",
+    "check": "node ./node_modules/ts-node/dist/bin.js index.ts --test",
+    "fix": "node ./node_modules/ts-node/dist/bin.js index.ts",
+    "start": "node ./node_modules/ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
