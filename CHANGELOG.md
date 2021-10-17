@@ -1,3 +1,7 @@
+## v1.5.1 (October 17, 2021)
+
+* Security updates.
+
 ## v1.5.0 (December 5, 2020)
 
 * Added `excludePaths` and `includeOnlyPaths` options for `whenFileContent` condition.
