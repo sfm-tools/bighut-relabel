@@ -17,6 +17,6 @@
   "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
   "license": "MIT",
   "dependencies": {
-    "bighut-relabel": "^1.5.0"
+    "bighut-relabel": "^1.5.1"
   }
 }

@@ -18,6 +18,6 @@
     "typescript": "4.0.5"
   },
   "dependencies": {
-    "bighut-relabel": "^1.5.0"
+    "bighut-relabel": "^1.5.1"
   }
 }
