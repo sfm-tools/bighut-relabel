@@ -1,0 +1,7 @@
+{
+  "github": {
+    "token": "%YOUR GITHUB TOKEN HERE%",
+    "owner": "%GITHUB USERNAME OR ORGANIZATION NAME HERE%",
+    "repo": "%REPOSITORY NAME HERE%"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "labeler-cjs-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An example of bighut-relabel configuration.",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=12.18.4"
+  },
+  "scripts": {
+    "check": "node index.js --test",
+    "fix": "node index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexey Nemiro <alexey.nemiro@clearscale.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bighut-relabel": "^1.5.0"
+  }
+}
