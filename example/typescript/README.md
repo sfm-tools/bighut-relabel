@@ -8,7 +8,7 @@ You can use this example as a template.
 
 ```bash
 git clone https://github.com/sfm-tools/bighut-relabel.git
-cd bighut-relabel/example
+cd bighut-relabel/example/typescript
 npm install
 ```
 
