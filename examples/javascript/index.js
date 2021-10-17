@@ -8,9 +8,9 @@ const authPath = '.auth.json';
 // get GitHub repository access settings
 if (!fs.existsSync(authPath)) {
   throw new Error(
-    `File "${authPath}" not found. ` +
-    `Please create "${authPath}" file in the root directory of the application. ` +
-    `You can use file ".auth.example.json" as a sample.`
+    `File "${authPath}" not found. `
+    + `Please create "${authPath}" file in the root directory of the application. `
+    + 'You can use file ".auth.example.json" as a sample.'
   );
 }
 
