@@ -1,7 +1,8 @@
 {
   "name": "labeler-example",
   "version": "1.0.0",
-  "description": "Example configuration bighut-relabel.",
+  "private": true,
+  "description": "An example of bighut-relabel configuration.",
   "main": "index.ts",
   "scripts": {
     "check": "./node_modules/ts-node/dist/bin.js index.ts --test",
