@@ -196,12 +196,12 @@ export class GitHubClient implements IApiProviderClient {
   }
 
   public async getFileRaw(branchName: string, filePath: string): Promise<string> {
-    const content = (await this._client.repos.getContent({
+    const content = ((await this._client.repos.getContent({
       owner: this.owner,
       repo: this.repo,
       ref: branchName,
       path: filePath,
-    })).data.content;
+    })).data as { content: string }).content;
 
     return content && Buffer.from(content, 'base64').toString();
   }
