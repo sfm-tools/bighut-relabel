@@ -1,6 +1,6 @@
 # Configuration example
 
-This is an example of a possible **bighut-relabel** configuration for your project.
+This is an example of **bighut-relabel** configuration for your project.
 
 You can use this example as a template.
 
@@ -8,7 +8,7 @@ You can use this example as a template.
 
 ```bash
 git clone https://github.com/sfm-tools/bighut-relabel.git
-cd bighut-relabel/example/javascript
+cd bighut-relabel/examples/typescript
 npm ci
 ```
 
@@ -37,7 +37,7 @@ https://github.com/sfm-tools/bighut-relabel
                    owner     repo
 ```
 
-2. Check the `./config.js` file.
+2. Check the `./config.ts` file.
 
 3. Run one of two commands in the terminal:
 
