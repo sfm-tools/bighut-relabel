@@ -71,8 +71,8 @@ export function test(options: RepositoryOptions): Promise<void> {
 
 function run(options: RepositoryOptions, test: boolean): Promise<void> {
   const {
-    config,
     auth,
+    config,
     options: labelerOptions,
     client,
   } = options;
